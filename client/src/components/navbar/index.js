@@ -7,6 +7,9 @@ return (
 	<>
 	<Nav>
 		<NavMenu>
+		<NavLink to="/signup" activeStyle>
+			Signup
+		</NavLink>
 		<NavLink to="/login" activeStyle>
 			Login
 		</NavLink>

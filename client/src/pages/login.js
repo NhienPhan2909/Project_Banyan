@@ -1,10 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './globals.css';
+import {TextField} from '@mui/material';
+import Box from '@mui/material/Box';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 class Login extends Component {
     state = {
-        data: null
+        username: null,
+        password: null,
     };
+    
+    changeUsername = e => {
+        this.state.username = e.target.value;
+        console.log(e.target.value);
+    }
+      
+    changePassword = e => {
+        this.state.password = e.target.value;
+    }
 
     componentDidMount() {
         this.callBackendAPI()
@@ -24,15 +39,53 @@ class Login extends Component {
     };
 
     render() {
-        return (
-            <div className="page">
-                <header className="header">
-                    <h1>Login</h1>
-                </header>
-                <div className="express-output">{this.state.data}</div>
-            </div>
-        );
-    }
+            return (
+              <div className="form-container">
+                <form className="form">
+                  <div className="Auth-form-content">
+                    <h3 className="Auth-form-title">Login</h3>
+                    <div className="inputs">
+                    <div className="form-group mt-3">
+                    <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white'}}>
+                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                        <TextField className = 'usernameField' sx={{ input: { color: 'black' } }} id="input-with-username" label="Username" variant="standard"
+                            InputLabelProps={{
+                             style: { color: "lightgrey" },
+                            }}
+                             onChange={this.changeUsername}
+                         />
+                    </Box>
+                    </div>
+                    <div className="form-group mt-3">
+                    <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white'}}>
+                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                        <TextField className = 'usernameField' sx={{ input: { color: 'black' } }} id="input-with-username" label="Password" variant="standard"
+                            InputLabelProps={{
+                                style: { color: "lightgrey" },
+                            }}
+                            onChange={this.changePassword}
+                        />
+                    </Box>
+                    </div>
+                    </div>
+                    <div className="authSubmit">
+                    <Stack>
+                        <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
+                            onClick={() => {
+                                alert(this.state.username + " " + this.state.password);
+                            }}
+                        >Submit
+                        </Button>
+                    </Stack>
+                    </div>
+                    <p className="text-center mt-2">
+                      <a href="#">Forgot password?</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            )
+          }
 }
 
 export default Login;

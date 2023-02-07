@@ -13,6 +13,10 @@ app.get('/login', (req, res) => {
     res.send({ express: 'login page express content' });
 });
 
+app.get('/signup', (req, res) => {
+    res.send({ express: 'signup page express content' });
+});
+
 app.get('/dashboard', (req, res) => {
     res.send({ express: 'dashboard page express content' });
 });

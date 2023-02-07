@@ -10,6 +10,7 @@ import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Prompt from './pages/prompt';
 import Tree from './pages/tree';
+import Signup from './pages/signup';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
             <Navbar />
             <Routes>
                 <Route exact path='/' element={<Onboard />} />
+                <Route path='/signup' element={<Signup />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/prompt' element={<Prompt />} />

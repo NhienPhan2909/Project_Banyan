@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import './globals.css';
+import {TextField} from '@mui/material/';
+// import Box from '@mui/material/Box';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { fontSize } from '@mui/system';
 
 class Prompt extends Component {
     state = {
-        data: null
+        prompt: null
     };
 
     componentDidMount() {
@@ -25,11 +31,35 @@ class Prompt extends Component {
 
     render() {
         return (
-            <div className="page">
-                <header className="header">
-                    <h1>Prompt</h1>
-                </header>
-                <div className="express-output">{this.state.data}</div>
+            <div className="PromptContent">
+                <h1 className="PromptTitle">I want to design a project that...</h1>
+                <div className="PromptFormContainer">
+                <div className="PromptForm">
+                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black" } }} id="input-with-username" label="" variant="standard" size='large' fontSize='50px'
+                    InputLabelProps={{
+                        InputLabelProps: {
+                            style: { textAlign:'center', color: "lightgrey", maxHeight: '100px', minHeight: '100px'},
+                        },
+                        style: { textAlign:'center', color: "lightgrey" },
+                    }}
+                    onChange={
+                        x => {
+                            this.state.prompt = x.target.value;
+                        }
+                    }
+                    />
+                </div>
+                <div>
+                <Stack className="continue">
+                    <Button style = {{maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px'}} variant="contained"   
+                        onClick={() => {
+                            alert(this.state.prompt);
+                        }
+                    }>Continue
+                    </Button>
+                </Stack>
+                </div>
+                </div>
             </div>
         );
     }
