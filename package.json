@@ -1,0 +1,23 @@
+{
+  "name": "ai-pm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishaangupta2306/AI-PM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishaangupta2306/AI-PM/issues"
+  },
+  "homepage": "https://github.com/ishaangupta2306/AI-PM#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
