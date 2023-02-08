@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './globals.css';
+import './prompt.css';
 import {TextField} from '@mui/material/';
 // import Box from '@mui/material/Box';
 // import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -32,7 +32,7 @@ class Prompt extends Component {
     render() {
         return (
             <div className="PromptContent">
-                <h1 className="PromptTitle">I want to design a project that...</h1>
+                <h1 className="PromptTitle">Enter your Project Proposal</h1>
                 <div className="PromptFormContainer">
                 <div className="PromptForm">
                     <TextField fullWidth sx={{ input: {textAlign:"center", color: "black" } }} id="input-with-username" label="" variant="standard" size='large' fontSize='50px'

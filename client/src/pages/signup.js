@@ -5,6 +5,8 @@ import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import './auth.css';
+
 
 class Signup extends Component {
     state = {

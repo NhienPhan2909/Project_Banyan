@@ -1,10 +1,10 @@
 import React, { Component, useState } from 'react';
-import './globals.css';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import './auth.css';
 
 class Login extends Component {
     state = {
@@ -16,7 +16,7 @@ class Login extends Component {
         this.state.username = e.target.value;
         console.log(e.target.value);
     }
-      
+    
     changePassword = e => {
         this.state.password = e.target.value;
     }

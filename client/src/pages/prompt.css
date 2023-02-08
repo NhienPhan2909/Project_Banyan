@@ -1,0 +1,43 @@
+.PromptContent {
+    background: linear-gradient(white, #d1a9d0);
+    font-size: calc(10px + 2vmin);
+    color: #000000;
+  }
+
+  .PromptFormContainer {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    text-align: top;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .PromptTitle {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding-top: 100px;
+  }
+  
+  .PromptForm {
+    max-height: 20vh;
+    width: 420px;
+    border-color: #000000;
+    border-radius: 8px;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+    padding-top: 35px;
+     /* padding-bottom: 1px;  */
+  }
+
+  .continue {
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 10px;
+    text-align: center;
+    justify-content: center;
+  }
+  
