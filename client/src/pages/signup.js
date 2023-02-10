@@ -91,8 +91,7 @@ class Signup extends Component {
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
                             onClick={() => {
                               alert(this.state.username + " " + this.state.password + " " + this.state.email);
-                            }}
-                        >
+                            }}>
                           Submit</Button>
                   </Stack>
                   </div>

@@ -7,19 +7,26 @@
     padding-bottom: 20px;
   }
   
-  .Auth-form-title {
+  .dash-form-title {
     text-align: center;
     margin-bottom: 1em;
-    font-size: 30px;
+    font-size: 35px;
     color: rgb(34, 34, 34);
     font-weight: 800;
+    border-bottom: 0.5px solid black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding-bottom: 10px;
   }
 
-  .Auth-form-content {
+  .dash-form-content {
     text-align: center;
     margin-bottom: 1em;
     font-size: 18px;
     color: rgb(34, 34, 34);
+  }
+
+  .NewProjButton {
+    padding-right: 10px;
   }
 
   .authSubmit {
@@ -28,17 +35,18 @@
     align-items: center;
   }
 
-  .form {
-    width: 420px;
+  .dash-form {
+    width: 1000px;
+    height: 700px;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
     padding-bottom: 40px;
     border-radius: 8px;
     background-color: white;
   }
 
-  .form-container {
+  .dash-container {
     display: flex;
-    padding-bottom: 100px;
+    padding-top: 20px;
     justify-content: center;
     align-items: center;
     width: 100vw;

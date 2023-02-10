@@ -1,5 +1,8 @@
+import { Box } from '@mui/material';
 import React, { Component } from 'react';
-import './globals.css';
+import './dashboard.css';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 class Dashboard extends Component {
     state = {
@@ -25,12 +28,23 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div className="page">
-                <header className="header">
-                    <h1>Dashboard</h1>
-                </header>
-                <div className="express-output">{this.state.data}</div>
-            </div>
+            (
+                <div className="dash-container">
+                  <div className="dash-form">
+                      <h3 className="dash-form-title" >My Projects</h3>
+                      <Box display='flex' justifyContent = 'left' paddingLeft='50px' paddingRight='50px'>
+                    <Stack className="NewProjButton">
+                    <Button style = {{fontSize:'40px', maxWidth: '200px', maxHeight: '200px', minWidth: '200px', minHeight: '200px'}} variant='outlined'   
+                        onClick={() => {
+                            alert(this.state.prompt);
+                        }
+                    }>+
+                    </Button>
+                </Stack>
+                  </Box>
+                  </div>
+                </div>
+              )
         );
     }
 }
