@@ -1,39 +1,28 @@
-.inputs {
-    padding-bottom: 40px;
-    padding-right: 20px;
-  }
-  
-  .input {
-    padding-bottom: 20px;
-  }
-
   .dashHeader {
     display: flex;
     justify-content: right;
-
     margin-bottom: 1em;
     font-size: 35px;
     color: rgb(34, 34, 34);
     font-weight: 800;
     border-bottom: 1px solid grey;
     font-family: Arial, Helvetica, sans-serif;
-    padding-bottom: 10px;
   }
 
   .dashHeader h3{
-    padding-right: 350px;
+    padding-right: 310px;
   }
 
-  .dashHeader Button {
-    padding-top: 25px;
-    padding-right: 25px;
+  .projects {
+    display: flex;
+    padding-top: 30px;
+    padding-right: 30px;
   }
-
 
   .startDoc{
     padding-left: 60px;
     padding-bottom: 10px;
-    color: rgb(65, 65, 65);
+    color: rgb(78, 78, 78);
     font-size: 18px;
 
   }
@@ -47,12 +36,6 @@
 
   .NewProjButton {
     padding-right: 10px;
-  }
-
-  .authSubmit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .dash-form {
@@ -71,6 +54,6 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background: rgb(157, 165, 208);
+    background: #9DA5D0;
   }
   
