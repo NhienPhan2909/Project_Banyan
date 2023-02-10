@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import './dashboard.css';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
 
 class Dashboard extends Component {
     state = {
@@ -31,12 +33,21 @@ class Dashboard extends Component {
             (
                 <div className="dash-container">
                   <div className="dash-form">
-                      <h3 className="dash-form-title" >My Projects</h3>
-                      <Box display='flex' justifyContent = 'left' paddingLeft='50px' paddingRight='50px'>
-                    <Stack className="NewProjButton">
-                    <Button style = {{fontSize:'40px', maxWidth: '200px', maxHeight: '200px', minWidth: '200px', minHeight: '200px'}} variant='outlined'   
+                    <div className='dashHeader'>
+                      <h3>My Projects </h3>
+                      <Button style = {{maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px'}} 
                         onClick={() => {
-                            alert(this.state.prompt);
+                            alert("Hi");
+                        }
+                         }><AccountCircle sx={{color:'black', fontSize:'50px'}}/>
+                        </Button>
+                    </div>
+                      <div className='startDoc'>Start a new Project</div>
+                      <Box display='flex' paddingLeft='50px' paddingRight='50px'>
+                    <Stack>
+                    <Button className="NewProjButton" style = {{fontSize:'40px',  maxWidth: '150px', maxHeight: '200px', minWidth: '150px', minHeight: '200px'}} variant='outlined'   
+                        onClick={() => {
+                            alert("Hi");
                         }
                     }>+
                     </Button>
