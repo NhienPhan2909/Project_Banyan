@@ -5,7 +5,6 @@ import {TextField} from '@mui/material/';
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { fontSize } from '@mui/system';
 
 class Prompt extends Component {
     state = {
@@ -35,7 +34,7 @@ class Prompt extends Component {
                 <h1 className="PromptTitle">Enter your Project Proposal</h1>
                 <div className="PromptFormContainer">
                 <div className="PromptForm">
-                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black" } }} id="input-with-username" label="" variant="standard" size='large' fontSize='50px'
+                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black", fontSize: '30px' } }} id="input-with-username" label="" variant="standard" size='large'
                     InputLabelProps={{
                         InputLabelProps: {
                             style: { textAlign:'center', color: "lightgrey", maxHeight: '100px', minHeight: '100px'},
