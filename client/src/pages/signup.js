@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import axios from 'axios';
 import './globals.css';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -8,24 +9,32 @@ import Stack from '@mui/material/Stack';
 import './auth.css';
 
 
-class Signup extends Component {
-    state = {
-        username: null,
-        password: null,
-        email : null, 
-    };
+class Signup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            email: ''
+        };
+    }
     
-    changeUsername = e => {
-        this.state.username = e.target.value;
-        console.log(e.target.value);
+    changeUsername = (event) => {
+        this.setState({
+            username: event.target.value
+        });
     }
-      
-    changePassword = e => {
-        this.state.password = e.target.value;
+
+    changePassword = (event) => {
+        this.setState({
+            password: event.target.value
+        });
     }
-      
-    changeEmail = e => {
-        this.state.email = e.target.value;
+
+    changeEmail = (event) => {
+        this.setState({
+            email: event.target.value
+        });
     }
 
     componentDidMount() {
@@ -44,6 +53,21 @@ class Signup extends Component {
         }
         return body;
     };
+
+    submitForm = async () => {
+        const { username, password, email } = this.state;
+        try {
+            const response = await axios.post('http://localhost:5000/api/register', {
+                username,
+                email,
+                password
+            });
+
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     render() {
           return (
@@ -90,7 +114,8 @@ class Signup extends Component {
                   <Stack>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
                             onClick={() => {
-                              alert(this.state.username + " " + this.state.password + " " + this.state.email);
+                                alert(this.state.username + " " + this.state.password + " " + this.state.email);
+                                this.submitForm();
                             }}>
                           Submit</Button>
                   </Stack>
