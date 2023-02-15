@@ -57,13 +57,12 @@ class Signup extends React.Component {
     submitForm = async () => {
         const { username, password, email } = this.state;
         try {
-            const response = await axios.post('http://localhost:5000/api/register', {
+            const response = await axios.post('http://localhost:11000/api/register', {
                 username,
                 email,
                 password
             });
-
-            console.log(response);
+            return response;
         } catch (error) {
             console.error(error);
         }

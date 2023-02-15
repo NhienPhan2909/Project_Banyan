@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import axios from 'axios';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -38,6 +39,20 @@ class Login extends Component {
         return body;
     };
 
+    login = async () => {
+        try {
+            var username = this.state.username
+            var password = this.state.password
+            const response = await axios.post('http://localhost:11000/api/login', {
+                username,
+                password
+            });
+            return response.json;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     render() {
             return (
               <div className="form-container">
@@ -72,7 +87,8 @@ class Login extends Component {
                     <Stack>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
                             onClick={() => {
-                                alert(this.state.username + " " + this.state.password);
+                                var resp = this.login()
+                                alert(resp.message)
                             }}
                         >Submit
                         </Button>

@@ -1,18 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const SignupRoute = require('./routes/signup')
+const SignupRoute = require('./routes/auth')
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 11000;
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.use(express.json());
+
 app.use(cors())
 
-mongoose.connect('mongodb://127.0.0.1:27017/signupdb', {
+mongoose.connect('mongodb+srv://admin:admin123@cluster0.ozg5hbu.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
+}, err => {
+    if (err) {
+        console.log(err)
+    }
 });
 
 // create a GET route
@@ -20,7 +25,7 @@ app.get('/onboard', (req, res) => {
     res.send({ express: 'onboard page express content' });
 });
 
-app.get('/login', (req, res) => {
+app.get('/logins', (req, res) => {
     res.send({ express: 'login page express content' });
 });
 
