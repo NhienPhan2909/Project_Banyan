@@ -47,7 +47,7 @@ class Login extends Component {
                 username,
                 password
             });
-            return response.json;
+            return response.data;
         } catch (error) {
             console.error(error);
         }
@@ -88,7 +88,7 @@ class Login extends Component {
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
                             onClick={() => {
                                 var resp = this.login()
-                                alert(resp.message)
+                                console.log(resp)
                             }}
                         >Submit
                         </Button>
