@@ -3,7 +3,7 @@ const{MongoClient} = require('mongodb')
 
 let dbConnection
 // Connect to local database
-// let URI = 'mongodb://127.0.0.1:27017/PM_AI'
+//let URI = 'mongodb://127.0.0.1:27017/PM_AI'
 // Connect to Mongo Atlast database
 let URI = 'mongodb+srv://admin:admin123@cluster0.ozg5hbu.mongodb.net/?retryWrites=true&w=majority'
 
