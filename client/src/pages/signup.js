@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import './globals.css';
 import {TextField} from '@mui/material';
@@ -15,7 +15,8 @@ class Signup extends React.Component {
         this.state = {
             username: '',
             password: '',
-            email: ''
+            email: '',
+            signinStatus: null
         };
     }
     
@@ -54,6 +55,10 @@ class Signup extends React.Component {
         return body;
     };
 
+    displayErrorMessage = () => {
+            return <Box display='flex' justifyContent='center' color='red'  alignItems='center'>Your username or email is associated with another account</Box>
+    }
+
     submitForm = async () => {
         const { username, password, email } = this.state;
         try {
@@ -62,7 +67,13 @@ class Signup extends React.Component {
                 email,
                 password
             });
-            return response;
+            console.log(response)
+            if (response.status === 200) {
+                 window.location.href = '/prompt';
+             }
+             this.setState({signinStatus: response.status})
+             console.log(response);
+            return response.status;
         } catch (error) {
             console.error(error);
         }
@@ -70,6 +81,7 @@ class Signup extends React.Component {
 
     render() {
           return (
+            <div>
             <div className="form-container">
               <form className="form">
                 <div className="Auth-form-content">
@@ -113,8 +125,7 @@ class Signup extends React.Component {
                   <Stack>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
                             onClick={() => {
-                                alert(this.state.username + " " + this.state.password + " " + this.state.email);
-                                this.submitForm();
+                                var resp = this.submitForm();
                             }}>
                           Submit</Button>
                   </Stack>
@@ -124,6 +135,12 @@ class Signup extends React.Component {
                   </p>
                 </div>
               </form>
+            </div>
+            {this.state.signinStatus !== 200 && this.state.signinStatus !== null && (
+            <div>
+            {this.displayErrorMessage()}
+            </div>
+            )}
             </div>
           )
     }

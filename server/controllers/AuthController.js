@@ -59,6 +59,7 @@ const register = (req, res, next) => {
             });
         });
     });
+    return res.status(200).send('User successfully created');
 }
 
 const login = (req, res, next) => {
@@ -74,9 +75,11 @@ const login = (req, res, next) => {
         else if (!bcrypt.compareSync(password, user.password)) {
             return res.status(401).send({ msg: 'Wrong Password!' });
         }
+        /*
         else if (!user.active) {
             return res.status(401).send({ msg: 'Your Email has not been verified. Please click on resend' });
         } 
+        */
         else {
             return res.status(200).send('User successfully logged in.');
         }

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -9,18 +9,27 @@ import './auth.css';
 
 class Login extends Component {
     state = {
-        username: null,
-        password: null,
+        username: '',
+        password: '',
+        loginStatus: null
     };
     
-    changeUsername = e => {
-        this.state.username = e.target.value;
-        console.log(e.target.value);
+    changeUsername = (event) => {
+        this.setState({
+            username: event.target.value
+        });
+    }
+
+    changePassword = (event) => {
+        this.setState({
+            password: event.target.value
+        });
+    }
+
+    displayErrorMessage = () => {
+        return <Box display='flex' justifyContent='center' color='red'  alignItems='center' margin-top='10px'>Please check your login credentials</Box>
     }
     
-    changePassword = e => {
-        this.state.password = e.target.value;
-    }
 
     componentDidMount() {
         this.callBackendAPI()
@@ -47,14 +56,20 @@ class Login extends Component {
                 username,
                 password
             });
-            return response.data;
+            if (response.status === 200) {
+                 window.location.href = '/dashboard';
+            }
+            this.setState({ loginStatus: response.status });
+            return response.status
         } catch (error) {
+            //this.setState({loginStatus: response.status})
             console.error(error);
         }
     }
 
     render() {
             return (
+                <div>
               <div className="form-container">
                 <form className="form">
                   <div className="Auth-form-content">
@@ -86,9 +101,8 @@ class Login extends Component {
                     <div className="authSubmit">
                     <Stack>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
-                            onClick={() => {
-                                var resp = this.login()
-                                console.log(resp)
+                            onClick={async () => {
+                                var message = await this.login()
                             }}
                         >Submit
                         </Button>
@@ -99,6 +113,12 @@ class Login extends Component {
                     </p>
                   </div>
                 </form>
+              </div>
+              {this.state.loginStatus !== 200 && this.state.loginStatus !== null && (
+                <div>
+                {this.displayErrorMessage()}
+                </div>
+                )}
               </div>
             )
           }
