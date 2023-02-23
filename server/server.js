@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const SignupRoute = require('./routes/auth')
+const { router, auth } = require('./routes/auth')
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 11000;
@@ -45,5 +45,9 @@ app.get('/tree', (req, res) => {
     res.send({ express: 'tree page express content' });
 });
 
+app.get('/protected', auth, (req, res) => {
+    res.send('This is a protected route.');
+});
+
 // POST
-app.use('/api', SignupRoute)
+app.use('/api', router)
