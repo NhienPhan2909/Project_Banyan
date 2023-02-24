@@ -58,7 +58,7 @@ const register = (req, res, next) => {
                 var mailOptions = { 
                     from: 'aipmshared@gmail.com', 
                     to: user.email, subject: 'Account Verification Link', 
-                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
+                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
                 };
                 transporter.sendMail(mailOptions, function (err) {
                     if (err) {
@@ -71,7 +71,7 @@ const register = (req, res, next) => {
         });
     });
    // return res.status(200).send('User successfully created');
-}
+};
 
 const login = (req, res, next) => {
     var username = req.body.username
@@ -98,6 +98,49 @@ const login = (req, res, next) => {
     }); 
 }
 
+const verify = (req, res) => {
+    var token = req.query.token;
+    if (token) {
+        try {
+            Token.findOne({ token: token }, function (err, token) {
+                if (err) {
+                    return res.status(500).send({ msg: err.message });
+                }
+                // if token exists in database i.e. tokem is associated with a user.
+                else if (token) {
+                    userId = token._userId
+                    User.findOne({ _id: userId }, function (err, user) {
+                        if (err) {
+                            return restart.status(500).send({ msg: err.message });
+                        }
+                        else if (user) {
+                            user.active = true;
+                            user.save((err) => {
+                                if (err) {
+                                  console.log(err);
+                                  return;
+                                }
+                                
+                                console.log('User is now verified!');
+                                return res.status(200).send({ msg: 'User successfully verified'});
+                              });
+                        }
+                    });
+                }
+                else {
+                    return res.status(400).send({ msg: 'This token does not have a corresponding account.' });
+                }
+            });
+        } catch (err) {
+
+            console.log(err)
+            return res.sendStatus(403)
+        }
+    } else {
+        return res.sendStatus(403);
+    }
+};
+
 module.exports = {
-    register, login
+    register, login, verify
 }

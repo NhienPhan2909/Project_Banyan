@@ -7,10 +7,11 @@ const router = express.Router();
 router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
 
+router.get('/verify', AuthController.verify)
+
 const auth = (req, res, next) => {
     // Get token from header
     const token = req.header('Authorization');
-
     // Check if token exists
     if (!token) {
         return res.status(401).json({ msg: 'No token, authorization denied' });

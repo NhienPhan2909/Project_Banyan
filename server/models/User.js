@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     },
     active: {
         type: Boolean,
-        default: true //TODO: Switch to false
+        default: false
     },
     date: {
         type: Date,
