@@ -67,11 +67,9 @@ class Signup extends React.Component {
                 email,
                 password
             });
-            console.log(response)
             if (response.status === 200) {
                  window.location.href = '/prompt';
              }
-             console.log(response);
             return response.status;
         } catch (error) {
             console.error(error);
@@ -123,8 +121,8 @@ class Signup extends React.Component {
                   <div className="authSubmit">
                   <Stack>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
-                            onClick={() => {
-                                var resp = this.submitForm();
+                            onClick={async () => {
+                                var resp = await this.submitForm()
                                 this.setState({signinStatus: resp})
                             }}>
                           Submit</Button>
