@@ -71,7 +71,6 @@ class Signup extends React.Component {
             if (response.status === 200) {
                  window.location.href = '/prompt';
              }
-             this.setState({signinStatus: response.status})
              console.log(response);
             return response.status;
         } catch (error) {
@@ -126,6 +125,7 @@ class Signup extends React.Component {
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
                             onClick={() => {
                                 var resp = this.submitForm();
+                                this.setState({signinStatus: resp})
                             }}>
                           Submit</Button>
                   </Stack>
