@@ -58,7 +58,7 @@ const register = (req, res, next) => {
                 var mailOptions = { 
                     from: 'aipmshared@gmail.com', 
                     to: user.email, subject: 'Account Verification Link', 
-                    text: 'Hello ' + req.body.name + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
+                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token.token + '\n\nThank You!\n' 
                 };
                 transporter.sendMail(mailOptions, function (err) {
                     if (err) {
