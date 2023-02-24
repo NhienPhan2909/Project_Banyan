@@ -11,6 +11,7 @@ import Dashboard from './pages/dashboard';
 import Prompt from './pages/prompt';
 import Tree from './pages/tree';
 import Signup from './pages/signup';
+import Verify from './pages/verify';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/prompt' element={<Prompt />} />
                 <Route path='/tree' element={<Tree />} />
+                <Route path='/api/verify' element={<Verify />} />
             </Routes>
         </Router>
     );
