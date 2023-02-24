@@ -59,10 +59,8 @@ class Login extends Component {
             if (response.status === 200) {
                  window.location.href = '/dashboard';
             }
-            this.setState({ loginStatus: response.status });
             return response.status
         } catch (error) {
-            //this.setState({loginStatus: response.status})
             console.error(error);
         }
     }
@@ -103,6 +101,7 @@ class Login extends Component {
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
                             onClick={async () => {
                                 var message = await this.login()
+                                this.setState({ loginStatus: message });
                             }}
                         >Submit
                         </Button>
