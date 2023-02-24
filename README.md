@@ -2,6 +2,6 @@
 
 ### Usage
 
-in one shell: `node server/index.js`
+in one shell: `node server/server.js`
 in another shell: `cd client && npm start`
 

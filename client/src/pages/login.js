@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import axios from 'axios';
 import {TextField} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -6,6 +6,16 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import './auth.css';
+
+const setAuthToken = (token) => {
+    if (token) {
+        localStorage.setItem('jwtToken', token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+        localStorage.removeItem('jwtToken');
+        delete axios.defaults.headers.common['Authorization'];
+    }
+};
 
 class Login extends Component {
     state = {
@@ -56,8 +66,13 @@ class Login extends Component {
                 username,
                 password
             });
+
+            console.log(response);
+            const token = response.data.token;
+            setAuthToken(token);
+
             if (response.status === 200) {
-                 window.location.href = '/dashboard';
+                window.location.href = '/dashboard';
             }
             return response.status
         } catch (error) {
