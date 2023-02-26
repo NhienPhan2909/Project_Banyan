@@ -17,7 +17,7 @@ const customNode = ({
   setAnchor,
   setOptions,
 }) => (
-  <g>
+  <g fill={getColor(nodeDatum)}>
     <rect
       width="20"
       height="20"
@@ -30,9 +30,12 @@ const customNode = ({
       }
     />
 
-    <text fill="black" strokeWidth="0" x="20">
+    <foreignObject x="" y="-100" width="500" height="200">
+      <h2 style={{ color: "black" }}>{nodeDatum.name}</h2>
+    </foreignObject>
+    {/* <text fill="black" strokeWidth="0" x="20">
       {nodeDatum.name}
-    </text>
+    </text> */}
     {nodeDatum.attributes?.prompt && (
       // <text
       //   fill="white"
@@ -47,7 +50,9 @@ const customNode = ({
       //   {nodeDatum.attributes?.prompt}
       // </text>
       <foreignObject x="20" y="20" width="800" height="1000">
-        <textbox>{nodeDatum.attributes?.prompt}</textbox>
+        <textbox style={{ color: "black" }}>
+          {nodeDatum.attributes?.prompt}
+        </textbox>
       </foreignObject>
     )}
   </g>
@@ -58,6 +63,10 @@ const wrappedText = (text) => {
 
   for (let i = 0; i < split.length; i += 5) {}
   return text;
+};
+
+const getColor = (data) => {
+  return data?.attributes?.type === "Epic" ? "blue" : "green";
 };
 
 const nodeClicked = (nodeDatum, toggleNode, setSelected) => {
@@ -110,7 +119,7 @@ export default function PMTree({
           width: (window.innerWidth / 2) * 1.6,
           height: (window.innerHeight / 2) * 1.4,
         }}
-        depthFactor={200}
+        depthFactor={400}
         onNodeClick={(data) => {
           nodeClicked(data, setSelected);
         }}

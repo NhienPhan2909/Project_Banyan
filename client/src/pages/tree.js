@@ -28,7 +28,9 @@ class Tree extends Component {
       <div className="page">
         <header className="header">
           <h1>Tree</h1>
-          <Dashboard></Dashboard>
+          <div style={{ backgroundColor: "white" }}>
+            <Dashboard></Dashboard>
+          </div>
         </header>
         <div className="express-output">{this.state.data}</div>
       </div>
