@@ -9,7 +9,7 @@ const router = express.Router();
 app.use(express.json());
 app.use(cors())
 
-router.post('/add', RootController.addRoot)
+router.post('/add_root', RootController.addRoot)
 router.get('/:root_id', RootController.findRoot)
 router.patch('/update/:root_id', RootController.updateRoot)
 router.delete('/delete/:root_id', RootController.deleteRoot)

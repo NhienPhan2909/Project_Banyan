@@ -4,6 +4,8 @@ const { router, auth } = require('./routes/auth');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 11000;
+const prompt = require('./prompt.js');
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
@@ -38,6 +40,14 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/prompt', (req, res) => {
+    const prompt_epic_stories = {
+        root_id: 1,
+        node_id: 1,
+        name: "Design e-commerce website",
+      };
+      
+      prompt.initiatePrompt(prompt_epic_stories)
+      
     res.send({ express: 'prompt page express content' });
 });
 

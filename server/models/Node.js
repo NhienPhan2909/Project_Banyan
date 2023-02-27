@@ -18,6 +18,10 @@ const NodeSchema = new Schema({
     content: {
         type: String,
         default: null
+    },
+    agile_scope: {
+        type: String,
+        default: null
     }
 });
 
