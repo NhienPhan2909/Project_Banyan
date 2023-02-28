@@ -7,6 +7,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import './auth.css';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 class Signup extends React.Component {
@@ -16,10 +18,14 @@ class Signup extends React.Component {
             username: '',
             password: '',
             email: '',
-            signinStatus: null
+            signinStatus: null,
+            showPassword: false,
         };
     }
     
+    toggleShowPassword = () => {
+        this.setState({ showPassword: !this.state.showPassword });
+    }
     changeUsername = (event) => {
         this.setState({
             username: event.target.value
@@ -87,7 +93,7 @@ class Signup extends React.Component {
                   <div className="form-group mt-3">
                 <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white'}}>
                   <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
-                  <TextField className = 'usernameField' sx={{ input: { color: 'black' } }} id="input-with-username" label="Username" variant="standard"
+                  <TextField className = 'usernameField' sx={{ input: { color: 'black'}, width: '180px' }} id="input-with-username" label="Username" variant="standard"
                     InputLabelProps={{
                         style: { color: "lightgrey" },
                     }}
@@ -98,18 +104,32 @@ class Signup extends React.Component {
                   <div className="form-group mt-3">
                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white'}}>
                         <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
-                        <TextField className = 'usernameField' sx={{ input: { color: 'black' } }} id="input-with-username" label="Password" variant="standard"
+                        <TextField className = 'usernameField' type={this.state.showPassword ? 'text' : 'password'} sx={{ input: { color: 'black' }, width: '180px'}} id="input-with-username" label="Password" variant="standard"
                             InputLabelProps={{
                              style: { color: "lightgrey" },
                             }}
                             onChange={this.changePassword}
+                            InputProps={{
+                                // add an InputAdornment with a IconButton that toggles the showPassword state
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={this.toggleShowPassword}
+                                            edge="end"
+                                        >
+                                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                     </Box>
                   </div>
                   <div className="form-group mt-3">
                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white'}}>
                         <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
-                        <TextField className = 'usernameField' sx={{ input: { color: 'black' } }} id="input-with-username" label="Email" variant="standard"
+                        <TextField className = 'usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Email" variant="standard"
                             InputLabelProps={{
                                 style: { color: "lightgrey" },
                             }}
