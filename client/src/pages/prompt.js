@@ -34,7 +34,7 @@ class Prompt extends Component {
                 <h1 className="PromptTitle">Enter your Project Proposal</h1>
                 <div className="PromptFormContainer">
                 <div className="PromptForm">
-                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black", fontSize: '30px' } }} id="input-with-username" label="" variant="standard" size='large'
+                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black", fontSize: '20px' } }} id="input-with-username" label="" variant="standard" size='large'
                     InputLabelProps={{
                         InputLabelProps: {
                             style: { textAlign:'center', color: "lightgrey", maxHeight: '100px', minHeight: '100px'},
