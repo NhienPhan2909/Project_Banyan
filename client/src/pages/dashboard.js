@@ -13,7 +13,8 @@ class Dashboard extends Component {
     state = {
         displayNumProjectError: false,
         anchorEl: null,
-        deleteMode: false
+        deleteMode: false, 
+        roots: null
       };
 
       handlePopoverOpen = (event) => {
@@ -61,7 +62,7 @@ class Dashboard extends Component {
                 }
             }>+
             </Button>
-            {this.state.roots && this.state.roots.map( root => (
+            {this.state.roots.length && this.state.roots.map( root => (
                 <Button className="project-button" sx={{backgroundColor: '#fffff8'}} key={root._id} variant='outlined'   
                     onClick={() => {
                         window.location.href = '/tree/' + root._id;
