@@ -1,4 +1,4 @@
-const Root = require('../models/Root');
+const Project = require('../models/Project');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
@@ -11,43 +11,43 @@ mongoose.set('strictQuery', false);
     });
 }*/
 
-const getDashboardRoots = (req, res, next) => {
+const getProjects = (req, res, next) => {
     var token = req.body.token;
     // get user id from token
     var user = jwt.verify(token, 'your_secret_key_here').userId;
 
-    Root.find({ _userId: user }, function(err, roots) {
+    Project.find({ _userId: user }, function(err, projects) {
         if (err) {
             return res.status(500).send({ msg: err.message });
         }
-        else if (!roots) {
+        else if (!project) {
             return res.status(400).send({ msg: 'User has no projects.' });
         }
 
-        res.status(200).json({ roots });
+        res.status(200).json({ project });
     })
 }
 
-const addRoot = (req, res, next) => {
+const addProject = (req, res, next) => {
     let root = new Root(req.body);
     root.save().then(doc => {res.status(200).json({'Root': 'Root added'});})
         .catch(err => {res.status(400).send('Error adding new Root');});
 }
 
-const updateRoot = (req, res, next) => {
+const updateProject = (req, res, next) => {
     const updates = req.body
-    Root.findOneAndUpdate({root_id: parseInt(req.params.root_id)}, {$set: updates})
+    Project.findOneAndUpdate({root_id: parseInt(req.params.root_id)}, {$set: updates})
         .then(result => {res.status(200).json(result)})
         .catch(err => {res.status(400).send('Could not update the root')});
 }
 
-const deleteRoot = (req, res, next) => {
-    Root.deleteOne({root_id: parseInt(req.params.root_id)}, function(err, root) {
+const deleteProject = (req, res, next) => {
+    Project.deleteOne({root_id: parseInt(req.params.root_id)}, function(err, root) {
         if(err) res.json(err);
         else res.json('Root removed');
     });
 }
 
 module.exports = {
-    /*findRoot,*/ getDashboardRoots, addRoot, updateRoot, deleteRoot
+    /*findRoot,*/ getProjects, addProject, updateProject, deleteProject
 }

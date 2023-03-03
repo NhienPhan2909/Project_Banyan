@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { router, auth } = require('./routes/auth');
-const rootrouter = require('./routes/rootoftree');
+const projectrouter = require('./routes/project');
 
 const cors = require('cors');
 const app = express();
@@ -63,4 +63,4 @@ app.get('/protected', auth, (req, res) => {
 
 // POST
 app.use('/api', router);
-app.use('/root', rootrouter);
+app.use('/projects', projectrouter);
