@@ -63,9 +63,10 @@ class Dashboard extends Component {
             }>+
             </Button>
             {this.state.roots.length && this.state.roots.map( root => (
-                <Button className="project-button" sx={{backgroundColor: '#fffff8'}} key={root._id} variant='outlined'   
+                <Button className="project-button" id='projects' sx={{backgroundColor: '#fffff8'}} key={root._id} variant='outlined'   
                     onClick={() => {
-                        window.location.href = '/tree/' + root._id;
+                        //window.location.href = '/tree/' + root._id;
+                        console.log(document.getElementById("alexProj").style)
                     }}
                 >{root.name}</Button>
             ))}
