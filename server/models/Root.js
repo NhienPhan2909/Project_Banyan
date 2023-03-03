@@ -1,18 +1,18 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RootSchema = new Schema({
-    root_id: {
-        type: Number,
-        required: true,
-        unique: true
-    },
-    node_id: {
-        type: Number,
+    _node_Id: { // id of the root node for this tree
+        type: mongoose.ObjectId,
         required: true
     },
     name: {
         type: String,
+        required: true
+    },
+    _userId: {
+        type: mongoose.ObjectId,
         required: true
     }
 });

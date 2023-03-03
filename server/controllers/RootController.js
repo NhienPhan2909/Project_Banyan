@@ -1,24 +1,31 @@
-const express = require('express');
 const Root = require('../models/Root');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const {ObjectId} = require('mongodb')
-const {connectToDb, getDb, URI} = require('../routes/db')
-const cors = require('cors');
 
 mongoose.set('strictQuery', false);
-const app = express();
-app.use(express.json());
-app.use(cors())
 
-mongoose.connect(URI, { useNewUrlParser: true });
-const connection = mongoose.connection;
- 
-connection.once('open', function() {
-    console.log("MongoDB connection established.");
-})
+/*const findRoot = (req, res, next) => {
 
-const findRoot = (req, res, next) => {
-    Root.findOne({root_id: parseInt(req.params.root_id)}, function(err, root) {res.json(root);});
+    Root.findOne( )}, function(err, root) { 
+        res.json(root); 
+    });
+}*/
+
+const getDashboardRoots = (req, res, next) => {
+    var token = req.body.token;
+    // get user id from token
+    var user = jwt.verify(token, 'your_secret_key_here').userId;
+
+    Root.find({ _userId: user }, function(err, roots) {
+        if (err) {
+            return res.status(500).send({ msg: err.message });
+        }
+        else if (!roots) {
+            return res.status(400).send({ msg: 'User has no projects.' });
+        }
+
+        res.status(200).json({ roots });
+    })
 }
 
 const addRoot = (req, res, next) => {
@@ -42,5 +49,5 @@ const deleteRoot = (req, res, next) => {
 }
 
 module.exports = {
-    findRoot, addRoot, updateRoot, deleteRoot
+    /*findRoot,*/ getDashboardRoots, addRoot, updateRoot, deleteRoot
 }

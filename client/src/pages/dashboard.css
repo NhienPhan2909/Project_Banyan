@@ -1,60 +1,68 @@
-  .dashHeader {
-    display: flex;
-    justify-content: right;
-    margin-bottom: 1em;
-    font-size: 35px;
-    color: rgb(34, 34, 34);
-    font-weight: 800;
-    border-bottom: 1px solid grey;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+.dashHeader {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 1em;
+  font-size: 35px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+  border-bottom: 1px solid grey;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-  .dashHeader h3{
-    padding-right: 310px;
-  }
+.dashHeader h3 {
+  padding-right: 310px;
+}
 
-  .projects {
-    display: flex;
-    padding-top: 30px;
-    padding-right: 30px;
-  }
+.projects {
+  display: flex;
+  padding-top: 30px;
+  padding-right: 30px;
+}
 
-  .startDoc{
-    padding-left: 60px;
-    padding-bottom: 10px;
-    color: rgb(78, 78, 78);
-    font-size: 18px;
+.startDoc {
+  padding-left: 60px;
+  padding-bottom: 10px;
+  color: rgb(78, 78, 78);
+  font-size: 18px;
 
-  }
+}
 
-  .dash-form-content {
-    text-align: center;
-    margin-bottom: 1em;
-    font-size: 18px;
-    color: rgb(34, 34, 34);
-  }
+.dash-form-content {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 18px;
+  color: rgb(34, 34, 34);
+}
 
-  .NewProjButton {
-    padding-right: 10px;
-  }
+.dash-form {
+  width: 1000px;
+  height: 700px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-bottom: 40px;
+  border-radius: 8px;
+  background-color: white;
+}
 
-  .dash-form {
-    width: 1000px;
-    height: 700px;
-    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-    padding-bottom: 40px;
-    border-radius: 8px;
-    background-color: white;
-  }
+.dash-container {
+  display: flex;
+  padding-top: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: #9DA5D0;
+}
 
-  .dash-container {
-    display: flex;
-    padding-top: 20px;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background: #9DA5D0;
-  }
-
+.project-button {
+  font-size: 18px;
+  /*color: 'black';*/
+  max-width: 150px;
+  max-height: 200px;
+  min-width: 150px;
+  min-height: 200px;
+  padding-right: 20px;
+}
   
+#NewProjButton {
+  font-size: 60px; 
+}
