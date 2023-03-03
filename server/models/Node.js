@@ -2,13 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const NodeSchema = new Schema({
-    node_id: {
-        type: Number,
-        required: true,
-        unique: true
-    },
     parent_id: {
-        type: Number,
+        type: mongoose.ObjectId,
         required: true
     },
     child_id_list: {

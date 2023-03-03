@@ -8,7 +8,6 @@ router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
 router.post('/verify', AuthController.verify)
 
-
 const auth = (req, res, next) => {
     // Get token from header
     const token = req.header('Authorization');
