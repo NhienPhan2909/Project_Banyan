@@ -27,7 +27,6 @@ class Tree extends Component {
     return (
       <div className="page">
         <header className="header">
-          <h1>Tree</h1>
           <div style={{ backgroundColor: "white" }}>
             <Dashboard></Dashboard>
           </div>
