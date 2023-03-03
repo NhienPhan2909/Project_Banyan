@@ -14,7 +14,7 @@ class Dashboard extends Component {
         displayNumProjectError: false,
         anchorEl: null,
         deleteMode: false, 
-        roots: null
+        roots: []
       };
 
       handlePopoverOpen = (event) => {
