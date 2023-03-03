@@ -1,9 +1,8 @@
-const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const RootSchema = new Schema({
-    _node_Id: { // id of the root node for this tree
+const ProjectSchema = new Schema({
+    _rootId: { // id of the root node for this tree
         type: mongoose.ObjectId,
         required: true
     },
@@ -17,4 +16,4 @@ const RootSchema = new Schema({
     }
 });
 
-module.exports = Root = mongoose.model('root', RootSchema);
+module.exports = Project = mongoose.model('project', ProjectSchema);

@@ -14,7 +14,7 @@ class Dashboard extends Component {
         displayNumProjectError: false,
         anchorEl: null,
         deleteMode: false, 
-        roots: []
+        projects: []
       };
 
       handlePopoverOpen = (event) => {
@@ -40,20 +40,20 @@ class Dashboard extends Component {
         // get token string (hashed)
         var token = localStorage.getItem('jwtToken');
         
-        const response = await axios.post('http://localhost:11000/root/dashboard', {
+        const response = await axios.post('http://localhost:11000/projects/dashboard', {
             token
         });
 
-        this.setState({ roots: response.data.roots });
+        this.setState({ projects: response.data.projects });
     }
 
     generateProjects = () => {
-        // need onclick function bringing user to respective tree (call filltree on respective root)
+        // need onclick function bringing user to respective tree (call filltree on respective project)
         return <Box display='flex' paddingLeft='50px' paddingRight='50px'>
         <Stack  direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
             <Button className="project-button" id="NewProjButton" variant='outlined'   
                 onClick={() => {
-                    if(this.state.roots.length > 4) {
+                    if(this.state.projects.length > 4) {
                         this.setState({displayNumProjectError: true})
                     }
                     else {
@@ -62,13 +62,12 @@ class Dashboard extends Component {
                 }
             }>+
             </Button>
-            {this.state.roots.length && this.state.roots.map( root => (
-                <Button className="project-button" id='projects' sx={{backgroundColor: '#fffff8'}} key={root._id} variant='outlined'   
+            {this.state.projects.length && this.state.projects.map( project => (
+                <Button className="project-button" sx={{backgroundColor: '#fffff8'}} key={project._id} variant='outlined'   
                     onClick={() => {
-                        //window.location.href = '/tree/' + root._id;
-                        console.log(document.getElementById("alexProj").style)
+                        window.location.href = '/tree/' + project._id;
                     }}
-                >{root.name}</Button>
+                >{project.name}</Button>
             ))}
         </Stack>
         </Box>

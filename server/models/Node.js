@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const NodeSchema = new Schema({
-    parent_id: {
+    _parentId: {
         type: mongoose.ObjectId,
-        required: true
+        default: null
     },
-    child_id_list: {
+    _childIdList: {
         type: Array,
         default: null
     },
