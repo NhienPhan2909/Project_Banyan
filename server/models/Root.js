@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RootSchema = new Schema({
-    _node_Id: { // id of the root node for this tree
+    _nodeId: { // id of the root node for this tree
         type: mongoose.ObjectId,
         required: true
     },
