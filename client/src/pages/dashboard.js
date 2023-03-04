@@ -14,7 +14,7 @@ class Dashboard extends Component {
         displayNumProjectError: false,
         anchorEl: null,
         deleteMode: false, 
-        roots: []
+        projects: []
       };
 
       handlePopoverOpen = (event) => {
@@ -39,21 +39,24 @@ class Dashboard extends Component {
     getRoots = async () => {
         // get token string (hashed)
         var token = localStorage.getItem('jwtToken');
+        if (typeof token !== "string") {
+          console.log("Not string");
+        }
         
-        const response = await axios.post('http://localhost:11000/root/dashboard', {
+        const response = await axios.post('http://localhost:11000/projects/dashboard', {
             token
         });
 
-        this.setState({ roots: response.data.roots });
+        this.setState({ projects: response.data.projects });
     }
 
     generateProjects = () => {
-        // need onclick function bringing user to respective tree (call filltree on respective root)
+        // need onclick function bringing user to respective tree (call filltree on respective project)
         return <Box display='flex' paddingLeft='50px' paddingRight='50px'>
         <Stack  direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
             <Button className="project-button" id="NewProjButton" variant='outlined'   
                 onClick={() => {
-                    if(this.state.roots.length > 4) {
+                    if(this.state.projects.length > 4) {
                         this.setState({displayNumProjectError: true})
                     }
                     else {
@@ -62,12 +65,12 @@ class Dashboard extends Component {
                 }
             }>+
             </Button>
-            {this.state.roots.length && this.state.roots.map( root => (
-                <Button className="project-button" sx={{backgroundColor: '#fffff8'}} key={root._id} variant='outlined'   
+            {this.state.projects.length && this.state.projects.map( project => (
+                <Button className="project-button" id='projects' sx={{backgroundColor: '#fffff8'}} key={project._id} variant='outlined'   
                     onClick={() => {
-                        window.location.href = '/tree/' + root._id;
+                        window.location.href = '/tree/' + project._id;
                     }}
-                >{root.name}</Button>
+                >{project.name}</Button>
             ))}
         </Stack>
         </Box>
@@ -91,13 +94,15 @@ class Dashboard extends Component {
             <div className="dash-form">
               <div className='dashHeader'>
                 <h3>My Projects</h3>
-                <Stack className='projects' direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} display='flex'>
-                  <Button 
+                <Box paddingTop={'35px'}>
+                <Button 
                     style={{ maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }} 
                     onClick={this.handlePopoverOpen}
                   >
                     <SettingsIcon sx={{ color: 'black', fontSize: '50px' }} />
                   </Button>
+                  </Box>
+                <Stack className='projects' direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} display='flex'>
                   <Popover
                     open={open}
                     anchorEl={anchorEl}
