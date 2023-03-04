@@ -34,7 +34,29 @@ const projectPrompt = async (req, res, next) => {
 
     const completedText = response.choices[0].text;
 
-    const text = extractEpicsAndStories(completedText)
+    const jsonText = extractEpicsAndStories(completedText)
 
-    return res.status(200).send(text);
+    return res.status(200).send(jsonText)
 };
+
+function extractEpicsAndStories (responseText) {
+    const text = responseText
+    const json = { epics: [] };
+    let currentEpic = null;
+    let currentStory = null;
+
+    for (const line of text.split('\n')) {
+    if (line.startsWith('Epic ')) {
+        const epicName = line.substring(6).trim();
+        currentEpic = { name: epicName, stories: [] };
+        json.epics.push(currentEpic);
+    } else if (line.startsWith('User Story ')) {
+        const storyName = line.substring(11).trim();
+        currentStory = { name: storyName };
+        currentEpic.stories.push(currentStory);
+    }
+    }
+    json = JSON.stringify(json, null, 2)
+    console.log(json);
+    return json
+}
