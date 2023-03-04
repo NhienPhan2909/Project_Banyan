@@ -3,10 +3,12 @@ const ProjectController = require('../controllers/ProjectController');
 
 const router = express.Router();
 
-router.post('/add_root', ProjectController.addProject)
-//router.post('/:root_id', ProjectController.findProject)
-router.post('/dashboard', ProjectController.getProjects)
-router.post('/update/:root_id', ProjectController.updateProject)
-router.post('/delete/:root_id', ProjectController.deleteProject)
+router.post('/add_project', ProjectController.addProject)
+router.get('/:id', ProjectController.findOneProject)
+router.get('/dashboard', ProjectController.getAllProjects)
+// Test with no verification step
+//router.get('/dashboard/:userId', ProjectController.getAllProjects)
+router.patch('/update/:id', ProjectController.updateProject)
+router.delete('/delete/:id', ProjectController.deleteProject)
 
 module.exports = router;

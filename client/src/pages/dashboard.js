@@ -39,6 +39,9 @@ class Dashboard extends Component {
     getRoots = async () => {
         // get token string (hashed)
         var token = localStorage.getItem('jwtToken');
+        if (typeof token !== "string") {
+          console.log("Not string");
+        }
         
         const response = await axios.post('http://localhost:11000/projects/dashboard', {
             token
@@ -63,7 +66,7 @@ class Dashboard extends Component {
             }>+
             </Button>
             {this.state.projects.length && this.state.projects.map( project => (
-                <Button className="project-button" sx={{backgroundColor: '#fffff8'}} key={project._id} variant='outlined'   
+                <Button className="project-button" id='projects' sx={{backgroundColor: '#fffff8'}} key={project._id} variant='outlined'   
                     onClick={() => {
                         window.location.href = '/tree/' + project._id;
                     }}
