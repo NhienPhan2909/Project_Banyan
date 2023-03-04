@@ -94,13 +94,15 @@ class Dashboard extends Component {
             <div className="dash-form">
               <div className='dashHeader'>
                 <h3>My Projects</h3>
-                <Stack className='projects' direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} display='flex'>
-                  <Button 
+                <Box paddingTop={'35px'}>
+                <Button 
                     style={{ maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }} 
                     onClick={this.handlePopoverOpen}
                   >
                     <SettingsIcon sx={{ color: 'black', fontSize: '50px' }} />
                   </Button>
+                  </Box>
+                <Stack className='projects' direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} display='flex'>
                   <Popover
                     open={open}
                     anchorEl={anchorEl}
