@@ -30,10 +30,10 @@ function initiatePrompt(data){
 
 module.exports = {initiatePrompt};
 
-// const prompt_epic_stories = {
-//   root_id: 1,
-//   node_id: 1,
-//   name: "Design e-commerce website",
-// };
+const prompt_epic_stories = {
+  root_id: 1,
+  node_id: 1,
+  name: "Design e-commerce website",
+};
 
-// initiatePrompt(prompt_epic_stories)
+initiatePrompt(prompt_epic_stories)
