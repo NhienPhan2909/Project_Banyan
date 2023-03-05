@@ -32,6 +32,7 @@ class Dashboard extends Component {
       };
       
       handleLogout = () => {
+        localStorage.setItem("jwtToken", "");
         window.location.href = '/login';
         this.handlePopoverClose();
       };
