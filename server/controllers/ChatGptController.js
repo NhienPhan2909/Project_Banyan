@@ -65,6 +65,28 @@ const projectPrompt = async (req, res, next) => {
     return res.status(200).send(jsonText)
 };
 
+function extractText (responseText) {
+    const text = responseText
+    const json = { epics: [] };
+    let currentEpic = null;
+    let currentStory = null;
+
+    for (const line of text.split('\n')) {
+    if (line.startsWith('Epic ')) {
+        const epicName = line.substring(6).trim();
+        currentEpic = { name: epicName, stories: [] };
+        json.epics.push(currentEpic);
+    } else if (line.startsWith('User Story ')) {
+        const storyName = line.substring(11).trim();
+        currentStory = { name: storyName };
+        currentEpic.stories.push(currentStory);
+    }
+    }
+    json = JSON.stringify(json, null, 2)
+    console.log(json);
+    return json
+}
+
 const expandNode  = async (req, res, next) => {
     var projectPrompt = req.body.projectPrompt
     var agileType = req.body.agileType
@@ -77,7 +99,7 @@ const expandNode  = async (req, res, next) => {
     }
     else if(agileType == "User Story"){
         prompt = "Think yourself as a software engineer. For a agile sprint, break down the user story: \"" 
-        + parentNodePrompt + "\" for project of " + projectPrompt + " into achievable agile cards. Feel free to break the agile cards further"
+        + parentNodePrompt + "\" for project of " + projectPrompt + " into achievable agile cards. Break the agile cards further"
     }
 
     else if(agileType == "Agile Card"){
@@ -101,3 +123,4 @@ const expandNode  = async (req, res, next) => {
 
     return res.status(200).send(jsonText)
 };
+
