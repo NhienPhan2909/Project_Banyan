@@ -134,7 +134,7 @@ class Login extends Component {
                     </div>
                     </div>
                     <div className="authSubmit">
-                    <Stack>
+                    <Stack paddingBottom={'10px'}>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained"   
                             onClick={async () => {
                                 var message = await this.login()
@@ -145,7 +145,7 @@ class Login extends Component {
                     </Stack>
                     </div>
                     <p className="text-center mt-2">
-                      <a href="#">Forgot password?</a>
+                      <a href="/signup">Need an account?</a>
                     </p>
                   </div>
                 </form>

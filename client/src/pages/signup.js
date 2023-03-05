@@ -139,7 +139,7 @@ class Signup extends React.Component {
                   </div>
                   </div>
                   <div className="authSubmit">
-                  <Stack>
+                  <Stack paddingBottom={'10px'}>
                         <Button style = {{maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px'}} variant="contained" 
                             onClick={async () => {
                                 var resp = await this.submitForm()
@@ -149,7 +149,7 @@ class Signup extends React.Component {
                   </Stack>
                   </div>
                   <p className="text-center mt-2">
-                    <a href="#">Forgot password?</a>
+                    <a href="/login">Already have an account?</a>
                   </p>
                 </div>
               </form>
