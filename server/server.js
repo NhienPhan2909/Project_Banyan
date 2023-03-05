@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { router, auth } = require('./routes/auth');
 const projectrouter = require('./routes/project');
+const chatgptrouter = require('./routes/chatgpt');
+
 
 const cors = require('cors');
 const app = express();
@@ -64,3 +66,4 @@ app.get('/protected', auth, (req, res) => {
 // POST
 app.use('/api', router);
 app.use('/projects', projectrouter);
+app.use('/chatgpt', chatgptrouter);

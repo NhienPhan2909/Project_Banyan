@@ -1,8 +1,4 @@
-const configuration = new Configuration({
-    apiKey: "API_KEY",
-  });
-
-const openai = new OpenAIApi(configuration);
+const { Configuration, OpenAIApi } = require("openai");
 
 function extractEpicsAndStories (responseText) {
     const text = responseText
@@ -26,68 +22,47 @@ function extractEpicsAndStories (responseText) {
     return json
 }
 
-
-const projectPrompt = async (req, res, next) => {
+const projectPrompt = async (req, res, next) => { 
     //request.body.prompt should just be the essence of the project
-    var prompt = "Think yourself as a Project Manager. Break down the project of" 
-    + req.body.prompt + "into agile epics. And break down each epic into user stories"
+    var prompt = "Think yourself as a Project Manager. Break down the project of " 
+    + req.body.prompt + " into agile epics. And break down each epic into user stories"  
 
-
-    // {
-    //     "id": "<COMPLETION ID>",
-    //     "model": "<MODEL NAME>",
-    //     "created": <TIMESTAMP>,
-    //     "choices": [
-    //         {
-    //             "text": "<COMPLETED TEXT>",
-    //             "index": 0,
-    //             "logprobs": null,
-    //             "finish_reason": "<REASON FOR FINISHING>",
-    //             "prompt": "<PROMPT>"
-    //         }
-    //     ]
-    // }
-
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        temperature: 0.7,
-        max_tokens: 1791,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-    });
-
-    const completedText = response.choices[0].text;
-
-    const jsonText = extractEpicsAndStories(completedText)
-
-    return res.status(200).send(jsonText)
-};
-
-function extractText (responseText) {
-    const text = responseText
-    const json = { epics: [] };
-    let currentEpic = null;
-    let currentStory = null;
-
-    for (const line of text.split('\n')) {
-    if (line.startsWith('Epic ')) {
-        const epicName = line.substring(6).trim();
-        currentEpic = { name: epicName, stories: [] };
-        json.epics.push(currentEpic);
-    } else if (line.startsWith('User Story ')) {
-        const storyName = line.substring(11).trim();
-        currentStory = { name: storyName };
-        currentEpic.stories.push(currentStory);
-    }
-    }
-    json = JSON.stringify(json, null, 2)
-    console.log(json);
-    return json
+        var unirest = require('unirest');
+        var req = unirest('POST', 'https://api.openai.com/v1/completions')
+        .headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer <API_KEY>'
+        })
+        .send(JSON.stringify({
+            "model": "text-davinci-003",
+            "prompt": "Think yourself as a Project Manager. Break down the project of e-commerce website design into agile epics. And break down each epic into user stories",
+            "max_tokens": 3600,
+            "temperature": 0
+        }))
+        .end(function (response) { 
+            if (response.error) throw new Error(response.error); 
+            console.log("response..........", response)
+            const completedText = response.raw_body;
+            console.log(typeof completedText)
+            const jsonObj = JSON.parse(completedText);
+            console.log(jsonObj)
+            console.log(jsonObj.choices)
+            finalText = jsonObj.choices[0].text
+            console.log("JSON TEXT.............", finalText)
+            return res.status(200).send(finalText)        
+        })
 }
 
+
+
 const expandNode  = async (req, res, next) => {
+    
+    const configuration = new Configuration({
+        apiKey: "API_KEY",
+    });
+
+    const openai = new OpenAIApi(configuration);
+
     var projectPrompt = req.body.projectPrompt
     var agileType = req.body.agileType
     var parentNodePrompt = req.body.parentNodePrompt
@@ -106,21 +81,37 @@ const expandNode  = async (req, res, next) => {
         prompt = "Think yourself as a software engineer. For a agile sprint, break down the agile card: \"" 
         + parentNodePrompt + "\" for project of " + projectPrompt + " into further achievable agile cards. Feel free to break the agile cards further"
     }
-    
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        temperature: 0.7,
-        max_tokens: 1791,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-    });
 
-    const completedText = response.choices[0].text;
+    var unirest = require('unirest');
+        var req = unirest('POST', 'https://api.openai.com/v1/completions')
+        .headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer <API_KEY>'
+        })
+        .send(JSON.stringify({
+            "model": "text-davinci-003",
+            "prompt": prompt,
+            "max_tokens": 3600,
+            "temperature": 0
+        }))
+        .end(function (response) { 
+            if (response.error) throw new Error(response.error); 
+            console.log("response..........", response)
+            const completedText = response.raw_body;
+            console.log(typeof completedText)
+            const jsonObj = JSON.parse(completedText);
+            console.log(jsonObj)
+            console.log(jsonObj.choices)
+            finalText = jsonObj.choices[0].text
+            console.log("JSON TEXT.............", finalText)
+            return res.status(200).send(finalText)        
+        })  
 
-    const jsonText = extractEpicsAndStories(completedText)
 
-    return res.status(200).send(jsonText)
+    return res.status(200).send(finalText)
 };
+
+module.exports = {
+    projectPrompt, expandNode
+}
 
