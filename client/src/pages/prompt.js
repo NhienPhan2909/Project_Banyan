@@ -5,6 +5,7 @@ import {TextField} from '@mui/material/';
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 
 class Prompt extends Component {
     state = {
@@ -27,6 +28,15 @@ class Prompt extends Component {
         }
         return body;
     };
+
+    // Use ChatGPT API
+    createProject = async (prompt) => {
+        
+        const response = await axios.post('http://localhost:11000/chatgpt/start-project', {
+            prompt
+        });
+
+    }
 
     render() {
         return (
@@ -53,6 +63,7 @@ class Prompt extends Component {
                     <Button style = {{maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px'}} variant="contained"   
                         onClick={() => {
                             alert(this.state.prompt);
+                            this.createProject(this.state.prompt);
                         }
                     }>Continue
                     </Button>
