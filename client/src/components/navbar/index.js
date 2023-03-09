@@ -42,7 +42,7 @@ return (
 					Tree
 				</NavLink> 
 			</>
-			): (
+			):(
 			<>
 				<NavLink to="/signup" activeStyle>
 					Signup
@@ -51,7 +51,8 @@ return (
 					Login
 				</NavLink>
 			</>
-			)}
+			)
+		}
 		{/* <NavLink to="/dashboard" activeStyle>
 			Dashboard
 		</NavLink>
