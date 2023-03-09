@@ -28,8 +28,13 @@ class Dashboard extends Component {
 
       handleDeleteProject = () => {
         // implement logic to delete project
-        this.setState({ deleteMode: true});
-        this.handlePopoverClose();
+        if(this.state.projects.length === 0) {
+          this.handlePopoverClose()
+        }
+        else {
+          this.setState({ deleteMode: true});
+          this.handlePopoverClose()
+        }
       };
       
       handleLogout = () => {
@@ -44,13 +49,41 @@ class Dashboard extends Component {
         if (typeof token !== "string") {
           console.log("Not string");
         }
-        
         const response = await axios.post('http://localhost:11000/projects/dashboard', {
             token
         });
 
         this.setState({ projects: response.data.projects });
     }
+
+    deleteProject = async (projectId) => {
+      try {
+        const token = localStorage.getItem('jwtToken');
+
+        if (typeof token !== 'string') {
+          console.log('Not string');
+        }
+    
+        const response = await axios.delete(`http://localhost:11000/projects/delete/${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        this.setState({ projects: this.state.projects.filter((x) => x._id !== projectId) });
+
+        return response.status;
+      } 
+      catch (err) {
+        console.log(err);
+        return err.response.status;
+      }
+    };
+
+    displayDeleteMessage = () => {
+      if(this.state.deleteMode === true)
+        return <Box display='flex' justifyContent='center' color='red'  alignItems='center' paddingTop={'50px'} margin-top='10px'>Please select a project to delete</Box>
+  }
 
     generateProjects = () => {
         // need onclick function bringing user to respective tree (call filltree on respective project)
@@ -70,7 +103,15 @@ class Dashboard extends Component {
             {this.state.projects.length && this.state.projects.map( project => (
                 <Button className="project-button" id='projects' sx={{backgroundColor: '#fffff8'}} key={project._id} variant='outlined'   
                     onClick={() => {
+                      if(this.state.deleteMode === true) {
+                        console.log(project._id)
+                        this.deleteProject(project._id)
+                        this.setState({deleteMode: false})
+                      }
+                      else {
                         window.location.href = '/tree/' + project._id;
+                      }
+                       console.log(this.state.deleteMode)
                     }}
                 >{project.name}</Button>
             ))}
@@ -134,6 +175,7 @@ class Dashboard extends Component {
               <div className='startDoc'>Start a new Project</div>
               {this.generateProjects()}
               {this.displayNumProjectError()}
+              {this.displayDeleteMessage()}
             </div>
           </div>
         );
