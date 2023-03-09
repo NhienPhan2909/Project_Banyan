@@ -12,30 +12,49 @@ class Prompt extends Component {
         prompt: null
     };
 
-    componentDidMount() {
-        this.callBackendAPI()
-            .then(res => this.setState({ data: res.express }))
-            .catch(err => console.log(err));
-    }
-
-    // fetching the GET route from the Express server which matches the GET route from server.js
-    callBackendAPI = async () => {
-        const response = await fetch('/prompt');
-        const body = await response.json();
-
-        if (response.status !== 200) {
-            throw Error(body.message) 
-        }
-        return body;
-    };
-
     // Use ChatGPT API
     createProject = async (prompt) => {
-        
-        const response = await axios.post('http://localhost:11000/chatgpt/start-project', {
+        const chatGptResponse = await axios.post('http://localhost:11000/chatgpt/start-project', {
             prompt
         });
 
+        // For each epic from the ChatGPT response, save its stories as nodes in the database, retrieving their IDs.
+        // Then, save the epic as another node that includes the list of story IDs, then retrieve its ID.
+        const epic_ids = await Promise.all(chatGptResponse.data.epics.map(async (epic) => {
+            const epicResponse = await axios.post('http://localhost:11000/nodes/add-node', {
+                content: epic.name,
+                agile_scope: "epic",
+                _childIdList: await Promise.all(epic.stories.map(async (story) => {
+                    const storyResponse = await axios.post('http://localhost:11000/nodes/add-node', {
+                        content: story.name,
+                        agile_scope: "story"
+                    });
+                    return storyResponse.data.result._id;
+                }))
+            });
+            return epicResponse.data.result._id;
+        }));
+
+        // Finally, save the initiative (prompt) as the root node that includes the list of epic IDs,
+        // then save a project attached to the user that points to the initiative ID.
+        const rootResponse = await axios.post('http://localhost:11000/nodes/add-node', {
+            content: prompt,
+            agile_scope: "initiative",
+            _childIdList: epic_ids
+        });
+
+        const token = localStorage.getItem('jwtToken');
+        const projectResponse = await axios.post('http://localhost:11000/projects/add-project', {
+            _rootId: rootResponse.data.result._id,
+            name: prompt, // need to add separate text input for the project name and route it here
+            token: token
+        })
+
+        if (projectResponse.status === 200) {
+            window.location.href = '/dashboard';
+        }
+
+        return projectResponse.status;
     }
 
     render() {
@@ -53,7 +72,7 @@ class Prompt extends Component {
                     }}
                     onChange={
                         x => {
-                            this.state.prompt = x.target.value;
+                            this.setState({ prompt: x.target.value });
                         }
                     }
                     />
@@ -62,7 +81,6 @@ class Prompt extends Component {
                 <Stack className="continue">
                     <Button style = {{maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px'}} variant="contained"   
                         onClick={() => {
-                            alert(this.state.prompt);
                             this.createProject(this.state.prompt);
                         }
                     }>Continue

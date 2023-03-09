@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { router, auth } = require('./routes/auth');
 const projectrouter = require('./routes/project');
 const chatgptrouter = require('./routes/chatgpt');
+const noderouter = require('./routes/nodeoftree');
 
 
 const cors = require('cors');
@@ -67,3 +68,4 @@ app.get('/protected', auth, (req, res) => {
 app.use('/api', router);
 app.use('/projects', projectrouter);
 app.use('/chatgpt', chatgptrouter);
+app.use('/nodes', noderouter);

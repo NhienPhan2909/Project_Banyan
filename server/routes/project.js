@@ -3,7 +3,7 @@ const ProjectController = require('../controllers/ProjectController');
 
 const router = express.Router();
 
-router.post('/add_project', ProjectController.addProject)
+router.post('/add-project', ProjectController.addProject)
 router.get('/:id', ProjectController.findOneProject)
 router.post('/dashboard', ProjectController.getAllProjects)
 router.patch('/update/:id', ProjectController.updateProject)

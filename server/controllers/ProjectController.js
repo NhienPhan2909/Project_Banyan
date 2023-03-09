@@ -37,9 +37,28 @@ const getAllProjects = (req, res, next) => {
 }
 
 const addProject = (req, res, next) => {
-    let project = new Project(req.body);
-    project.save().then(doc => {res.status(200).json({'Project': 'Project added'});})
-        .catch(err => {res.status(400).send(err);});
+    var token = req.body.token;
+    // get user id from token
+    var user = jwt.verify(token, 'your_secret_key_here').userId;
+
+    var proj = new Project();
+    try {
+        proj = new Project({
+            _rootId: req.body._rootId,
+            name: req.body.name,
+            _userId: user
+        });
+    } catch(error) {
+        return res.status(400).send({ msg: 'Invalid project structure.' });
+    }
+
+    proj.save(function(err, result) {
+        if (err) {
+            return res.status(500).send({ msg: err.message });
+        }
+
+        res.status(200).json({ result });
+    });
 }
 
 const updateProject = (req, res, next) => {
