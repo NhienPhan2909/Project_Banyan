@@ -1,40 +1,18 @@
 import React, { Component } from "react";
+import { useParams } from "react-router-dom";
 import "./globals.css";
-import Dashboard from "../components/Dashboard";
-class Tree extends Component {
-  state = {
-    data: null,
-  };
+import TreeContainer from "../components/tree/container";
 
-  componentDidMount() {
-    this.callBackendAPI()
-      .then((res) => this.setState({ data: res.express }))
-      .catch((err) => console.log(err));
-  }
-
-  // fetching the GET route from the Express server which matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch("/tree");
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message);
-    }
-    return body;
-  };
-
-  render() {
-    return (
-      <div className="page">
-        <header className="header">
-          <div style={{ backgroundColor: "white" }}>
-            <Dashboard></Dashboard>
-          </div>
-        </header>
-        <div className="express-output">{this.state.data}</div>
-      </div>
-    );
-  }
-}
-
-export default Tree;
+// this is quite inconsistent from other pages, because useParams requires a functional component
+// need to work on making the pages more uniform in the future
+export default function Tree() {
+  return (
+    <div className="page">
+      <header className="header">
+        <div style={{ backgroundColor: "white" }}>
+          <TreeContainer project={useParams()._projectId}></TreeContainer>
+        </div>
+      </header>
+    </div>
+  )
+};

@@ -77,18 +77,24 @@ class Dashboard extends Component {
     try {
       const token = localStorage.getItem('jwtToken');
 
-      if (typeof token !== 'string') {
-        console.log('Not string');
-      }
+      // first, get the project from the database to see which nodes to delete
+      const initialResponse = await axios.get(`http://localhost:11000/projects/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      const initialResponse = await axios.get(`http://localhost:11000/projects/${projectId}`);
+      // delete the root nodes (this will recursively delete the child nodes)
       const nodeResponse = await axios.delete(`http://localhost:11000/nodes/delete/${initialResponse.data._rootId}`);
+
+      // then, after all references are cleared, delete the project
       const projectResponse = await axios.delete(`http://localhost:11000/projects/delete/${initialResponse.data._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
+      // remove the project from the component state
       this.setState({ projects: this.state.projects.filter((x) => x._id !== projectId) });
 
       return projectResponse.status;

@@ -23,7 +23,7 @@ function App() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/prompt' element={<Prompt />} />
-                <Route path='/tree' element={<Tree />} />
+                <Route path='/tree/:_projectId' element={<Tree />} />
                 <Route path='/api/verify' element={<Verify />} />
             </Routes>
         </Router>

@@ -5,15 +5,28 @@ const { ObjectId } = require('mongodb');
 
 mongoose.set('strictQuery', false);
 
-const findOneProject = (req, res, next) => {
-    // COMMENT OUT USER VERIFY STEP TO TEST ON POSTMAN
-    /*var token = req.body.token;
-    // get user id from token
-    var user = jwt.verify(token, 'your_secret_key_here').userId;*/
+const findProject = (req, res, next) => {
+    // Get the token from the request body or headers
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    Project.findOne({_id: new ObjectId(req.params.id), /*_userId: user*/}, function(err, project) {
-        if (err) res.json(err)
-        else res.json(project);
+    // If the token is not provided, return an error
+    if (!token) {
+      return res.status(401).json({ message: 'Authorization token is missing' });
+    }
+
+    // Verify the token and get the payload
+    var user = jwt.verify(token, 'your_secret_key_here').userId;
+
+    Project.findOne({_id: new ObjectId(req.params.id), _userId: user}, function(err, project) {
+        if (err) {
+            return res.status(500).send({ msg: err.message });
+        }
+        else if (!project) {
+            return res.status(400).send({ msg: 'Project not found.' });
+        }
+
+        res.status(200).json(project);
     });
 }
 
@@ -104,5 +117,5 @@ const deleteProject = async (req, res, next) => {
   };
 
 module.exports = {
-    findOneProject, getAllProjects, addProject, updateProject, deleteProject
+    findProject, getAllProjects, addProject, updateProject, deleteProject
 }

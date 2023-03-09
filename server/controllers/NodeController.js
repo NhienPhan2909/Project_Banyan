@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 mongoose.set('strictQuery', false);
 
 const findNode = (req, res, next) => {
-    Node.findOne({_id: new ObjectId(req.params.id)}, function(err, node) {
+    Node.findOne({_id: new ObjectId(req.params.node_id)}, function(err, node) {
         if (err) {
             return res.status(500).send({ msg: err.message });
         }
@@ -43,7 +43,6 @@ const updateNode = (req, res, next) => {
 
 // recursive delete function that deletes all child nodes
 const _deleteNode = async (node_id) => {
-    console.log(node_id);
     Node.findOne({ _id: node_id }, async function(err, node) {
         const result = new Node(node);
 
