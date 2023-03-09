@@ -50,7 +50,9 @@ class Verify extends Component {
 
             if (response.status === 200) {
                 this.state.sucess = true;
-    
+                localStorage.setItem('jwtToken', response.data.token);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+
                 var interval = setInterval(myURL, 5000);
                 function myURL () {
                     window.location.href = '/prompt'

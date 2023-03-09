@@ -123,8 +123,11 @@ const verify = (req, res) => {
                                   return;
                                 }
                                 
+                                const token = jwt.sign({ userId: user.id }, 'your_secret_key_here', {
+                                    expiresIn: '1d', // Token will expire in 1 day
+                                });
                                 console.log('User is now verified!');
-                                return res.status(200).send({ msg: 'User successfully verified'});
+                                return res.status(200).json({ token });
                               });
                         }
                     });
