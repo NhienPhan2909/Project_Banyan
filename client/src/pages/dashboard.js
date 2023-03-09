@@ -37,6 +37,21 @@ class Dashboard extends Component {
     }
   };
 
+  cancelDelete = () => {
+    // implement logic to delete project
+      this.setState({ deleteMode: false });
+      this.handlePopoverClose()
+  };
+
+  buttonMode = () => {
+    if(this.state.deleteMode) {
+      return <Button variant="contained" sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
+    }
+    else {
+      return  <Button variant="contained" sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete Project</Button>
+    }
+  }
+
   handleLogout = () => {
     localStorage.setItem("jwtToken", "");
     window.location.href = '/login';
@@ -83,18 +98,13 @@ class Dashboard extends Component {
     }
   };
 
-  displayDeleteMessage = () => {
-    if (this.state.deleteMode === true)
-      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop={'50px'} margin-top='10px'>Please select a project to delete</Box>
-  }
-
   generateProjects = () => {
     // need onclick function bringing user to respective tree (call filltree on respective project)
     return <Box display='flex' paddingLeft='50px' paddingRight='50px'>
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
         <Button className="project-button" id="NewProjButton" variant='outlined'
           onClick={() => {
-            if (this.state.projects.length > 4) {
+            if (this.state.projects.length >= 4) {
               this.setState({ displayNumProjectError: true })
             }
             else {
@@ -128,7 +138,12 @@ class Dashboard extends Component {
 
   displayNumProjectError() {
     if (this.state.displayNumProjectError)
-      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='50px'>You may have a maximum of 4 projects, please delete a project if you wish to continue</Box>
+      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='75px'>You may have a maximum of 4 projects, please delete a project if you wish to continue</Box>
+  }
+
+    displayDeleteMessage = () => {
+    if (this.state.deleteMode === true)
+      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop={'75px'} margin-top='10px'>Please select a project to delete</Box>
   }
 
   render() {
@@ -163,9 +178,7 @@ class Dashboard extends Component {
                 }}
               >
                 <Box display={'flex'} flexDirection={'column'} sx={{ p: 2, pb: 0, gap: 0.2 }}>
-                  <Button variant="contained" sx={{ mb: 1 }} onClick={this.handleDeleteProject}>
-                    Delete Project
-                  </Button>
+                  {this.buttonMode()}
                 </Box>
                 <Box display={'flex'} flexDirection={'column'} sx={{ p: 2, pt: 0, gap: 0.2 }}>
                   <Button variant="contained" onClick={this.handleLogout}>
