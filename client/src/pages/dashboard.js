@@ -33,6 +33,7 @@ class Dashboard extends Component {
     }
     else {
       this.setState({ deleteMode: true });
+      this.setState({ displayNumProjectError: false });
       this.handlePopoverClose()
     }
   };
@@ -137,7 +138,7 @@ class Dashboard extends Component {
   }
 
   displayNumProjectError() {
-    if (this.state.displayNumProjectError)
+    if (this.state.displayNumProjectError) 
       return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='75px'>You may have a maximum of 4 projects, please delete a project if you wish to continue</Box>
   }
 
