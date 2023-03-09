@@ -30,7 +30,7 @@ const customNode = ({
       }
     />
 
-    <foreignObject x="" y="-100" width="500" height="200">
+    <foreignObject x="2" y="-100" width="500" height="200">
       <h2 style={{ color: "black" }}>{nodeDatum.name}</h2>
     </foreignObject>
     {/* <text fill="black" strokeWidth="0" x="20">
