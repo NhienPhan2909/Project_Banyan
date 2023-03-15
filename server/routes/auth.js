@@ -8,6 +8,12 @@ router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
 router.post('/verify', AuthController.verify)
 
+// Route that requires authentication
+router.get('/protected', AuthController.verifyJWT, (req, res) => {
+    // req.user contains the decoded JWT payload
+    res.json({ message: `Hello ${req.user}!` });
+  });
+
 const auth = (req, res, next) => {
     // Get token from header
     const token = req.header('Authorization');

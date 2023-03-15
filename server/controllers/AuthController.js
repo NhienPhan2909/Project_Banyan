@@ -92,9 +92,7 @@ const login = (req, res, next) => {
             return res.status(401).send({ msg: 'Your Email has not been verified. Please click on resend' });
         }
 
-        const token = jwt.sign({ userId: user.id }, 'your_secret_key_here', {
-            expiresIn: '1d', // Token will expire in 1 day
-        });
+        const token = generateJWT(user)
 
         res.status(200).json({ token });
     }); 
@@ -122,10 +120,7 @@ const verify = (req, res) => {
                                   console.log(err);
                                   return;
                                 }
-                                
-                                const token = jwt.sign({ userId: user.id }, 'your_secret_key_here', {
-                                    expiresIn: '1d', // Token will expire in 1 day
-                                });
+                                const token = generateJWT(user);
                                 console.log('User is now verified!');
                                 return res.status(200).json({ token });
                               });
@@ -146,6 +141,29 @@ const verify = (req, res) => {
     }
 };
 
+// Verify JWT middleware
+const verifyJWT = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ message: 'Missing authorization token' });
+    }
+  
+    try {
+      const decoded = jwt.verify(token, 'your_secret_key_here');
+      req.user = decoded;
+      next();
+    } catch (err) {
+      return res.status(401).json({ message: 'Invalid authorization token' });
+    }
+  };
+
+// Generate JWT
+const generateJWT = (user) => {
+    const payload = { userId: user.id };
+    const options = { expiresIn: '1d' };
+    return jwt.sign(payload, 'your_secret_key_here', options);
+  };
+
 module.exports = {
-    register, login, verify
+    register, login, verify, verifyJWT
 }

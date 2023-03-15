@@ -4,32 +4,32 @@ import { Nav, NavLink, NavMenu }
 import Buffer from "buffer";
 
 
-function checkJwtToken() {
-	// Get the JWT token from local storage
-	const token = localStorage.getItem('jwtToken');
+// function checkJwtToken() {
+// 	// Get the JWT token from local storage
+// 	const token = localStorage.getItem('jwtToken');
   
-	if (!token) {
-	  // Token not found in local storage
-	  return false;
-	}
+// 	if (!token) {
+// 	  // Token not found in local storage
+// 	  return false;
+// 	}
   
-	// Decode the JWT token
-	const base64Url = token.split('.')[1];
-	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-	const decodedToken = JSON.parse(Buffer.Buffer.from(base64, 'base64').toString());
-	const expTime = decodedToken.exp * 1000; // convert to ms
+// 	// Decode the JWT token
+// 	const base64Url = token.split('.')[1];
+// 	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+// 	const decodedToken = JSON.parse(Buffer.Buffer.from(base64, 'base64').toString());
+// 	const expTime = decodedToken.exp * 1000; // convert to ms
   
-	// Check if the token is expired, return true if not
-	return Date.now() < (expTime) 
-  }
+// 	// Check if the token is expired, return true if not
+// 	return Date.now() < (expTime) 
+//   }
   
 
-const Navbar = () => {
+const Navbar = (props) => {
 return (
 	<>
 	<Nav>
 		<NavMenu>
-		{checkJwtToken() ? 
+		{props.authorized ? 
 			(
 			<>
 				<NavLink to="/dashboard" activeStyle>
@@ -53,15 +53,6 @@ return (
 			</>
 			)
 		}
-		{/* <NavLink to="/dashboard" activeStyle>
-			Dashboard
-		</NavLink>
-		<NavLink to="/prompt" activeStyle>
-			Prompt
-		</NavLink>
-		<NavLink to="/tree" activeStyle>
-			Tree
-		</NavLink> */}
 		</NavMenu>
 	</Nav>
 	</>
