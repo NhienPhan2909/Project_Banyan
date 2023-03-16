@@ -104,6 +104,7 @@ class Dashboard extends Component {
       return err.response.status;
     }
   };
+  
 
   generateProjects = () => {
     // need onclick function bringing user to respective tree (call filltree on respective project)
@@ -121,7 +122,7 @@ class Dashboard extends Component {
           }>+
         </Button>
         {this.state.projects.length && this.state.projects.map(project => (
-          <Button className="project-button" id='projects' sx={{ backgroundColor: '#fffff8' }} key={project._id} variant='outlined'
+          <Button className="project-button" id='projects' key={project._id} variant='outlined'
             onClick={() => {
               if (this.state.deleteMode === true) {
                 console.log(project._id)
