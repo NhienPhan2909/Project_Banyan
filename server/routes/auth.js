@@ -42,6 +42,4 @@ function protectPage(req, res, next) {
     next();
 }
 
-module.exports = {
-    auth, router
-}
+module.exports = router;

@@ -1,0 +1,19 @@
+@import '../globals.css';
+
+#tree-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #e7eafc;
+}
+
+#tree-wrapper {
+    width: 95%;
+    height: 95%;
+    border: 4px solid black;
+    background-color: white;
+}
+
+/* TODO: move styles from other parts of the tree components to here */

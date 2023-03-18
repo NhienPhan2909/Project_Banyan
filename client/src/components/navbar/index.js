@@ -1,62 +1,22 @@
 import React from "react";
 import { Nav, NavLink, NavMenu }
 	from "./elements";
-import Buffer from "buffer";
 
 
-// function checkJwtToken() {
-// 	// Get the JWT token from local storage
-// 	const token = localStorage.getItem('jwtToken');
-  
-// 	if (!token) {
-// 	  // Token not found in local storage
-// 	  return false;
-// 	}
-  
-// 	// Decode the JWT token
-// 	const base64Url = token.split('.')[1];
-// 	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-// 	const decodedToken = JSON.parse(Buffer.Buffer.from(base64, 'base64').toString());
-// 	const expTime = decodedToken.exp * 1000; // convert to ms
-  
-// 	// Check if the token is expired, return true if not
-// 	return Date.now() < (expTime) 
-//   }
-  
-
-const Navbar = (props) => {
-return (
-	<>
-	<Nav>
-		<NavMenu>
-		{props.authorized ? 
-			(
-			<>
-				<NavLink to="/dashboard" activeStyle>
-					Dashboard
+export default function Navbar() {
+	return (
+		<Nav>
+			<NavMenu>
+				<NavLink to="/">
+					Home
 				</NavLink>
-				<NavLink to="/prompt" activeStyle>
-					Prompt
-				</NavLink>
-				<NavLink to="/tree" activeStyle>
-					Tree
-				</NavLink> 
-			</>
-			):(
-			<>
-				<NavLink to="/signup" activeStyle>
+				<NavLink to="/signup">
 					Signup
 				</NavLink>
-				<NavLink to="/login" activeStyle>
+				<NavLink to="/login">
 					Login
 				</NavLink>
-			</>
-			)
-		}
-		</NavMenu>
-	</Nav>
-	</>
-);
+			</NavMenu>
+		</Nav>
+	);
 };
-
-export default Navbar;

@@ -6,13 +6,14 @@ import Navbar from './components/navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate}
 	from 'react-router-dom';
 
-import Onboard from './pages';
-import Login from './pages/login';
+import Onboard from './pages/onboard';
 import Dashboard from './pages/dashboard';
 import Prompt from './pages/prompt';
-import Tree from './pages/tree';
-import Signup from './pages/signup';
-import Verify from './pages/verify';
+import TreeContainer from './pages/tree';
+
+import Login from './pages/auth/login';
+import Signup from './pages/auth/signup';
+import Verify from './pages/auth/verify';
 
 
 function App() {
@@ -39,14 +40,15 @@ function App() {
 
     return (
         <Router>
-            <Navbar authorized = {authenticated}/>
+            {!authenticated && <Navbar />}
             <Routes>
-                <Route exact path='/' element={<Onboard />} />
+                <Route exact path='/' element={authenticated ? <Dashboard /> : <Onboard />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/dashboard' element={authenticated ? <Dashboard /> : <Navigate to='/login' />} />
                 <Route path='/prompt' element={authenticated ? <Prompt /> : <Navigate to='/login' />} />
-                <Route path='/tree/:_projectId' element={authenticated ? <Tree /> : <Navigate to='/login' />} />
+                <Route path='/tree' element={authenticated ? <Navigate to='/dashboard' /> : <Navigate to='/login' />} />
+                <Route path='/tree/:_projectId' element={authenticated ? <TreeContainer /> : <Navigate to='/login' />} />
                 <Route path='/api/verify' element={<Verify />} />
             </Routes>
         </Router>

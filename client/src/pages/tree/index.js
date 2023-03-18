@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import PMTree from "./PMTree";
 import EditDialog from "./EditDialog";
 import CreateDialog from "./CreateDialog";
 import axios from 'axios';
+
+import './tree.css';
 
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -42,7 +45,9 @@ const getProject = async (projectId) => {
   return tree;
 }
 
-export default function TreeContainer({ project }) {
+export default function TreeContainer() {
+  const project = useParams()._projectId;
+
   const [selected, setSelected] = useState("");
   const [data, setData] = useState();
 
@@ -59,11 +64,10 @@ export default function TreeContainer({ project }) {
       setData(data);
     }
     getData();
-  }, [project]);
+  });
 
   return (
-    // <Container>
-    <div>
+    <div id="tree-body">
       <EditDialog
         open={openDialog}
         setOpen={setOpenDialog}

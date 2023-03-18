@@ -10,6 +10,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 
+import './tree.css';
+
 const customNode = ({
   nodeDatum,
   toggleNode,
@@ -104,12 +106,7 @@ export default function PMTree({
   return (
     // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
     <div
-      id="treeWrapper"
-      style={{
-        width: "60em",
-        height: "30em",
-        border: "4px solid black",
-      }}
+      id="tree-wrapper"
       onClick={() => setOptions(false)}
     >
       <Tree
