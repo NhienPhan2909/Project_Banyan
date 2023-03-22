@@ -112,7 +112,7 @@ class Dashboard extends Component {
   displayHeader = () => {
     return <div id='dash-header'>
       <Box id='spacer' />
-      <h3>My Projects</h3>
+      <h3>Projects</h3>
       <Box id='settings'>
         <Button
           style={{ maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }}

@@ -4,18 +4,21 @@ import {TextField} from '@mui/material/';
 // import Box from '@mui/material/Box';
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 class Prompt extends Component {
     state = {
-        prompt: null
+        prompt: null, 
+        description: null
     };
 
     // Use ChatGPT API
-    createProject = async (prompt) => {
+    createProject = async (prompt, description) => {
         const chatGptResponse = await axios.post('http://localhost:11000/chatgpt/start-project', {
-            prompt
+            prompt, 
+            description
         });
 
         // For each epic from the ChatGPT response, save its stories as nodes in the database, retrieving their IDs.
@@ -59,37 +62,60 @@ class Prompt extends Component {
 
     render() {
         return (
-            <div className="PromptContent">
-                <h1 className="PromptTitle">Enter your Project Proposal</h1>
-                <div className="PromptFormContainer">
-                <div className="PromptForm">
-                    <TextField fullWidth sx={{ input: {textAlign:"center", color: "black", fontSize: '20px' } }} id="input-with-username" label="" variant="standard" size='large'
-                    InputLabelProps={{
-                        InputLabelProps: {
-                            style: { textAlign:'center', color: "lightgrey", maxHeight: '100px', minHeight: '100px'},
-                        },
-                        style: { textAlign:'center', color: "lightgrey" },
-                    }}
-                    onChange={
-                        x => {
-                            this.setState({ prompt: x.target.value });
-                        }
-                    }
-                    />
-                </div>
-                <div>
-                <Stack className="continue">
-                    <Button style = {{maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px'}} variant="contained"   
-                        onClick={() => {
-                            this.createProject(this.state.prompt);
-                        }
-                    }>Continue
-                    </Button>
-                </Stack>
-                </div>
+            <div>
+                <div className="prompt-container">
+                    <form className="promptForm">
+                    <Button style={{ maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="contained"
+                                        onClick={() => {
+                                            window.location.href = '/dashboard'
+                                        }}
+                                    >X
+                        </Button>
+                        <div className="Prompt-form-content">
+                            <h3 className="Prompt-form-title">Create Your Project</h3>
+                            <div className="inputs">
+                            <Box paddingLeft={'50px'} paddingBottom={'10px'} fontSize={'20px'} box={{display: 'flex', alignItems: 'flex-end', color: 'white' }}>1. Project Title</Box>
+                                    <Box textAlign={'center'} paddingBottom={'30px'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
+                                        <TextField sx={{ input: { color: 'black' }, width: '300px' }} variant="standard"
+                                            InputLabelProps={{
+                                                style: { color: "lightgrey" },
+                                            }}
+                                            onChange={
+                                                x => {
+                                                    this.setState({ prompt: x.target.value });
+                                                }
+                                            }
+                                        />
+                                    </Box>
+                                    <Box paddingLeft={'50px'}  paddingBottom={'20px'} fontSize={'20px'} text-align={'left'} justifyContent={'left'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>2. Project Description</Box>
+                                    <Box textAlign={'center'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
+                                        <TextField variant={'outlined'}  multiline rows={5} maxRows={8} sx={{ input: { color: 'black' }, width: '300px' }} label="My project consists of..." 
+                                            InputLabelProps={{
+                                                style: { color: "lightgrey" },
+                                            }}
+                                            onChange={
+                                                x => {
+                                                    this.setState({ description: x.target.value });
+                                                }
+                                            }
+                                        />
+                                    </Box>
+                            </div>
+                            <div className="promptSubmit">
+                                <Stack paddingBottom={'10px'} spacing={2}>
+                                    <Button style={{ maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
+                                        onClick={async () => {
+                                            this.createProject(this.state.prompt, this.state.description);
+                                        }}
+                                    >Continue
+                                    </Button>
+                                </Stack>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        );
+        )
     }
 }
 

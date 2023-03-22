@@ -24,7 +24,7 @@ function extractEpicsAndStories(responseText) {
 const projectPrompt = async (req, res, next) => {
     //request.body.prompt should just be the essence of the project
     var prompt = "Think yourself as a Project Manager. Break down the project of "
-        + req.body.prompt + " into agile epics. And break down each epic into user stories";
+        + req.body.prompt + " into agile epics. And break down each epic into user stories. Some background information regarding the project: " + req.body.description;
 
     var unirest = require('unirest');
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
