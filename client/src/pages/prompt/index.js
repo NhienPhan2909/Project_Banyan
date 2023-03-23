@@ -11,11 +11,16 @@ import axios from 'axios';
 class Prompt extends Component {
     state = {
         prompt: null, 
-        description: null
+        description: null,
+        loading: false
     };
 
-    // Use ChatGPT API
+    // Define a method that sends a request to ChatGPT API
+    // and saves the response to the database
     createProject = async (prompt, description) => {
+        this.setState({ loading: true }); // set loading state to true before API call
+
+        // Send a request to ChatGPT API to start a new project and get the response
         const chatGptResponse = await axios.post('http://localhost:11000/chatgpt/start-project', {
             prompt, 
             description
@@ -53,8 +58,14 @@ class Prompt extends Component {
             token: token
         })
 
+        // If the project is successfully added, send the user to the project tree
+        // TODO: Status message to user
         if (projectResponse.status === 200) {
-            window.location.href = '/dashboard';
+            window.location.href = '/tree/' + projectResponse.data.result._id;
+            this.setState({ loading: false });
+        } else {
+            window.location.href = '/dashboard'
+            this.setState({ loading: false });
         }
 
         return projectResponse.status;
@@ -63,6 +74,7 @@ class Prompt extends Component {
     render() {
         return (
             <div>
+                {this.state.loading && <div>Loading...</div>}
                 <div className="prompt-container">
                     <form className="promptForm">
                     <Button sx={{color: '#ff8787'}} style={{backgroundColor: 'white', maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="contained"
