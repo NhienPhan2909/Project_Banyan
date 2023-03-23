@@ -38,7 +38,7 @@
 
 .prompt-container {
   display: flex;
-  background: #e7eafc;
+  background: rgb(233, 250, 255);
   justify-content: center;
   align-items: center;
   width: 100vw;
