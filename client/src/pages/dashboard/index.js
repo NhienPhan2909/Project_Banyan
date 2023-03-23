@@ -50,10 +50,10 @@ class Dashboard extends Component {
 
   buttonMode = () => {
     if (this.state.deleteMode) {
-      return <Button variant="contained" sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
+      return <Button variant="contained" style={{backgroundColor:'#4172fa'}} sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
     }
     else {
-      return <Button variant="contained" sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete Project</Button>
+      return <Button variant="contained" style={{backgroundColor:'#4172fa'}} sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete</Button>
     }
   }
 
@@ -115,7 +115,7 @@ class Dashboard extends Component {
       <h3>Projects</h3>
       <Box id='settings'>
         <Button
-          style={{ maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }}
+          style={{maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }}
           onClick={this.handlePopoverOpen}
         >
           <SettingsIcon sx={{ color: 'black', fontSize: '50px' }} />
@@ -138,7 +138,7 @@ class Dashboard extends Component {
           {this.buttonMode()}
         </Box>
         <Box display={'flex'} flexDirection={'column'} sx={{ p: 2, pt: 0, gap: 0.2 }}>
-          <Button variant="contained" onClick={this.handleLogout}>
+          <Button style={{backgroundColor:'#4172fa'}} variant="contained" onClick={this.handleLogout}>
             Logout
           </Button>
         </Box>
@@ -149,7 +149,7 @@ class Dashboard extends Component {
   displayProjects = () => {
     return <Box display='flex' paddingLeft='50px' paddingRight='50px'>
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
-        <Button className="project-button" id="NewProjButton" variant='outlined'
+        <Button style={{backgroundColor:'lightblue'}} className="project-button" id="NewProjButton" variant='contained'
           onClick={() => {
             if (this.state.projects.length >= 4) {
               this.setState({ displayNumProjectError: true })
@@ -161,7 +161,7 @@ class Dashboard extends Component {
           }>+
         </Button>
         {this.state.projects.length && this.state.projects.map(project => (
-          <Button className="project-button" key={project._id} variant='outlined'
+          <Button sx={{color: 'black'}} style={{backgroundColor:'white'}} className="project-button" key={project._id} variant='contained'
             onClick={() => {
               if (this.state.deleteMode === true) {
                 this.deleteProject(project._id)

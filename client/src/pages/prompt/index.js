@@ -65,7 +65,7 @@ class Prompt extends Component {
             <div>
                 <div className="prompt-container">
                     <form className="promptForm">
-                    <Button style={{ maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="contained"
+                    <Button sx={{color: '#ff8787'}} style={{backgroundColor: 'white', maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="contained"
                                         onClick={() => {
                                             window.location.href = '/dashboard'
                                         }}
@@ -103,7 +103,7 @@ class Prompt extends Component {
                             </div>
                             <div className="promptSubmit">
                                 <Stack paddingBottom={'10px'} spacing={2}>
-                                    <Button style={{ maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
+                                    <Button style={{backgroundColor: 'lightblue', maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
                                         onClick={async () => {
                                             this.createProject(this.state.prompt, this.state.description);
                                         }}
