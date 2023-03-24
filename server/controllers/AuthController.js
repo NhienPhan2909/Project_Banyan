@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Token = require('../models/Token')
+const ActivationToken = require('../models/ActivationToken')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
@@ -41,8 +41,8 @@ const register = (req, res, next) => {
         }
 
         // generate token and save
-        var token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
-        token.save(function (err) {
+        var activationToken = new ActivationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+        activationToken.save(function (err) {
             if (err) {
                 return res.status(500).send({ msg: err.message });
             }
@@ -59,7 +59,7 @@ const register = (req, res, next) => {
                 var mailOptions = { 
                     from: 'aipmshared@gmail.com', 
                     to: user.email, subject: 'Account Verification Link', 
-                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + token.token + '\n\nThank You!\n'
+                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
                     // \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
                 };
                 transporter.sendMail(mailOptions, function (err) {
@@ -99,16 +99,16 @@ const login = (req, res, next) => {
 }
 
 const verify = (req, res) => {
-    var token = req.body.token;
-    if (token) {
+    var activationToken = req.body.activationToken;
+    if (activationToken) {
         try {
-            Token.findOne({ token: token }, function (err, token) {
+            ActivationToken.findOne({ token: activationToken }, function (err, activationToken) {
                 if (err) {
                     return res.status(500).send({ msg: err.message });
                 }
-                // if token exists in database i.e. tokem is associated with a user.
-                else if (token) {
-                    userId = token._userId
+                // If token exists in database i.e. token is associated with a user.
+                else if (activationToken) {
+                    userId = activationToken._userId
                     User.findOne({ _id: userId }, function (err, user) {
                         if (err) {
                             return restart.status(500).send({ msg: err.message });
@@ -122,6 +122,7 @@ const verify = (req, res) => {
                                 }
                                 const token = generateJWT(user);
                                 console.log('User is now verified!');
+                                //ActivationToken.deleteOne({ token: activationToken });
                                 return res.status(200).json({ token });
                               });
                         }
