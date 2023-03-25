@@ -50,10 +50,10 @@ class Dashboard extends Component {
 
   buttonMode = () => {
     if (this.state.deleteMode) {
-      return <Button variant="contained" style={{backgroundColor:'#4172fa'}} sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
+      return <Button variant="contained" style={{backgroundColor:'lightblue'}} sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
     }
     else {
-      return <Button variant="contained" style={{backgroundColor:'#4172fa'}} sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete</Button>
+      return <Button variant="contained" style={{backgroundColor:'lightblue'}} sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete</Button>
     }
   }
 
@@ -138,7 +138,7 @@ class Dashboard extends Component {
           {this.buttonMode()}
         </Box>
         <Box display={'flex'} flexDirection={'column'} sx={{ p: 2, pt: 0, gap: 0.2 }}>
-          <Button style={{backgroundColor:'#4172fa'}} variant="contained" onClick={this.handleLogout}>
+          <Button style={{backgroundColor:'lightblue'}} variant="contained" onClick={this.handleLogout}>
             Logout
           </Button>
         </Box>
