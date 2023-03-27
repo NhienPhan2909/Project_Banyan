@@ -150,7 +150,7 @@ export default function PMTree({
           </IconButton>
         </Box>
       </Popper>
-      <List />
+      <List data={data} />
     </div>
   );
 }

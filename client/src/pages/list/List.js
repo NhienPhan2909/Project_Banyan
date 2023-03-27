@@ -5,9 +5,33 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
 import Container from "@mui/material/Container";
 
-export default function List() {
+export default function List({ data }) {
+  const spinTreeItems = (data) => {
+    return (
+      <TreeItem nodeId={data[0].toString()} label={data[1]}>
+        {renderTreeItems(data[3])}
+      </TreeItem>
+    );
+  };
+
+  const renderTreeItems = (items) => {
+    return (
+      <>
+        {" "}
+        {items.map((item) => (
+          <TreeItem key={item.id} nodeId={item.id.toString()} label={item.name}>
+            {item.children.length > 0 && renderTreeItems(item.children)}
+          </TreeItem>
+        ))}
+      </>
+    );
+  };
+
+  const getTreeItem = (itemName, itemId) => {
+    return <TreeItem nodeId={itemId} label={itemName} />;
+  };
   return (
-    <Container style={{ border: "solid black", width: "15%" }}>
+    <Container style={{ border: "solid black", width: "20%" }}>
       <h2>List View</h2>
 
       <TreeView
@@ -16,15 +40,7 @@ export default function List() {
         defaultExpandIcon={<ChevronRightIcon />}
         sx={{ height: "90%", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
       >
-        <TreeItem nodeId="1" label="Applications">
-          <TreeItem nodeId="2" label="Calendar" />
-        </TreeItem>
-        <TreeItem nodeId="5" label="Documents">
-          <TreeItem nodeId="10" label="OSS" />
-          <TreeItem nodeId="6" label="MUI">
-            <TreeItem nodeId="8" label="index.js" />
-          </TreeItem>
-        </TreeItem>
+        {spinTreeItems(Object.values(data))}
       </TreeView>
     </Container>
   );

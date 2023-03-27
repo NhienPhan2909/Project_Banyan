@@ -25,6 +25,7 @@ const _getNode = async (nodeId, index) => {
   var nodeName = index === -1 ? "Project" : scope + " " + (index + 1);
 
   return {
+    id: nodeId,
     name: nodeName,
     attributes: {
       type: scope,
@@ -66,12 +67,13 @@ export default function TreeContainer() {
   };
 
   useEffect(() => {
+    console.log("USEEFFECT");
     async function getData() {
       const data = await getProject(project);
       setData(data);
     }
     getData();
-  });
+  }, []);
 
   return (
     <div id="tree-body">
