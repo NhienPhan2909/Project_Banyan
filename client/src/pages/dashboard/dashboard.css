@@ -6,7 +6,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: rgb(233, 250, 255);
+  background: hsl(155, 100%, 96%);
 }
 
 #dash-form {
@@ -15,37 +15,52 @@
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   padding-bottom: 40px;
   border-radius: 8px;
-  background-color: white;
+  background-color: #fafafa;
 }
 
 #dash-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1em;
+  padding-bottom: 15px;
+  padding-top: 5px;
   font-size: 35px;
-  color: rgb(34, 34, 34);
+  background-color: white;
+  color: rgb(0, 105, 62);
   font-weight: 800;
-  border-bottom: 1.25px ridge black;
   font-family: Arial, Helvetica, sans-serif;
+  border-radius: 8px 8px 0 0;
 }
 
 /* a spacer before the h3 and the settings button allows 
    for the h3 to center and the button to align right */
-#spacer, #settings {
-  width: 50px;
-  height: 50px;
-  padding-bottom: 10px;
+#spacer, #settings, #settings button {
+  min-width: 50px;
+  max-width: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  padding: 0;
 }
 
 #spacer { padding-left: 40px; }
 #settings { padding-right: 40px; }
+#settings button { color:hsl(155, 100%, 80%); }
+#settings button:hover { background-color: hsla(155, 100%, 80%, .12); }
+#logo { max-width: 30%; }
+.popover-button { background-color: hsl(155, 100%, 21%) !important; }
 
-#start-doc {
-  padding-left: 60px;
-  padding-bottom: 10px;
-  color: rgb(78, 78, 78);
+#dash-projects {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+#projects-text {
+  padding-left: 10px;
+  padding-bottom: 20px;
+  color: rgb(0, 105, 62);
   font-size: 18px;
+  font-weight: 550;
 }
 
 /*.dash-form-content {
@@ -57,10 +72,12 @@
 
 .project-button {
   font-size: 16px !important;
-  max-width: 150px;
-  max-height: 200px;
-  min-width: 150px;
-  min-height: 200px;
+  max-width: 150px !important;
+  max-height: 200px !important;
+  min-width: 150px !important;
+  min-height: 200px !important;
+  background-color: white !important;
+  color: rgb(0, 105, 62) !important;
 }
 
 #NewProjButton {

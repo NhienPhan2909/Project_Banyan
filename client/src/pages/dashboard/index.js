@@ -50,10 +50,10 @@ class Dashboard extends Component {
 
   buttonMode = () => {
     if (this.state.deleteMode) {
-      return <Button variant="contained" style={{backgroundColor:'lightblue'}} sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
+      return <Button variant="contained" className="popover-button" sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
     }
     else {
-      return <Button variant="contained" style={{backgroundColor:'lightblue'}} sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete</Button>
+      return <Button variant="contained" className="popover-button" sx={{ mb: 1 }} onClick={this.handleDeleteProject}>Delete</Button>
     }
   }
 
@@ -112,13 +112,10 @@ class Dashboard extends Component {
   displayHeader = () => {
     return <div id='dash-header'>
       <Box id='spacer' />
-      <h3>Projects</h3>
+      <img id='logo' src="BanyanText_Transparent.png" />
       <Box id='settings'>
-        <Button
-          style={{maxWidth: '50px', maxHeight: '50px', minWidth: '50px', minHeight: '50px' }}
-          onClick={this.handlePopoverOpen}
-        >
-          <SettingsIcon sx={{ color: 'black', fontSize: '50px' }} />
+        <Button onClick={this.handlePopoverOpen}>
+          <SettingsIcon sx={{ color: 'rgb(21, 20, 20)', fontSize: '50px' }} />
         </Button>
       </Box>
       <Popover
@@ -138,7 +135,7 @@ class Dashboard extends Component {
           {this.buttonMode()}
         </Box>
         <Box display={'flex'} flexDirection={'column'} sx={{ p: 2, pt: 0, gap: 0.2 }}>
-          <Button style={{backgroundColor:'lightblue'}} variant="contained" onClick={this.handleLogout}>
+          <Button className="popover-button" variant="contained" onClick={this.handleLogout}>
             Logout
           </Button>
         </Box>
@@ -147,9 +144,10 @@ class Dashboard extends Component {
   }
 
   displayProjects = () => {
-    return <Box display='flex' paddingLeft='50px' paddingRight='50px'>
+    return <Box id="dash-projects">
+      <div id="projects-text">Your Projects</div>
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
-        <Button style={{backgroundColor:'lightblue'}} className="project-button" id="NewProjButton" variant='contained'
+        <Button className="project-button" id="NewProjButton" variant='contained'
           onClick={() => {
             if (this.state.projects.length >= 4) {
               this.setState({ displayNumProjectError: true })
@@ -161,7 +159,7 @@ class Dashboard extends Component {
           }>+
         </Button>
         {this.state.projects.length && this.state.projects.map(project => (
-          <Button sx={{color: 'black'}} style={{backgroundColor:'white'}} className="project-button" key={project._id} variant='contained'
+          <Button className="project-button" key={project._id} variant='contained'
             onClick={() => {
               if (this.state.deleteMode === true) {
                 this.deleteProject(project._id)
@@ -196,7 +194,6 @@ class Dashboard extends Component {
       <div id="dash-container">
         <div id="dash-form">
           {this.displayHeader()}
-          <div id='start-doc'>Start a new Project</div>
           {this.displayProjects()}
           {this.displayNumProjectError()}
           {this.displayDeleteMessage()}
