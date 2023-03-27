@@ -10,6 +10,7 @@
 }
 
 #tree-wrapper {
+    display: inline-flex;
     width: 95%;
     height: 95%;
     border: 4px solid black;

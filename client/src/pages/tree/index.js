@@ -3,47 +3,54 @@ import { useParams } from "react-router-dom";
 import PMTree from "./PMTree";
 import EditDialog from "./EditDialog";
 import CreateDialog from "./CreateDialog";
-import axios from 'axios';
+import axios from "axios";
 
-import './tree.css';
+import "./tree.css";
 
 const capitalize = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 const _getNode = async (nodeId, index) => {
-  const nodeResponse = await axios.get(`http://localhost:11000/nodes/${nodeId}`);
+  const nodeResponse = await axios.get(
+    `http://localhost:11000/nodes/${nodeId}`
+  );
 
-  const children = await Promise.all(nodeResponse.data._childIdList.map(_getNode));
+  const children = await Promise.all(
+    nodeResponse.data._childIdList.map(_getNode)
+  );
 
   var scope = capitalize(nodeResponse.data.agile_scope);
   var content = capitalize(nodeResponse.data.content);
-  var nodeName = (index === -1) ? 'Project' : scope + ' ' + (index + 1);
+  var nodeName = index === -1 ? "Project" : scope + " " + (index + 1);
 
   return {
     name: nodeName,
     attributes: {
       type: scope,
-      prompt: content
+      prompt: content,
     },
-    children: children
-  }
-}
+    children: children,
+  };
+};
 
 const getProject = async (projectId) => {
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem("jwtToken");
 
   // get project from projects collection in database
-  const projectResponse = await axios.get(`http://localhost:11000/projects/${projectId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
+  const projectResponse = await axios.get(
+    `http://localhost:11000/projects/${projectId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  });
+  );
 
   const tree = await _getNode(projectResponse.data._rootId, -1);
 
   return tree;
-}
+};
 
 export default function TreeContainer() {
   const project = useParams()._projectId;
@@ -89,13 +96,15 @@ export default function TreeContainer() {
             Edit Node
           </Button>
         </div> */}
-      {data && (<PMTree
-        data={data}
-        selected={selected}
-        setSelected={setSelected}
-        setOpenDialog={setOpenDialog}
-        setOpenCreateDialog={setOpenCreateDialog}
-      />)}
+      {data && (
+        <PMTree
+          data={data}
+          selected={selected}
+          setSelected={setSelected}
+          setOpenDialog={setOpenDialog}
+          setOpenCreateDialog={setOpenCreateDialog}
+        />
+      )}
       {/* </Stack> */}
       {/* // </Container> */}
     </div>
