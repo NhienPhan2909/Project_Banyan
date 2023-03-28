@@ -89,9 +89,9 @@ class Signup extends React.Component {
                         <div className="Auth-form-content">
                             <h3 className="Auth-form-title">Sign Up</h3>
                             <div className="inputs">
-                                <div className="form-group mt-3">
+
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1.75 }} />
                                         <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Username" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
@@ -99,10 +99,8 @@ class Signup extends React.Component {
                                             onChange={this.changeUsername}
                                         />
                                     </Box>
-                                </div>
-                                <div className="form-group mt-3">
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1.75 }} />
                                         <TextField className='usernameField' type={this.state.showPassword ? 'text' : 'password'} sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Password" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
@@ -124,10 +122,8 @@ class Signup extends React.Component {
                                             }}
                                         />
                                     </Box>
-                                </div>
-                                <div className="form-group mt-3">
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1.75 }} />
                                         <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Email" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
@@ -136,10 +132,9 @@ class Signup extends React.Component {
                                         />
                                     </Box>
                                 </div>
-                            </div>
                             <div className="authSubmit">
                                 <Stack paddingBottom={'10px'}>
-                                    <Button style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
+                                    <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
                                         onClick={async () => {
                                             var resp = await this.submitForm()
                                             this.setState({ signinStatus: resp })

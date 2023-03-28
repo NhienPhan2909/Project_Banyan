@@ -80,7 +80,7 @@ class Login extends Component {
                             <div className="inputs">
                                 <div className="form-group mt-3">
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 2}} />
                                         <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Username" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
@@ -91,7 +91,7 @@ class Login extends Component {
                                 </div>
                                 <div className="form-group mt-3">
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 1 }} />
+                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 2 }} />
                                         <TextField className='usernameField' type={this.state.showPassword ? 'text' : 'password'} sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Password" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
@@ -117,7 +117,7 @@ class Login extends Component {
                             </div>
                             <div className="authSubmit">
                                 <Stack paddingBottom={'10px'}>
-                                    <Button style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
+                                    <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
                                         onClick={async () => {
                                             var message = await this.login()
                                             this.setState({ loginStatus: message });
