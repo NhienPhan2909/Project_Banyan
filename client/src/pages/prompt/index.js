@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
+import { fontSize } from '@mui/system';
 
 class Prompt extends Component {
     state = {
@@ -77,18 +78,20 @@ class Prompt extends Component {
                 {this.state.loading && <div>Loading...</div>}
                 <div className="prompt-container">
                     <form className="promptForm">
-                    <Button sx={{color: '#ff8787'}} style={{backgroundColor: 'white', maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="contained"
+                    <Button className='cancel' sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: 'white', maxWidth: '40px', maxHeight: '30px', minWidth: '40px', minHeight: '30px', fontSize:'18px'}} variant="none"
                                         onClick={() => {
                                             window.location.href = '/dashboard'
                                         }}
-                                    >X
+                                    >x
                         </Button>
+                        <div className='logo'>
+                            <img id='logo' src="BanyanText_Transparent.png"/>
+                        </div>
                         <div className="Prompt-form-content">
-                            <h3 className="Prompt-form-title">Create Your Project</h3>
                             <div className="inputs">
-                            <Box paddingLeft={'50px'} paddingBottom={'10px'} fontSize={'20px'} box={{display: 'flex', alignItems: 'flex-end', color: 'white' }}>1. Project Title</Box>
-                                    <Box textAlign={'center'} paddingBottom={'30px'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <TextField sx={{ input: { color: 'black' }, width: '300px' }} variant="standard"
+                            <Box color={'rgb(0, 105, 62)'} fontWeight='425' paddingLeft={'50px'}  fontSize={'20px'} box={{display: 'flex', alignItems: 'flex-end', color: 'white' }}>1. Project Title</Box>
+                                    <Box textAlign={'center'} paddingBottom={'40px'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
+                                        <TextField sx={{ input: { color: 'black' }, width: '300px' }} label="E.g. Ecommerce Website" variant="standard"
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
                                             }}
@@ -99,9 +102,9 @@ class Prompt extends Component {
                                             }
                                         />
                                     </Box>
-                                    <Box paddingLeft={'50px'}  paddingBottom={'20px'} fontSize={'20px'} text-align={'left'} justifyContent={'left'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>2. Project Description</Box>
+                                    <Box color={'rgb(0, 105, 62)'} fontWeight='425' paddingLeft={'50px'}  paddingBottom={'20px'} fontSize={'20px'} text-align={'left'} justifyContent={'left'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>2. Project Description</Box>
                                     <Box textAlign={'center'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <TextField variant={'outlined'}  multiline rows={5} maxRows={8} sx={{ input: { color: 'black' }, width: '300px' }} label="My project consists of..." 
+                                        <TextField variant={'outlined'}  multiline rows={5} maxRows={8} sx={{ input: { color: 'black' }, width: '300px' }} label="What does your project entail?" 
                                             InputLabelProps={{
                                                 style: { color: "lightgrey" },
                                             }}
@@ -115,7 +118,7 @@ class Prompt extends Component {
                             </div>
                             <div className="promptSubmit">
                                 <Stack paddingBottom={'10px'} spacing={2}>
-                                    <Button style={{backgroundColor: 'lightblue', maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
+                                    <Button style={{backgroundColor:  'rgb(0, 105, 62)', maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
                                         onClick={async () => {
                                             this.createProject(this.state.prompt, this.state.description);
                                         }}

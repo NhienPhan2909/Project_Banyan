@@ -32,14 +32,9 @@ class Dashboard extends Component {
 
   handleDeleteProject = () => {
     // implement logic to delete project
-    if (this.state.projects.length === 0) {
-      this.handlePopoverClose()
-    }
-    else {
-      this.setState({ deleteMode: true });
-      this.setState({ displayNumProjectError: false });
-      this.handlePopoverClose()
-    }
+    this.setState({ deleteMode: true });
+    this.setState({ displayNumProjectError: false });
+    
   };
 
   cancelDelete = () => {
@@ -177,15 +172,15 @@ class Dashboard extends Component {
 
   displayNumProjectError = () => {
     if (this.state.displayNumProjectError)
-      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='75px'>
+      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='100px'>
         You may have a maximum of 4 projects, please delete a project if you wish to continue.
       </Box>;
   }
 
   displayDeleteMessage = () => {
     if (this.state.deleteMode === true)
-      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop={'75px'} margin-top='10px'>
-        Please select a project to delete, or the settings icon to cancel.
+      return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop={'100px'} margin-top='10px'>
+        Please select a project to delete
       </Box>;
   }
 
