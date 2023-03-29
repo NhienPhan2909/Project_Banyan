@@ -25,7 +25,8 @@ class Login extends Component {
         username: '',
         password: '',
         loginStatus: null,
-        showPassword: false
+        showPassword: false,
+        errorMessage: ''
     };
 
     toggleShowPassword = () => {
@@ -45,7 +46,7 @@ class Login extends Component {
     }
 
     displayErrorMessage = () => {
-        return <Box display='flex' justifyContent='center' color='red' alignItems='center' margin-top='10px'>Please check your login credentials</Box>
+        return <Box display='flex' justifyContent='center' color='red' alignItems='center' margin-top='10px'>{this.state.errorMessage}</Box>
     }
 
     login = async () => {
@@ -66,7 +67,10 @@ class Login extends Component {
             }
             return response.status
         } catch (error) {
-            console.error(error);
+            if (error.response) {
+                console.log(error.response.data.msg);
+                this.setState({errorMessage: error.response.data.msg})
+            }
         }
     }
 
