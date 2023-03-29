@@ -157,8 +157,10 @@ class Dashboard extends Component {
           <Button className="project-button" key={project._id} variant='contained'
             onClick={() => {
               if (this.state.deleteMode === true) {
-                this.deleteProject(project._id)
-                this.setState({ deleteMode: false })
+                if (window.confirm("Click OK to confirm that you want to delete this project") == true) {
+                  this.deleteProject(project._id)
+                  this.setState({ deleteMode: false })
+                }               
               }
               else {
                 window.location.href = '/tree/' + project._id;
