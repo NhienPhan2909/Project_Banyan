@@ -9,7 +9,7 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import List from "../list/List";
+import List from "./List";
 
 import "./tree.css";
 
@@ -137,6 +137,11 @@ export default function PMTree({
                     width: (window.innerWidth / 2) * 1.6,
                     height: (window.innerHeight / 2) * 1.4,
                 }}
+                translate={{
+                    x: (window.innerWidth / 2) * 1.6 / 2,
+                    y: (window.innerHeight / 2) * 1.4 / 2
+                }}
+                zoom={0.3}
                 depthFactor={500}
                 onNodeClick={(data) => {
                     nodeClicked(data, setSelected);
@@ -146,7 +151,7 @@ export default function PMTree({
                 renderCustomNodeElement={(d3Props) =>
                     customNode({ ...d3Props, setSelected, setAnchor, setOptions })
                 }
-                nodeSize={{ x: 300, y: 100 }}
+                nodeSize={{ x: 250, y: 200 }}
                 separation={{ nonSiblings: 3, siblings: 3 }}
             ></Tree>
             <Popper open={options} anchorEl={anchor}>
