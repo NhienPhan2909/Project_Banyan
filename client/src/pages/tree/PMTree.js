@@ -27,20 +27,25 @@ const customNode = ({
     <rect
       width="800"
       height="40"
-      x="0"
+      x="-400"
       y="-40"
       style={{ fill: "skyblue", stroke: "cadetblue", strokeWidth: "2" }}
     />
 
     <rect
       width="800"
-      height="200"
-      x="0"
-      style={{ fill: "none", stroke: "cadetblue", strokeWidth: "2" }}
+      height="300"
+      x="-400"
+      style={{
+        fill: "white",
+        stroke: "cadetblue",
+        strokeWidth: "2",
+        zIndex: 1,
+      }}
     />
 
     <foreignObject
-      x="20"
+      x="-380"
       y="-50"
       width="500"
       height="200"
@@ -66,7 +71,7 @@ const customNode = ({
       // >
       //   {nodeDatum.attributes?.prompt}
       // </text>
-      <foreignObject x="20" y="20" width="800" height="1000">
+      <foreignObject x="-380" y="20" width="800" height="300">
         <textbox style={{ color: "black" }}>
           {nodeDatum.attributes?.prompt}
         </textbox>
@@ -129,7 +134,7 @@ export default function PMTree({
           width: (window.innerWidth / 2) * 1.6,
           height: (window.innerHeight / 2) * 1.4,
         }}
-        depthFactor={400}
+        depthFactor={1000}
         onNodeClick={(data) => {
           nodeClicked(data, setSelected);
         }}
@@ -139,7 +144,7 @@ export default function PMTree({
           customNode({ ...d3Props, setSelected, setAnchor, setOptions })
         }
         nodeSize={{ x: 500, y: 200 }}
-        separation={{ nonSiblings: 5, siblings: 5 }}
+        separation={{ nonSiblings: 3, siblings: 3 }}
       ></Tree>
       <Popper open={options} anchorEl={anchor}>
         <Box
