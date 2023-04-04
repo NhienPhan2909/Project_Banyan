@@ -20,20 +20,34 @@ const customNode = ({
   setAnchor,
   setOptions,
 }) => (
-  <g fill={getColor(nodeDatum)}>
+  <g
+    fill={getColor(nodeDatum)}
+    onClick={() => nodeClicked(nodeDatum, toggleNode, setSelected, setOptions)}
+  >
     <rect
-      width="20"
-      height="20"
-      x="-10"
-      onClick={() =>
-        nodeClicked(nodeDatum, toggleNode, setSelected, setOptions)
-      }
+      width="800"
+      height="40"
+      x="0"
+      y="-40"
+      style={{ fill: "skyblue", stroke: "cadetblue", strokeWidth: "2" }}
+    />
+
+    <rect
+      width="800"
+      height="200"
+      x="0"
+      style={{ fill: "none", stroke: "cadetblue", strokeWidth: "2" }}
+    />
+
+    <foreignObject
+      x="20"
+      y="-50"
+      width="500"
+      height="200"
       onMouseOver={(e) =>
         mouseOver(nodeDatum, e, setAnchor, setOptions, setSelected)
       }
-    />
-
-    <foreignObject x="2" y="-100" width="500" height="200">
+    >
       <h2 style={{ color: "black" }}>{nodeDatum.name}</h2>
     </foreignObject>
     {/* <text fill="black" strokeWidth="0" x="20">
@@ -110,6 +124,7 @@ export default function PMTree({
       <Tree
         data={data}
         orientation="vertical"
+        pathFunc="step"
         dimensions={{
           width: (window.innerWidth / 2) * 1.6,
           height: (window.innerHeight / 2) * 1.4,
@@ -123,7 +138,7 @@ export default function PMTree({
         renderCustomNodeElement={(d3Props) =>
           customNode({ ...d3Props, setSelected, setAnchor, setOptions })
         }
-        nodeSize={{ x: 200, y: 200 }}
+        nodeSize={{ x: 500, y: 200 }}
         separation={{ nonSiblings: 5, siblings: 5 }}
       ></Tree>
       <Popper open={options} anchorEl={anchor}>
