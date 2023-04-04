@@ -53,6 +53,7 @@
   display: flex;
   flex-direction: column;
   padding: 25px;
+  overflow-x: scroll;
 }
 
 #projects-text {
