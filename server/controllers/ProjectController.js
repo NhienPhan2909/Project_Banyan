@@ -16,7 +16,7 @@ const findProject = (req, res, next) => {
     }
 
     // Verify the token and get the payload
-    var user = jwt.verify(token, 'your_secret_key_here').userId;
+    var user = jwt.verify(token, process.env.SECRET_TOKEN).userId;
 
     Project.findOne({_id: new ObjectId(req.params.id), _userId: user}, function(err, project) {
         if (err) {
@@ -33,7 +33,7 @@ const findProject = (req, res, next) => {
 const getAllProjects = (req, res, next) => {
     var token = req.body.token;
     // get user id from token
-    var user = jwt.verify(token, 'your_secret_key_here').userId;
+    var user = jwt.verify(token, process.env.SECRET_TOKEN).userId;
 
     // Test with no verification step
     //Project.find({_userId: new ObjectId(req.params.userId)}, function(err, projects) {
@@ -52,7 +52,7 @@ const getAllProjects = (req, res, next) => {
 const addProject = (req, res, next) => {
     var token = req.body.token;
     // get user id from token
-    var user = jwt.verify(token, 'your_secret_key_here').userId;
+    var user = jwt.verify(token, process.env.SECRET_TOKEN).userId;
 
     var proj = new Project();
     try {
@@ -77,7 +77,7 @@ const addProject = (req, res, next) => {
 const updateProject = (req, res, next) => {
     var token = req.body.token;
     // get user id from token
-    var user = jwt.verify(token, 'your_secret_key_here').userId;
+    var user = jwt.verify(token, process.env.SECRET_TOKEN).userId;
 
     const updates = req.body
     Project.findOneAndUpdate({_id: new ObjectId(req.params.id), _userId: user}, {$set: updates})
@@ -97,7 +97,7 @@ const deleteProject = async (req, res, next) => {
       }
 
       // Verify the token and get the payload
-      var user = jwt.verify(token, 'your_secret_key_here').userId;
+      var user = jwt.verify(token, process.env.SECRET_TOKEN).userId;
       // Get the project ID from the request URL parameters
       const projectId = req.params.id;
   
