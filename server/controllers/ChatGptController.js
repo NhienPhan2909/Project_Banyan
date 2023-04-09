@@ -30,7 +30,7 @@ const projectPrompt = async (req, res, next) => {
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
+            'Authorization': process.env.OpenAI_API//'Bearer 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'
         })
         .send(JSON.stringify({
             "model": "text-davinci-003",

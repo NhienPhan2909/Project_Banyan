@@ -28,7 +28,7 @@ const register = (req, res, next) => {
         }
     });
 
-    hashedPass = bcrypt.hashSync(password, 5);
+    hashedPass = bcrypt.hashSync(password, 5); 
     let user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -51,13 +51,13 @@ const register = (req, res, next) => {
                 var transporter = nodemailer.createTransport({
                     service: 'gmail', 
                     auth: {
-                        user: "aipmshared@gmail.com", 
-                        pass: "zrcrkvhepfmagytm" 
+                        user: process.env.EMAIL, 
+                        pass: process.env.EMAIL_PASS 
                     } 
                 });
-                url = 'http://localhost:3000'
+                url = process.env.SITE_URL;
                 var mailOptions = { 
-                    from: 'aipmshared@gmail.com', 
+                    from: process.env.EMAIL, 
                     to: user.email, subject: 'Account Verification Link', 
                     text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
                     // \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
@@ -122,6 +122,13 @@ const verify = (req, res) => {
                                 }
                                 const token = generateJWT(user);
                                 console.log('User is now verified!');
+                                ActivationToken.remove( {token: activationToken._id}, function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                        return ;
+                                    }
+                                    console.log("Deleted Token Succesfully")
+                                });
                                 //ActivationToken.deleteOne({ token: activationToken });
                                 return res.status(200).json({ token });
                               });
@@ -150,7 +157,7 @@ const verifyJWT = (req, res, next) => {
     }
   
     try {
-      const decoded = jwt.verify(token, 'your_secret_key_here');
+      const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
       req.user = decoded;
       next();
     } catch (err) {
@@ -162,7 +169,7 @@ const verifyJWT = (req, res, next) => {
 const generateJWT = (user) => {
     const payload = { userId: user.id };
     const options = { expiresIn: '1d' };
-    return jwt.sign(payload, 'your_secret_key_here', options);
+    return jwt.sign(payload, process.env.SECRET_TOKEN, options);
   };
 
 module.exports = {

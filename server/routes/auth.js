@@ -24,8 +24,7 @@ const auth = (req, res, next) => {
 
     try {
         // Verify token
-        const decoded = jwt.verify(token, 'your_secret_key_here');
-
+        const decoded = jwt.verify(token, process.env.SECRET_TOKEN);
         // Set user object on request
         req.user = decoded.user;
         next();
