@@ -12,7 +12,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 class Dashboard extends Component {
 
     state = {
-        displayNumProjectError: false,
         anchorEl: null,
         deleteMode: false,
         projects: []
@@ -34,7 +33,7 @@ class Dashboard extends Component {
         // implement logic to delete project
         this.setState({ deleteMode: true });
         this.setState({ displayNumProjectError: false });
-
+        this.handlePopoverClose();
     };
 
     cancelDelete = () => {
@@ -144,12 +143,7 @@ class Dashboard extends Component {
             <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2}>
                 <Button className="project-button" id="NewProjButton" variant='contained'
                     onClick={() => {
-                        if (this.state.projects.length >= 4) {
-                            this.setState({ displayNumProjectError: true })
-                        }
-                        else {
-                            window.location.href = '/prompt';
-                        }
+                        window.location.href = '/prompt';
                     }
                     }>+
                 </Button>
@@ -157,10 +151,9 @@ class Dashboard extends Component {
                     <Button className="project-button" key={project._id} variant='contained'
                         onClick={() => {
                             if (this.state.deleteMode === true) {
-                                if (window.confirm("Click OK to confirm that you want to delete this project") == true) {
-                                    this.deleteProject(project._id)
-                                    this.setState({ deleteMode: false })
-                                }
+                                this.deleteProject(project._id)
+                                this.setState({ deleteMode: false })
+                                
                             }
                             else {
                                 window.location.href = '/tree/' + project._id;
@@ -170,13 +163,6 @@ class Dashboard extends Component {
                 ))}
             </Stack>
         </Box>
-    }
-
-    displayNumProjectError = () => {
-        if (this.state.displayNumProjectError)
-            return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop='100px'>
-                You may have a maximum of 4 projects, please delete a project if you wish to continue.
-            </Box>;
     }
 
     displayDeleteMessage = () => {
@@ -192,7 +178,6 @@ class Dashboard extends Component {
                 <div id="dash-form">
                     {this.displayHeader()}
                     {this.displayProjects()}
-                    {this.displayNumProjectError()}
                     {this.displayDeleteMessage()}
                 </div>
             </div>

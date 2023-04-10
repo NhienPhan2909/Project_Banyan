@@ -21,16 +21,12 @@ class Prompt extends Component {
     // and saves the response to the database
     createProject = async (prompt, description) => {
         // Check if there is a prompt
-        if (prompt === null) {
-            window.alert("Please enter your prompt for the project");
+        if (!prompt || !description) {
+            window.alert("Please enter your prompt and description for the project");
         }
         else {
             this.setState({ loading: true }); // set loading state to true before API call   
-        
-            // If the project description is null
-            if (description === null) {
-                window.confirm("Your project description is empty. Please click OK if you are sure to continue.");
-            }
+
             // Send a request to ChatGPT API to start a new project and get the response
             const chatGptResponse = await axios.post('http://localhost:11000/chatgpt/start-project', {
                 prompt, 
