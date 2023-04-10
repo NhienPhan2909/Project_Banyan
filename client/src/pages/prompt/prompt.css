@@ -49,3 +49,9 @@
   width: 100vw;
   height: 100vh;
 }
+
+.spinner {
+  color: 'rgb(0, 105, 62)';
+  background-color: '69af77';
+  size: 50,
+}
