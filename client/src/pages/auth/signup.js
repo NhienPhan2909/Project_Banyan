@@ -89,7 +89,6 @@ class Signup extends React.Component {
                         <div className="Auth-form-content">
                             <h3 className="Auth-form-title">Sign Up</h3>
                             <div className="inputs">
-
                                     <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
                                         <AccountCircle sx={{ color: 'black', mr: 1, my: 1.75 }} />
                                         <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Username" variant="standard"
