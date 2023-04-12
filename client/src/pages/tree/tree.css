@@ -17,4 +17,13 @@
     background-color: white;
 }
 
+#treeLogo {
+     max-width: 200px;
+     max-height: 75px;
+     min-width: 200px;
+     min-height: 75px;
+     padding-bottom: 7.5px;
+ }
+
+
 /* TODO: move styles from other parts of the tree components to here */
