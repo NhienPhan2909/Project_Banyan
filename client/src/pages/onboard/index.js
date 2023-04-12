@@ -101,13 +101,13 @@ function Onboard() {
                   <li>Sed do eiusmod tempor incididunt</li>
                 </ul> */}
                 <div id="buttons">
-                  <Link to="/signup">
+                  <Link id='signupButton' to="/signup">
                     <Button variant="primary" type="submit" block>
                       Sign up
                     </Button>
                   </Link>
                   {' '}
-                  <Link to="/login">
+                  <Link id='loginButton' to="/login">
                     <Button variant="dark" type="submit" block>
                       Login
                     </Button>

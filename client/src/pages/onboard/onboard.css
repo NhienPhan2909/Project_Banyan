@@ -6,13 +6,13 @@
     align-items: center;
     padding-top: 0px;
     width: 100vw;
-    height: 150vh;
+    height: 100vh;
     background: hsl(155, 100%, 96%);
   }
 
 #onboard-main {
     width: 70%;
-    height: 95%;
+    height: 98%;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
     padding-bottom: 40px;
     border-radius: 8px;
@@ -38,4 +38,12 @@
     display: flex;
     position: relative;
     margin: auto;
+}
+
+#buttons {
+    padding-top: 20px;
+}
+
+.row {
+    margin-left: initial;
 }
