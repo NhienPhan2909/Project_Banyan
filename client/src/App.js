@@ -40,7 +40,7 @@ function App() {
 
     return (
         <Router>
-            {!authenticated && <Navbar />}
+            {/* {!authenticated && <Navbar />} */}
             <Routes>
                 <Route exact path='/' element={authenticated ? <Dashboard /> : <Onboard />} />
                 <Route path='/signup' element={<Signup />} />
