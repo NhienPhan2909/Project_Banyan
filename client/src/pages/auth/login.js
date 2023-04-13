@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -129,6 +130,11 @@ class Login extends Component {
                             <p className="text-center mt-2">
                                 <a href="/signup">Need an account?</a>
                             </p>
+                            <Link to="/">
+                                <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ marginLeft: '10px', float: 'left', maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained">
+                                    Home
+                                </Button>
+                            </Link>
                         </div>
                     </form>
                 </div>
