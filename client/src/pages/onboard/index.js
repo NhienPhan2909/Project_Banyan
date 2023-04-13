@@ -2,6 +2,9 @@ import React from 'react';
 import { Carousel, Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTree, faSearch, faSeedling } from '@fortawesome/free-solid-svg-icons';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './onboard.css'
 function Onboard() {
@@ -101,25 +104,30 @@ function Onboard() {
                   <li>Sed do eiusmod tempor incididunt</li>
                 </ul> */}
                 <div id="buttons">
-                  <Link id='signupButton' to="/signup">
-                    <Button variant="primary" type="submit" block>
+                  <Link id='signup' to="/signup">
+                    <Button className='signupButton' variant="contained" type="submit" block>
                       Sign up
+                      {' '}
+                      <FontAwesomeIcon icon={faSeedling} style={{color: "#1f5125",}} />
                     </Button>
                   </Link>
                   {' '}
-                  <Link id='loginButton' to="/login">
-                    <Button variant="dark" type="submit" block>
+                  <Link id='login' to="/login">
+                    <Button className='loginButton' variant="dark" type="submit" block>
                       Login
+                      {' '}
+                      <FontAwesomeIcon icon={faTree} bounce style={{color: "#2f933a",}} />
                     </Button>
                   </Link>
+                  
                 </div>
               {/* </div> */}
             </Row>
           </Row>
-        </Container>
+        </Container> 
       </div>
     </div>
-  );
+  ); 
 }
 
 export default Onboard;
