@@ -105,7 +105,7 @@ function Onboard() {
                 </ul> */}
                 <div id="buttons">
                   <Link id='signup' to="/signup">
-                    <Button className='signupButton' variant="contained" type="submit" block>
+                    <Button className='signupButton' variant="dark" type="submit" block>
                       Sign up
                       {' '}
                       <FontAwesomeIcon icon={faSeedling} style={{color: "#1f5125",}} />

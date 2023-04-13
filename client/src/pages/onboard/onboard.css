@@ -53,11 +53,12 @@
 }
 
 .signupButton{
-     background: linear-gradient(60deg, rgb(0, 105, 62) 0%,  hsl(156, 84%, 78%) 100%);
+     /* background: linear-gradient(60deg, rgb(0, 105, 62) 0%,  hsl(156, 84%, 78%) 100%); */
+     background: rgb(18, 138, 88);
      /* box-shadow: 0 0.3rem 5rem rgba(rgb(0, 105, 62), 0.8) */
      /* outline: rgb(0, 105, 62); */
     }
 
-.loginButton {
+.loginButton {  
     background: #847e76;
 }
