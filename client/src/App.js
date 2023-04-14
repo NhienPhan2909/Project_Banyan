@@ -15,6 +15,8 @@ import Login from './pages/auth/login';
 import Signup from './pages/auth/signup';
 import Verify from './pages/auth/verify';
 
+import FadeLoader from "react-spinners/FadeLoader";
+
 
 function App() {
 
@@ -35,7 +37,7 @@ function App() {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <FadeLoader loading={loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77', position: 'fixed', top: '5%', left: '50%', transform: 'translateX(-50%)',}}/>
     }
 
     return (
