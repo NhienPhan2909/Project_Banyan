@@ -1,0 +1,64 @@
+@import '../globals.css';
+
+#onboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    padding-top: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: hsl(155, 100%, 96%);
+  }
+
+#onboard-main {
+    width: 70%;
+    height: 98%;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-bottom: 40px;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+ 
+/* .custom-item img {
+     height: 424px;
+} */
+
+#specialDiv {
+    position: relative; width: 100%; height: 0; padding-top: 50%;
+}
+
+#specialImg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    filter: brightness(150%) contrast(100%);
+}
+
+#logo {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+    margin: auto;
+}
+
+#buttons {
+    padding-top: 20px;
+}
+
+.row {
+    margin-left: initial;
+}
+
+#buttons {
+}
+
+.signupButton{
+     /* background: linear-gradient(60deg, rgb(0, 105, 62) 0%,  hsl(156, 84%, 78%) 100%); */
+     background: rgb(18, 138, 88);
+     /* box-shadow: 0 0.3rem 5rem rgba(rgb(0, 105, 62), 0.8) */
+     /* outline: rgb(0, 105, 62); */
+    }
+
+.loginButton {  
+    background: #847e76;
+}
