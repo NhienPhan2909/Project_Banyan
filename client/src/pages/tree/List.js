@@ -66,9 +66,6 @@ export default function List({ data }) {
             </Stack>
             <Divider sx={{ color:'black', backgroundColor:'black', my: '10px' }} />
 
-
-            <h2>List View</h2>
-
             <TreeView
                 aria-label="file system navigator"
                 defaultCollapseIcon={<ExpandMoreIcon />}

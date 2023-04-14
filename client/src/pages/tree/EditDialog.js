@@ -16,17 +16,23 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
   const [name, setName] = useState("");
   const [prompt, setPrompt] = useState("");
 
+  const saveNode = () => {
+    //Update the name and prompt of the selected node
+     selected.name = name;
+     selected.attributes.prompt = prompt;
+     setOpen(false);
+   };
+
   useEffect(() => {
-    if (!selected) return;
+    if(!selected) return;
     setName(selected?.name);
     setPrompt(selected?.attributes?.prompt);
-    console.log(name);
-  }, [selected, data, name]);
+  }, [selected, data]);
 
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit Prompt at Node</DialogTitle>
+        <DialogTitle >Edit Node</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>Set Name</DialogContentText> */}
           <TextField
@@ -37,6 +43,7 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             fullWidth
             variant="standard"
             value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </DialogContent>
         <DialogContent>
@@ -51,11 +58,12 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             multiline={true}
             rows="3"
             value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Apply</Button>
+          <Button onClick={saveNode}>Apply</Button>
         </DialogActions>
       </Dialog>
     </div>
