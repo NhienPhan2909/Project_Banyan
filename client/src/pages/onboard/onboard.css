@@ -8,7 +8,7 @@
     padding-top: 0px;
     width: 100vw;
     height: 100vh;
-    background: hsl(156, 100%, 96%);
+    background: hsl(151, 81%, 81%);
 } 
 
 #onboard-main {
@@ -52,28 +52,34 @@
 
 .caption-title {
     font-family: "Signika Negative";
-    font-size: 35px;
+    font-size: 25px;
     font-variant: normal;
     color: rgb(0, 105, 62);
 }
 
 .caption-text {
     font-family: "Signika Negative";
+    font-size: 15px;
     font-variant: normal;
     color: black;
 }
 
+#slide-2-title {
+   margin-bottom: 0em;
+}
+
 #slide-2-text {
-    margin-bottom: -2em;
+    margin-bottom: -.5em;
 }
 
 #slide-3-text {
-    margin-top: 1em;
+    margin-top: 1.5em;
     margin-bottom: 0em;
 }
 
 #slide-5-text {
-    margin-bottom: -1em;
+    margin-bottom: 1em;
+    font-size: 15px;
 }
 
 #logo {

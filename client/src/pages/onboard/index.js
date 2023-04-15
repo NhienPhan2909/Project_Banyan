@@ -45,7 +45,7 @@ function Onboard() {
                     />
                   </div>
                   <Carousel.Caption>
-                    <h3 className='caption-title'>Make an Account</h3>
+                    <h3 className='caption-title' id='slide-2-title'>Make an Account</h3>
                     <p className='caption-text' id='slide-2-text'>
                       Click on the button to signup with your email! Once you verify your email you can start using
                       our product.
@@ -96,7 +96,7 @@ function Onboard() {
                   <Carousel.Caption>
                     <h3 className='caption-title' id='slide-5-title'>Repeat!</h3>
                     <p className='caption-text' id='slide-5-text'>
-                      Now the world is your oyster :). Repeat the process with as many different projects as you'd like!
+                      Now the world is your oyster :) Repeat the process with as many different projects as you'd like!
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
