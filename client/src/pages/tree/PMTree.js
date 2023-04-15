@@ -29,9 +29,9 @@ const customNode = ({
   >
     <rect
       width="800"
-      height="100"
+      height="200"
       x="-400"
-      y="-100"
+      y="-140"
       style={{ fill: "#00693e", stroke: "#00693e", strokeWidth: "2" }}
     />
 
