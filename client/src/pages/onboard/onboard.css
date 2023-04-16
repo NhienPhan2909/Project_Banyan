@@ -15,17 +15,17 @@
     width: 70%;
     height: 98%;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-    padding-bottom: 40px;
-    border-radius: 25px;
+    padding-bottom: 10vh;
+    border-radius: 5vh;
     background-color: #fafafa;
 }
 
 #header {
-    padding-bottom: 15px;
+    padding-bottom: 3.5vh;
 }
 
 .carousel-item {
-    border: 1px solid black;
+    border: 0.24vh solid black;
   }
 
 .ImgDiv {
@@ -37,22 +37,26 @@
 }
 
 .customImg {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
 }
 
 .text { 
-    margin-top: 20px;
+    margin-top: 2vh;
     font-family: "Signika Negative"; 
-    font-size: 48px; 
+    font-size: 10vh; 
     font-variant: small-caps;
     font-weight: 700; 
-    line-height: 26.4px; 
+    line-height: 4vh; 
     color: rgb(0, 105, 62);
 }     
 
 .caption-title {
     font-family: "Signika Negative";
-    font-size: 25px;
+    font-size: 4vh;
     font-variant: normal;
     color: rgb(0, 105, 62);
 }
@@ -91,7 +95,7 @@
 }
 
 #buttons {
-    padding-top: 20px;
+    padding-top: 2.5vh;
 }
 
 .row {
