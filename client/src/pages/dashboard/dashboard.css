@@ -34,16 +34,18 @@
 
 /* a spacer before the h3 and the settings button allows 
    for the h3 to center and the button to align right */
+#settings { 
+  padding-right: 75px; 
+}
+
 #spacer, #settings, #settings button {
   min-width: 50px;
   max-width: 50px;
   min-height: 50px;
   max-height: 50px;
-  padding: 0;
 }
 
-#spacer { padding-left: 40px; }
-#settings { padding-right: 40px; }
+#spacer { padding-left: 80px; }
 #settings button { color:hsl(155, 100%, 80%); }
 #settings button:hover { background-color: hsla(155, 100%, 80%, .12); }
 #logo { max-width: 30%; }
