@@ -88,8 +88,8 @@ class Signup extends React.Component {
                 <div className="form-container">
                     <form className="form">
                     <Link to="/">
-                            <Button style={{fontSize:'12px', marginLeft:'20px', display:'flex', maxWidth: '10px', maxHeight: '10px', minWidth: '10px', minHeight: '10px' }} variant="standard">
-                                    back
+                    <Button sx={{color: 'lightgrey'}} style={{fontSize:'13px', marginLeft:'20px', maxWidth: '50px', maxHeight: '25px', minWidth: '50px', minHeight: '25px' }} variant="standard">
+                                    home
                             </Button>
                         </Link>
                         <div className="Auth-form-content">

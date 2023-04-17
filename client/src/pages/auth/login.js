@@ -81,8 +81,8 @@ class Login extends Component {
                 <div className="form-container">
                     <form className="form">   
                         <Link to="/">
-                            <Button style={{fontSize:'12px', marginLeft:'20px', display:'flex', maxWidth: '20px', maxHeight: '20px', minWidth: '20px', minHeight: '20px' }} variant="standard">
-                                    back
+                            <Button sx={{color: 'lightgrey'}} style={{fontSize:'13px', marginLeft:'20px', maxWidth: '50px', maxHeight: '25px', minWidth: '50px', minHeight: '25px' }} variant="standard">
+                                    home
                             </Button>
                         </Link>
                         <div className="Auth-form-content">
