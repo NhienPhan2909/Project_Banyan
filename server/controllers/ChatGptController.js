@@ -1,6 +1,6 @@
-const { Configuration, OpenAIApi } = require("openai");
+const unirest = require('unirest');
 
-function extractEpicsAndStories(responseText) {
+const extractEpicsAndStories = (responseText) => {
     const text = responseText
     const json = { epics: [] };
     let currentEpic = null;
@@ -22,11 +22,9 @@ function extractEpicsAndStories(responseText) {
 }
 
 const projectPrompt = async (req, res, next) => {
-    //request.body.prompt should just be the essence of the project
     var prompt = "Think yourself as a Project Manager. Break down the project of "
         + req.body.prompt + " into agile epics. And break down each epic into user stories. Some background information regarding the project: " + req.body.description;
 
-    var unirest = require('unirest');
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
@@ -40,47 +38,76 @@ const projectPrompt = async (req, res, next) => {
         }))
         .end(function (response) {
             if (response.error) throw new Error(response.error);
-            console.log("response..........", response)
+            console.log("response..........", response);
             const completedText = response.raw_body;
-            console.log(typeof completedText)
+            console.log(typeof completedText);
             const jsonObj = JSON.parse(completedText);
-            console.log(jsonObj)
-            console.log(jsonObj.choices)
-            finalText = jsonObj.choices[0].text
-            console.log("JSON TEXT.............", finalText)
+            console.log(jsonObj);
+            console.log(jsonObj.choices);
+            finalText = jsonObj.choices[0].text;
+            console.log("JSON TEXT.............", finalText);
             return res.status(200).json(extractEpicsAndStories(finalText));
-        })
+        });
 }
 
+const extractExpandedNode = (responseText, agileType) => {
+    var childType;
+    switch (agileType) {
+        case "epic":
+            childType = "story";
+            break;
+        case "story":
+        case "task":
+        default:
+            childType = "task";
+    }
+
+    const text = responseText;
+    const json = { children: [] };
+
+    for (const line of text.split('\n')) {
+        const childName = childType.charAt(0).toUpperCase() + childType.slice(1) + " " + line.charAt(0); // e.g. Story 3
+        const childContent = line.substring(3).trim();
+        const currentChild = {
+            name: childName,
+            attributes: {
+                type: childType,
+                content: childContent
+            },
+            children: []
+        }
+        json.children.push(currentChild);
+    }
+
+    return json;
+}
 
 const expandNode = async (req, res, next) => {
-
-    const configuration = new Configuration({
-        apiKey: "API_KEY",
-    });
-
-    const openai = new OpenAIApi(configuration);
-
-    var projectPrompt = req.body.projectPrompt
-    var agileType = req.body.agileType
-    var parentNodePrompt = req.body.parentNodePrompt
+    var projectPrompt = req.body.projectPrompt;
+    var agileType = req.body.type;
+    var parentNodePrompt = req.body.prompt;
     var prompt;
 
-    if (agileType == "Epic") {
-        prompt = "Think yourself as a project manager. For a agile sprint, break down the agile epic: \""
-            + parentNodePrompt + "\" for project of " + projectPrompt + " into user stories. Feel free to break the user story into agile cards further"
-    }
-    else if (agileType == "User Story") {
-        prompt = "Think yourself as a software engineer. For a agile sprint, break down the user story: \""
-            + parentNodePrompt + "\" for project of " + projectPrompt + " into achievable agile cards. Break the agile cards further"
+    switch (agileType) {
+        case "epic":
+            prompt = "Think yourself as a project manager. Using the Agile methodology, break down the agile epic: \""
+                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into 2-4 relevant user stories.";
+            break;
+        case "story":
+            prompt = "Think yourself as a software engineer. Using the Agile methodology, break down the user story: \""
+                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into 3-5 achievable tasks. Do not include any tasks involving "
+                + "deploying to production. Include recommended tech stacks for each task, in the form of (Recommended stacks: *, *, *).";
+            break;
+        case "task":
+            prompt = "Think yourself as a software engineer. Using the Agile methodology, break down the task: \""
+                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into subtasks such that each is achievable by a single developer. "
+                + "Do not include any tasks involving deploying to production.";
+            break;
+        default:
+            prompt = "Think yourself as a project manager. Using the Agile methodology, break down the goal of: \""
+                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into more granular and detailed goals.";
     }
 
-    else if (agileType == "Agile Card") {
-        prompt = "Think yourself as a software engineer. For a agile sprint, break down the agile card: \""
-            + parentNodePrompt + "\" for project of " + projectPrompt + " into further achievable agile cards. Feel free to break the agile cards further"
-    }
-
-    var unirest = require('unirest');
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
@@ -94,20 +121,17 @@ const expandNode = async (req, res, next) => {
         }))
         .end(function (response) {
             if (response.error) throw new Error(response.error);
-            console.log("response..........", response)
+            console.log("response..........", response);
             const completedText = response.raw_body;
-            console.log(typeof completedText)
+            console.log(typeof completedText);
             const jsonObj = JSON.parse(completedText);
-            console.log(jsonObj)
-            console.log(jsonObj.choices)
-            finalText = jsonObj.choices[0].text
-            console.log("JSON TEXT.............", finalText)
-            return res.status(200).send(finalText)
-        })
-
-
-    return res.status(200).send(finalText)
-};
+            console.log(jsonObj);
+            console.log(jsonObj.choices);
+            finalText = jsonObj.choices[0].text;
+            console.log("JSON TEXT.............", finalText);
+            return res.status(200).json(extractExpandedNode(finalText));
+        });
+}
 
 module.exports = {
     projectPrompt, expandNode
