@@ -87,6 +87,11 @@ class Signup extends React.Component {
             <div>
                 <div className="form-container">
                     <form className="form">
+                    <Link to="/">
+                            <Button style={{fontSize:'12px', marginLeft:'20px', display:'flex', maxWidth: '10px', maxHeight: '10px', minWidth: '10px', minHeight: '10px' }} variant="standard">
+                                    back
+                            </Button>
+                        </Link>
                         <div className="Auth-form-content">
                             <h3 className="Auth-form-title">Sign Up</h3>
                             <div className="inputs">
@@ -133,7 +138,7 @@ class Signup extends React.Component {
                                     </Box>
                                 </div>
                             <div className="authSubmit">
-                                <Stack paddingBottom={'10px'}>
+                                <Stack paddingBottom={'20px'}>
                                     <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
                                         onClick={async () => {
                                             var resp = await this.submitForm()
@@ -145,11 +150,6 @@ class Signup extends React.Component {
                             <p className="text-center mt-2">
                                 <a href="/login">Already have an account?</a>
                             </p>
-                            <Link to="/">
-                                <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ marginLeft: '10px', float: 'left', maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained">
-                                    Home
-                                </Button>
-                            </Link>
                         </div>
                     </form>
                 </div>
