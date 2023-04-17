@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Box } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -14,6 +15,7 @@ export default function List({ data }) {
     const [selectedItemId, setSelectedItemId] = React.useState(null);
 
     const spinTreeItems = (data) => {
+        console.log(data);
         return (
             <TreeItem nodeId={data[0].toString()} label={data[1]}>
                 {renderTreeItems(data[3])}
@@ -43,6 +45,60 @@ export default function List({ data }) {
         return <TreeItem nodeId={itemId} label={itemName} />;
     };
 
+    const updateNodeAndChildren = async (node) => {
+        try {
+            // check if node has ID
+            if (!node.id) {
+                // add new node to database
+                const response = await fetch('/add-node', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: node.attributes.prompt,
+                        agile_scope: node.attributes.type,
+                        _parentId: null //TODO: Update
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to add new node: ${response.status} ${response.statusText}`);
+                }
+
+                // get new ID from response
+                const data = await response.json();
+                node.id = data._id;
+            }
+
+            // update current node
+            const response = await fetch(`/update/${node.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: node.attributes.prompt,
+                    agile_scope: node.attributes.type,
+                    _parentId: null //TODO: Update
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update node with ID ${node.id}: ${response.status} ${response.statusText}`);
+            }
+
+            // recursively update children
+            if (node.children && node.children.length > 0) {
+                for (let i = 0; i < node.children.length; i++) {
+                    await updateNodeAndChildren(node.children[i]);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
 
         <Container style={{ border: "solid black", width: "20%", paddingTop: '10px' }}>
@@ -59,7 +115,7 @@ export default function List({ data }) {
                 <Button sx={{backgroundColor: 'rgb(0, 105, 62)', fontSize:'12px'}} style={{ maxWidth: '90px', maxHeight: '40px', minWidth: '90px', minHeight: '40px' }} variant="contained" 
                 onClick={async () => 
                 {
-                    
+                    updateNodeAndChildren(data);
                 }}>
                     Save
                 </Button>

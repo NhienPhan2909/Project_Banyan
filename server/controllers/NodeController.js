@@ -1,6 +1,6 @@
 const Node = require('../models/Node');
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongodb');
+const ObjectId = mongoose.Types.ObjectId;
 
 mongoose.set('strictQuery', false);
 
@@ -34,11 +34,31 @@ const addNode = (req, res, next) => {
     });
 }
 
-const updateNode = (req, res, next) => {
-    const updates = req.body
-    Node.findOneAndUpdate({node_id: parseInt(req.params.node_id)}, {$set: updates})
-        .then(result => {res.status(200).json(result)})
-        .catch(err => {res.status(400).send('Could not update the node')});
+const updateNode = async (req, res, next) => {
+    try {
+        const { content, agile_scope, _parentId } = req.body;
+        const { node_id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(node_id)) {
+            return res.status(400).send({ msg: 'Invalid node ID' });
+        }
+
+        const node = await Node.findOne({ _id: new ObjectId(node_id) });
+
+        if (!node) {
+            return res.status(404).send({ msg: 'Node not found' });
+        }
+
+        node.content = content || node.content;
+        node.agile_scope = agile_scope || node.agile_scope;
+        node._parentId = _parentId || node._parentId;
+
+        const updatedNode = await node.save();
+
+        res.status(200).send(updatedNode);
+    } catch (error) {
+        res.status(500).send({ msg: error.message });
+    }
 }
 
 // recursive delete function that deletes all child nodes
