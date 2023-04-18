@@ -122,6 +122,7 @@ export default function PMTree({
   setSelected,
   setOpenDialog,
   setOpenCreateDialog,
+  setOpenDeleteDialog,
 }) {
   const [options, setOptions] = useState(false);
   const [anchor, setAnchor] = useState(null);
@@ -173,7 +174,7 @@ export default function PMTree({
               fontSize="small"
             />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => setOpenDeleteDialog(true)}>
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Box>
