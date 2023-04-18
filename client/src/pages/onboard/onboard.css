@@ -16,6 +16,7 @@
     height: 98%;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
     padding-bottom: 10vh;
+    padding-top: 10px;
     border-radius: 5vh;
     background-color: #fafafa;
 }
