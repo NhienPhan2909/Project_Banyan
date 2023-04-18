@@ -4,6 +4,7 @@ import PMTree from "./PMTree";
 import EditDialog from "./EditDialog";
 import CreateDialog from "./CreateDialog";
 import DeleteDialog from "./DeleteDialog";
+import ExpandDialog from "./ExpandDialog";
 import axios from "axios";
 
 import "./tree.css";
@@ -63,6 +64,7 @@ export default function TreeContainer() {
     const [openDialog, setOpenDialog] = useState(false);
     const [openCreateDialog, setOpenCreateDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [openExpandDialog, setOpenExpandDialog] = useState(false);
 
     const handleClickOpen = () => {
         if (selected) setOpenDialog(true);
@@ -100,6 +102,13 @@ export default function TreeContainer() {
                 setData={setData}
                 selected={selected}
             />
+            <ExpandDialog
+                open={openExpandDialog}
+                setOpen={setOpenExpandDialog}
+                data={data}
+                setData={setData}
+                selected={selected}
+            />
             {/* <Stack direction="row">
         <div style={{ marginRight: "20%" }}>
           <h2>Selected: {selected.name}</h2>
@@ -115,6 +124,7 @@ export default function TreeContainer() {
                     setOpenDialog={setOpenDialog}
                     setOpenCreateDialog={setOpenCreateDialog}
                     setOpenDeleteDialog={setOpenDeleteDialog}
+                    setOpenExpandDialog={setOpenExpandDialog}
                 />
             )}
             {/* </Stack> */}

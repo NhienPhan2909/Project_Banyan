@@ -123,6 +123,7 @@ export default function PMTree({
     setOpenDialog,
     setOpenCreateDialog,
     setOpenDeleteDialog,
+    setOpenExpandDialog,
 }) {
     const [options, setOptions] = useState(false);
     const [anchor, setAnchor] = useState(null);
@@ -163,16 +164,11 @@ export default function PMTree({
                     <IconButton onClick={() => setOpenDialog(true)}>
                         <EditIcon fontSize="small" />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={() => setOpenExpandDialog(true)}>
                         <ExpandCircleDownIcon fontSize="small" />
                     </IconButton>
-                    <IconButton>
-                        <AddBoxIcon
-                            onClick={() => {
-                                setOpenCreateDialog(true);
-                            }}
-                            fontSize="small"
-                        />
+                    <IconButton onClick={() => setOpenCreateDialog(true)}>
+                        <AddBoxIcon fontSize="small" />
                     </IconButton>
                     <IconButton onClick={() => setOpenDeleteDialog(true)}>
                         <DeleteIcon fontSize="small" />
