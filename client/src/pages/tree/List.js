@@ -56,10 +56,10 @@ export default function List({ data }) {
             const childIdList = getChildIDs(node);
 
             // check if node has ID
-            if (!node.id) {
+            if (!node.id || node.id === -1) {
                 // add new node to database
                 const response = await axios.post(`http://localhost:11000/nodes/add-node`, {
-                    content: node.attributes.prompt,
+                    content: node.attributes.content,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
                     _parentId: null //TODO: Update
@@ -70,8 +70,7 @@ export default function List({ data }) {
                 }
 
                 // get new ID from response
-                const data = await response.json();
-                node.id = data._id;
+                node.id = response.data._id;
             } else {
                 // Delete nodes in the DB that are not childIdList but are in node's _childIdList
                 const existingNodeResponse = await axios.get(`http://localhost:11000/nodes/${node.id}`);

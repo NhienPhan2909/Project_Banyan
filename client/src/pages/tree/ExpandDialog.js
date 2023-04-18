@@ -26,9 +26,52 @@ export default function ExpandDialog({
         setOpen(false);
     };
 
+    const initChildIDs = (children) => {
+        if (children && children.length > 0) {
+            for (let i = 0; i < children.length; i++) {
+                children[i]["id"] = -1;
+            }
+        }
+        return children
+    }
+
     const expandNode = async (root) => {
         try {
-            
+            // Find the node in the PMTree given an id
+            const traverse = (node, id) => {
+                if (node.id === id) {
+                    return node;
+                }
+                if (node.children && node.children.length > 0) {
+                    for (let i = 0; i < node.children.length; i++) {
+                        const result = traverse(node.children[i], id);
+                        if (result) {
+                            return result;
+                        }
+                    }
+                }
+                return null;
+            };
+
+            const response = await axios.post(`http://localhost:11000/chatgpt/expand-node`, {
+                projectPrompt: root.attributes.prompt,
+                agileType: selected.attributes.type,
+                parentNodePrompt: selected.attributes.prompt,
+            });
+
+            if (response.status !== 200) {
+                throw new Error(`Failed to expand node: ${response.status} ${response.statusText}`);
+            }
+
+            // Add children to parent
+            const genChildren = initChildIDs(response.data.children)
+            const node = traverse(root, selected.id);
+            node.children = node.children.concat(genChildren);
+
+            console.log(initChildIDs(response.data.children))
+            console.log(response)
+            console.log(node.children)
+            console.log(root)
         } catch (error) {
             console.error(error);
         }
