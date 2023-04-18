@@ -39,13 +39,13 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             selected.name = name;
             selected.attributes.prompt = prompt;
             setOpen(false);
-            console.log(selected);
+            //console.log(selected);
 
             // Edit state
             const node = traverse(root, selected.id);
             node.name = name;
             node.attributes.prompt = prompt;
-            console.log(node);
+            //console.log(node);
         } catch (error) {
             console.error(error);
         }
