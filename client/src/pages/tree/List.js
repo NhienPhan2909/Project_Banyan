@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 
 import { Box } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
@@ -50,42 +51,31 @@ export default function List({ data }) {
             // check if node has ID
             if (!node.id) {
                 // add new node to database
-                const response = await fetch('/add-node', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        content: node.attributes.prompt,
-                        agile_scope: node.attributes.type,
-                        _parentId: null //TODO: Update
-                    })
+                const response = await axios.post(`http://localhost:11000/nodes/add-node`, {
+                    content: node.attributes.prompt,
+                    agile_scope: node.attributes.type,
+                    _parentId: null //TODO: Update
                 });
 
-                if (!response.ok) {
+                if (response.status != 200) {
                     throw new Error(`Failed to add new node: ${response.status} ${response.statusText}`);
                 }
 
                 // get new ID from response
                 const data = await response.json();
                 node.id = data._id;
-            }
-
-            // update current node
-            const response = await fetch(`/update/${node.id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+            } else {
+                // update current node
+                const response = await axios.patch(`http://localhost:11000/nodes/update/${node.id}`, {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _parentId: null //TODO: Update
-                })
-            });
+                });
 
-            if (!response.ok) {
-                throw new Error(`Failed to update node with ID ${node.id}: ${response.status} ${response.statusText}`);
+                if (response.status != 200) {
+                    throw new Error(`Failed to update node with ID ${node.id}: ${response.status} ${response.statusText}`);
+                }
+                console.log(response);
             }
 
             // recursively update children
