@@ -40,15 +40,28 @@ export default function List({ data }) {
         );
     };
 
+    const getChildIDs = (node) => {
+        const children = [];
+        if (node.children && node.children.length > 0) {
+            for (let i = 0; i < node.children.length; i++) {
+                children.push(node.children[i].id)
+            }
+        }
+        return children
+    }
+
     const updateNodeAndChildren = async (node) => {
         //console.log(data);
         try {
+            const childIdList = getChildIDs(node);
+
             // check if node has ID
             if (!node.id) {
                 // add new node to database
                 const response = await axios.post(`http://localhost:11000/nodes/add-node`, {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
+                    _childIdList: childIdList,
                     _parentId: null //TODO: Update
                 });
 
@@ -60,10 +73,15 @@ export default function List({ data }) {
                 const data = await response.json();
                 node.id = data._id;
             } else {
+                // TODO: Delete nodes in the DB that are not childIdList but are in node's _childIdList
+                // Use `http://localhost:11000/nodes/${node.id}` to get the node
+                // Use `http://localhost:11000/nodes/delete/${node.id}` to delete
+
                 // update current node
                 const response = await axios.patch(`http://localhost:11000/nodes/update/${node.id}`, {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
+                    _childIdList: childIdList,
                     _parentId: null //TODO: Update
                 });
 
