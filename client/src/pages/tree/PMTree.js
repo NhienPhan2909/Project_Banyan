@@ -15,94 +15,94 @@ import "./tree.css";
 
 // This defines the node
 const customNode = ({
-  nodeDatum,
-  toggleNode,
-  setSelected,
-  setAnchor,
-  setOptions,
+    nodeDatum,
+    toggleNode,
+    setSelected,
+    setAnchor,
+    setOptions,
 }) => (
-  // Group changes
-  <g
-    fill={getColor(nodeDatum)}
-    onClick={() => nodeClicked(nodeDatum, toggleNode, setSelected, setOptions)}
-    transform="scale(0.8)"
-  >
-    <rect
-      width="800"
-      height="200"
-      x="-400"
-      y="-140"
-      style={{ fill: "#00693e", stroke: "#00693e", strokeWidth: "2" }}
-    />
-
-    <rect
-      width="800"
-      height="300"
-      x="-400"
-      style={{
-        fill: "white",
-        stroke: "#00693e",
-        strokeWidth: "2",
-        zIndex: 1,
-      }}
-    />
-
-    <foreignObject
-      x="-380"
-      y="-120"
-      width="500"
-      height="200"
-      onMouseOver={(e) =>
-        mouseOver(nodeDatum, e, setAnchor, setOptions, setSelected)
-      }
+    // Group changes
+    <g
+        fill={getColor(nodeDatum)}
+        onClick={() => nodeClicked(nodeDatum, toggleNode, setSelected, setOptions)}
+        transform="scale(0.8)"
     >
-      <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
-    </foreignObject>
-    {/* <text fill="black" strokeWidth="0" x="20">
+        <rect
+            width="800"
+            height="200"
+            x="-400"
+            y="-140"
+            style={{ fill: "#00693e", stroke: "#00693e", strokeWidth: "2" }}
+        />
+
+        <rect
+            width="800"
+            height="300"
+            x="-400"
+            style={{
+                fill: "white",
+                stroke: "#00693e",
+                strokeWidth: "2",
+                zIndex: 1,
+            }}
+        />
+
+        <foreignObject
+            x="-380"
+            y="-120"
+            width="500"
+            height="200"
+            onMouseOver={(e) =>
+                mouseOver(nodeDatum, e, setAnchor, setOptions, setSelected)
+            }
+        >
+            <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
+        </foreignObject>
+        {/* <text fill="black" strokeWidth="0" x="20">
       {nodeDatum.name}
     </text> */}
-    {nodeDatum.attributes?.prompt && (
-      // <text
-      //   fill="white"
-      //   x="20"
-      //   y="20"
-      //   dy="20"
-      //   wordSpacing="0.1em"
-      //   strokeWidth="1"
-      //   textLength="400"
-      //   lengthAdjust="spacingAndGlyphs"
-      // >
-      //   {nodeDatum.attributes?.prompt}
-      // </text>
-      <foreignObject x="-380" y="20" width="760" height="300">
-        <textbox style={{ color: "black", fontSize: "44px" }}>
-          {nodeDatum.attributes?.prompt}
-        </textbox>
-      </foreignObject>
-    )}
-  </g>
+        {nodeDatum.attributes?.prompt && (
+            // <text
+            //   fill="white"
+            //   x="20"
+            //   y="20"
+            //   dy="20"
+            //   wordSpacing="0.1em"
+            //   strokeWidth="1"
+            //   textLength="400"
+            //   lengthAdjust="spacingAndGlyphs"
+            // >
+            //   {nodeDatum.attributes?.prompt}
+            // </text>
+            <foreignObject x="-380" y="20" width="760" height="300">
+                <textbox style={{ color: "black", fontSize: "44px" }}>
+                    {nodeDatum.attributes?.prompt}
+                </textbox>
+            </foreignObject>
+        )}
+    </g>
 );
 
 const wrappedText = (text) => {
-  const split = text.split(" ");
+    const split = text.split(" ");
 
-  for (let i = 0; i < split.length; i += 5) {}
-  return text;
+    for (let i = 0; i < split.length; i += 5) { }
+    return text;
 };
 
 const getColor = (data) => {
-  return data?.attributes?.type === "Epic" ? "blue" : "green";
+    return data?.attributes?.type === "Epic" ? "blue" : "green";
 };
 
 const nodeClicked = (nodeDatum, toggleNode, setSelected) => {
-  toggleNode();
-  setSelected(nodeDatum);
+    toggleNode();
+    setSelected(nodeDatum);
 };
 
 const mouseOver = (nodeDatum, e, setAnchor, setOptions, setSelected) => {
-  setSelected(nodeDatum);
-  setAnchor(e.target);
-  setOptions(true);
+    setSelected(nodeDatum);
+    setAnchor(e.target);
+    setOptions(true);
 };
 
 // const onHover = (data, setOpen, setHover) => {
@@ -117,69 +117,69 @@ const mouseOver = (nodeDatum, e, setAnchor, setOptions, setSelected) => {
 // };
 
 export default function PMTree({
-  data,
-  selected,
-  setSelected,
-  setOpenDialog,
-  setOpenCreateDialog,
-  setOpenDeleteDialog,
+    data,
+    selected,
+    setSelected,
+    setOpenDialog,
+    setOpenCreateDialog,
+    setOpenDeleteDialog,
 }) {
-  const [options, setOptions] = useState(false);
-  const [anchor, setAnchor] = useState(null);
+    const [options, setOptions] = useState(false);
+    const [anchor, setAnchor] = useState(null);
 
-  return (
-    // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
-    <div id="tree-wrapper" onClick={() => setOptions(false)}>
-      <Tree
-        data={data}
-        orientation="vertical"
-        pathFunc="step"
-        dimensions={{
-          width: (window.innerWidth / 2) * 1.6,
-          height: (window.innerHeight / 2) * 1.4,
-        }}
-        translate={{
-          x: ((window.innerWidth / 2) * 1.6) / 2,
-          y: ((window.innerHeight / 2) * 1.4) / 2,
-        }}
-        zoom={0.3}
-        depthFactor={500}
-        onNodeClick={(data) => {
-          nodeClicked(data, setSelected);
-        }}
-        // onNodeMouseOver={(data) => onHover(data, setOptions, setHover, setAnchor)}
-        // onNodeMouseOut={(data) => onHoverOut(data, setOptions)}
-        renderCustomNodeElement={(d3Props) =>
-          customNode({ ...d3Props, setSelected, setAnchor, setOptions })
-        }
-        nodeSize={{ x: 250, y: 200 }}
-        separation={{ nonSiblings: 3, siblings: 3 }}
-      ></Tree>
-      <Popper open={options} anchorEl={anchor}>
-        <Box
-          sx={{ border: 1, bgcolor: "background.paper" }}
-          onMouseLeave={() => setOptions(false)}
-        >
-          <IconButton onClick={() => setOpenDialog(true)}>
-            <EditIcon fontSize="small" />
-          </IconButton>
-          <IconButton>
-            <ExpandCircleDownIcon fontSize="small" />
-          </IconButton>
-          <IconButton>
-            <AddBoxIcon
-              onClick={() => {
-                setOpenCreateDialog(true);
-              }}
-              fontSize="small"
-            />
-          </IconButton>
-          <IconButton onClick={() => setOpenDeleteDialog(true)}>
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-        </Box>
-      </Popper>
-      <List data={data} />
-    </div>
-  );
+    return (
+        // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
+        <div id="tree-wrapper" onClick={() => setOptions(false)}>
+            <Tree
+                data={data}
+                orientation="vertical"
+                pathFunc="step"
+                dimensions={{
+                    width: (window.innerWidth / 2) * 1.6,
+                    height: (window.innerHeight / 2) * 1.4,
+                }}
+                translate={{
+                    x: ((window.innerWidth / 2) * 1.6) / 2,
+                    y: ((window.innerHeight / 2) * 1.4) / 2,
+                }}
+                zoom={0.3}
+                depthFactor={500}
+                onNodeClick={(data) => {
+                    nodeClicked(data, setSelected);
+                }}
+                // onNodeMouseOver={(data) => onHover(data, setOptions, setHover, setAnchor)}
+                // onNodeMouseOut={(data) => onHoverOut(data, setOptions)}
+                renderCustomNodeElement={(d3Props) =>
+                    customNode({ ...d3Props, setSelected, setAnchor, setOptions })
+                }
+                nodeSize={{ x: 250, y: 200 }}
+                separation={{ nonSiblings: 3, siblings: 3 }}
+            ></Tree>
+            <Popper open={options} anchorEl={anchor}>
+                <Box
+                    sx={{ border: 1, bgcolor: "background.paper" }}
+                    onMouseLeave={() => setOptions(false)}
+                >
+                    <IconButton onClick={() => setOpenDialog(true)}>
+                        <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton>
+                        <ExpandCircleDownIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton>
+                        <AddBoxIcon
+                            onClick={() => {
+                                setOpenCreateDialog(true);
+                            }}
+                            fontSize="small"
+                        />
+                    </IconButton>
+                    <IconButton onClick={() => setOpenDeleteDialog(true)}>
+                        <DeleteIcon fontSize="small" />
+                    </IconButton>
+                </Box>
+            </Popper>
+            <List data={data} />
+        </div>
+    );
 }
