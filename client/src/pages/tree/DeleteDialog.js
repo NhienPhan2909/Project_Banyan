@@ -28,7 +28,8 @@ export default function DeleteDialog({
     const deleteNodeAndChildren = async (root) => {
         try {
             //Update the name and prompt of the selected node
-            console.log(selected);
+            //console.log(selected);
+
             // Edit display
             // TODO
 
@@ -60,7 +61,7 @@ export default function DeleteDialog({
             };
 
             removeNode(root, selected.id);
-            console.log(root);
+            //console.log(root);
         } catch (error) {
             console.error(error);
         }

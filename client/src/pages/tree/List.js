@@ -73,9 +73,23 @@ export default function List({ data }) {
                 const data = await response.json();
                 node.id = data._id;
             } else {
-                // TODO: Delete nodes in the DB that are not childIdList but are in node's _childIdList
-                // Use `http://localhost:11000/nodes/${node.id}` to get the node
-                // Use `http://localhost:11000/nodes/delete/${node.id}` to delete
+                // Delete nodes in the DB that are not childIdList but are in node's _childIdList
+                const existingNodeResponse = await axios.get(`http://localhost:11000/nodes/${node.id}`);
+                const existingNode = existingNodeResponse.data;
+
+                if (existingNode._childIdList && existingNode._childIdList.length > 0) {
+                    for (let i = 0; i < existingNode._childIdList.length; i++) {
+                        const id = existingNode._childIdList[i];
+
+                        if (!childIdList.includes(id)) {
+                            const deleteResponse = await axios.delete(`http://localhost:11000/nodes/delete/${id}`);
+
+                            if (deleteResponse.status !== 200) {
+                                throw new Error(`Failed to delete node with ID ${id}: ${deleteResponse.status} ${deleteResponse.statusText}`);
+                            }
+                        }
+                    }
+                }
 
                 // update current node
                 const response = await axios.patch(`http://localhost:11000/nodes/update/${node.id}`, {
