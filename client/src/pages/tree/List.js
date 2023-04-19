@@ -40,20 +40,18 @@ export default function List({ data }) {
         );
     };
 
-    const getChildIDs = (node) => {
-        const children = [];
-        if (node.children && node.children.length > 0) {
-            for (let i = 0; i < node.children.length; i++) {
-                children.push(node.children[i].id)
-            }
-        }
-        return children
-    }
-
-    const updateNodeAndChildren = async (node) => {
-        //console.log(data);
+    const updateNodeAndChildren = async (node, parentId = null) => {
         try {
-            const childIdList = getChildIDs(node);
+            const childIdList = [];
+
+            // recursively update children first
+            if (node.children && node.children.length > 0) {
+                for (let i = 0; i < node.children.length; i++) {
+                    const childNode = node.children[i];
+                    await updateNodeAndChildren(childNode, node.id);
+                    childIdList.push(childNode.id);
+                }
+            }
 
             // check if node has ID
             if (!node.id || node.id === -1) {
@@ -62,7 +60,7 @@ export default function List({ data }) {
                     content: node.attributes.content,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
-                    _parentId: null //TODO: Update
+                    _parentId: parentId
                 });
 
                 if (response.status !== 200) {
@@ -95,25 +93,19 @@ export default function List({ data }) {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
-                    _parentId: null //TODO: Update
+                    _parentId: parentId
                 });
 
                 if (response.status !== 200) {
                     throw new Error(`Failed to update node with ID ${node.id}: ${response.status} ${response.statusText}`);
-                }
-                //console.log(response);
-            }
-
-            // recursively update children
-            if (node.children && node.children.length > 0) {
-                for (let i = 0; i < node.children.length; i++) {
-                    await updateNodeAndChildren(node.children[i]);
                 }
             }
         } catch (error) {
             console.error(error);
         }
     }
+
+
 
     return (
 
