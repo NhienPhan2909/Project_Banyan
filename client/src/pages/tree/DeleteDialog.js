@@ -52,15 +52,29 @@ export default function DeleteDialog({
                 return false; // indicate that the node has not been found
             };
 
-            const removeNode = (tree, id) => {
+            /*const removeNode = (tree, id) => {
                 if (tree.id === id) {
                     return null; // cannot remove the root node
                 }
                 traverseAndRemove(tree, id);
                 return tree; // return the modified tree
+            };*/
+
+            const removeNode = (tree, id) => {
+                if (tree.id === id) {
+                    // Remove the root node
+                    setData(null);
+                } else {
+                    // Remove a child node
+                    const result = traverseAndRemove(tree, id);
+                    if (result) {
+                        setData({ ...data }); // trigger a re-render by updating the data state
+                    }
+                }
             };
 
             removeNode(root, selected.id);
+            handleClose()
             //console.log(root);
         } catch (error) {
             console.error(error);
