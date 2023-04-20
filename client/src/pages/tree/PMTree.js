@@ -118,6 +118,7 @@ const mouseOver = (nodeDatum, e, setAnchor, setOptions, setSelected) => {
 
 export default function PMTree({
     data,
+    setData,
     selected,
     setSelected,
     setOpenDialog,
@@ -175,7 +176,7 @@ export default function PMTree({
                     </IconButton>
                 </Box>
             </Popper>
-            <List data={data} />
+            <List data={data} setData={setData} />
         </div>
     );
 }

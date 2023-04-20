@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
 
-export default function List({ data }) {
+export default function List({ data, setData }) {
     const [selectedItemId, setSelectedItemId] = React.useState(null);
     
     const spinTreeItems = (data) => {
@@ -40,7 +40,7 @@ export default function List({ data }) {
         );
     };
 
-    const updateNodeAndChildren = async (node, parentId = null) => {
+    const updateNodeAndChildren = async (node) => {
         try {
             const childIdList = [];
 
@@ -48,7 +48,7 @@ export default function List({ data }) {
             if (node.children && node.children.length > 0) {
                 for (let i = 0; i < node.children.length; i++) {
                     const childNode = node.children[i];
-                    await updateNodeAndChildren(childNode, node.id);
+                    await updateNodeAndChildren(childNode);
 
                     if (childNode.id && childNode.id != -1) {
                         childIdList.push(childNode.id);
@@ -56,8 +56,11 @@ export default function List({ data }) {
                 }
             }
 
+            console.log(node.id);
+
             // check if node has ID
             if (!node.id || node.id.startsWith("TEMPID")) {
+                console.log("had to create");
                 if (node.attributes.content === "") {
                     console.log("Empty node!");
                     return;
@@ -68,7 +71,6 @@ export default function List({ data }) {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
-                    _parentId: parentId
                 });
 
                 if (response.status !== 200) {
@@ -101,7 +103,6 @@ export default function List({ data }) {
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
-                    _parentId: parentId
                 });
 
                 if (response.status !== 200) {
@@ -111,6 +112,8 @@ export default function List({ data }) {
         } catch (error) {
             console.error(error);
             return -1;
+        } finally {
+            setData({ ...data });
         }
     }
 

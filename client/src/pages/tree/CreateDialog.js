@@ -48,9 +48,13 @@ export default function CreateDialog({
                 return null;
             };
 
+            // Edit state
+            const node = traverse(root, selected.id);
+
+            let count = node.children.length + 1;
             //Add a new child to the selected node
             const newChild = {
-                id: -1,
+                id: `TEMPID - ${node.id} (${count})`,
                 name: name,
                 attributes: {
                     type: type,
@@ -62,12 +66,8 @@ export default function CreateDialog({
             // Edit display
             selected.children.push(newChild);
             setOpen(false);
-            console.log(selected);
 
-            // Edit state
-            const node = traverse(root, selected.id);
             node.children.push(newChild);
-            console.log(node);
 
             setData({ ...data });
 

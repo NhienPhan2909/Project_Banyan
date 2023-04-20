@@ -45,7 +45,9 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             const node = traverse(root, selected.id);
             node.name = name;
             node.attributes.prompt = prompt;
-            //console.log(node);
+        
+            setData({ ...data });
+
         } catch (error) {
             console.error(error);
         }

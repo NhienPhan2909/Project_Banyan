@@ -62,6 +62,10 @@ export default function ExpandDialog({
                 return string.charAt(0).toUpperCase() + string.slice(1);
             };
 
+            console.log(selected.id);
+            const node = traverse(root, selected.id);
+            console.log(node);
+
             const response = await axios.post(`http://localhost:11000/chatgpt/expand-node`, {
                 projectPrompt: root.attributes.prompt,
                 agileType: selected.attributes.type,
@@ -73,8 +77,8 @@ export default function ExpandDialog({
             }
 
             // Add children to parent
-            const genChildren = initChildIDs(response.data.children)
-            const node = traverse(root, selected.id);
+            const genChildren = initChildIDs(response.data.children);
+            
 
             let count = node.children.length + 1;
             genChildren.forEach(child => {

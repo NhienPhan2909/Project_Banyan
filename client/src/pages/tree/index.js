@@ -119,6 +119,7 @@ export default function TreeContainer() {
             {data && (
                 <PMTree
                     data={data}
+                    setData={setData}
                     selected={selected}
                     setSelected={setSelected}
                     setOpenDialog={setOpenDialog}
