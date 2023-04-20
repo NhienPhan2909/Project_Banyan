@@ -71,7 +71,6 @@ export default function TreeContainer() {
     };
 
     useEffect(() => {
-        console.log("USEEFFECT");
         async function getData() {
             const data = await getProject(project);
             setData(data);

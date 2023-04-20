@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 
 export default function List({ data, setData }) {
     const [selectedItemId, setSelectedItemId] = React.useState(null);
+    const [saving, setSaving] = React.useState(false);
     
     const spinTreeItems = (data) => {
         return (
@@ -56,11 +57,8 @@ export default function List({ data, setData }) {
                 }
             }
 
-            console.log(node.id);
-
             // check if node has ID
             if (!node.id || node.id.startsWith("TEMPID")) {
-                console.log("had to create");
                 if (node.attributes.content === "") {
                     console.log("Empty node!");
                     return;
@@ -137,11 +135,14 @@ export default function List({ data, setData }) {
                 <Button sx={{backgroundColor: 'rgb(0, 105, 62)', fontSize:'12px'}} style={{ maxWidth: '90px', maxHeight: '40px', minWidth: '90px', minHeight: '40px' }} variant="contained" 
                 onClick={async () => 
                 {
-                    updateNodeAndChildren(data);
+                    setSaving(true);
+                    await updateNodeAndChildren(data);
+                    setSaving(false);
                 }}>
                     Save
                 </Button>
             </Stack>
+            {saving && <p id='saving'>Saving your work...</p>}
             <Divider sx={{ color:'black', backgroundColor:'black', my: '10px' }} />
 
             <TreeView

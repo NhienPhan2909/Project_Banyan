@@ -28,6 +28,8 @@ const projectPrompt = async (req, res, next) => {
     Then, break down each epic into user stories, each on their own line below their corresponding epic,
     in the format of "User Story n: As a user, I want to be able to *."`
 
+    console.log(`PROMPT TEXT......... ${prompt}`);
+
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
@@ -41,14 +43,10 @@ const projectPrompt = async (req, res, next) => {
         }))
         .end(function (response) {
             if (response.error) throw new Error(response.error);
-            console.log("response..........", response);
             const completedText = response.raw_body;
-            console.log(typeof completedText);
             const jsonObj = JSON.parse(completedText);
-            console.log(jsonObj);
-            console.log(jsonObj.choices);
             finalText = jsonObj.choices[0].text;
-            console.log("JSON TEXT.............", finalText);
+            console.log(`RESPONSE TEXT......... ${finalText}`);
             return res.status(200).json(extractEpicsAndStories(finalText));
         });
 }
@@ -97,12 +95,12 @@ const expandNode = async (req, res, next) => {
             Each story should be written as "As a user, I want to be able to *."`;
             break;
         case "story":
-            prompt = `Think of yourself as a software engineer. Using the Agile methodology, break down the user story: "${parentNodePrompt}"
+            prompt = `Think of yourself as an expert in the field. Using the Agile methodology, break down the user story: "${parentNodePrompt}"
             for the project of "${projectPrompt}" into 3-5 achievable tasks. Do not include any tasks involving deploying to production. 
-            Each task should be written as a direction, with recommended tech stacks included as (Recommended stacks: *, *, *).`;
+            Each task should be written as a direction. If applicable, include recommended tech stacks as (Recommended stacks: *, *, *).`;
             break;
         case "task":
-            prompt = `Think of yourself as a software engineer. Using the Agile methodology, break down the task: "${parentNodePrompt}"
+            prompt = `Think of yourself as an expert in the field. Using the Agile methodology, break down the task: "${parentNodePrompt}"
             for the project of "${projectPrompt}" into up to 6 subtasks such that each is achievable by a single developer.
             Do not include any tasks involving deploying to production.`;
             break;
@@ -112,6 +110,7 @@ const expandNode = async (req, res, next) => {
     }
     prompt += " Write the result as a numbered list, in the form of (1. *, 2. *).";
 
+    console.log(`PROMPT TEXT......... ${prompt}`);
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
@@ -124,15 +123,11 @@ const expandNode = async (req, res, next) => {
             "temperature": 0
         }))
         .end(function (response) {
-            if (response.error) console.log(response.error) // throw new Error(response.error);
-            console.log("response..........", response);
+            if (response.error) throw new Error(response.error);
             const completedText = response.raw_body;
-            console.log(typeof completedText);
             const jsonObj = JSON.parse(completedText);
-            console.log(jsonObj);
-            console.log(jsonObj.choices);
             finalText = jsonObj.choices[0].text.trim();
-            console.log("JSON TEXT.............", finalText);
+            console.log(`RESPONSE TEXT......... ${finalText}`);
             return res.status(200).json(extractExpandedNode(finalText, agileType));
         });
 }

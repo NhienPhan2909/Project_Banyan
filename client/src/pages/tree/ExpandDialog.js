@@ -62,9 +62,9 @@ export default function ExpandDialog({
                 return string.charAt(0).toUpperCase() + string.slice(1);
             };
 
-            console.log(selected.id);
+            //console.log(selected.id);
             const node = traverse(root, selected.id);
-            console.log(node);
+            //console.log(node);
 
             const response = await axios.post(`http://localhost:11000/chatgpt/expand-node`, {
                 projectPrompt: root.attributes.prompt,
@@ -90,10 +90,10 @@ export default function ExpandDialog({
 
             setData({ ...data }); // trigger a re-render by updating the data state
 
-            //console.log(initChildIDs(response.data.children))
-            //console.log(response)
-            //console.log(node.children)
-            //console.log(root)
+            //console.log(initChildIDs(response.data.children));
+            //console.log(response);
+            //console.log(node.children);
+            //console.log(root);
             handleClose()
         } catch (error) {
             console.error(error);
