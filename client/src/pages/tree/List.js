@@ -48,8 +48,8 @@ export default function List({ data }) {
             if (node.children && node.children.length > 0) {
                 for (let i = 0; i < node.children.length; i++) {
                     const childNode = node.children[i];
-                    await updateNodeAndChildren(childNode, node.id);
-                    childIdList.push(childNode.id);
+                    const updatedNodeId = await updateNodeAndChildren(childNode, node.id);
+                    childIdList.push(updatedNodeId);
                 }
             }
 
@@ -68,7 +68,8 @@ export default function List({ data }) {
                 }
 
                 // get new ID from response
-                node.id = response.data._id;
+                node.id = response.data.result._id;
+                return node.id;
             } else {
                 // Delete nodes in the DB that are not childIdList but are in node's _childIdList
                 const existingNodeResponse = await axios.get(`http://localhost:11000/nodes/${node.id}`);
@@ -99,9 +100,11 @@ export default function List({ data }) {
                 if (response.status !== 200) {
                     throw new Error(`Failed to update node with ID ${node.id}: ${response.status} ${response.statusText}`);
                 }
+                return node.id;
             }
         } catch (error) {
             console.error(error);
+            return -1;
         }
     }
 
