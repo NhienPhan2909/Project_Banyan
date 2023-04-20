@@ -144,7 +144,7 @@ export default function PMTree({
                     y: ((window.innerHeight / 2) * 1.4) / 2,
                 }}
                 zoom={0.3}
-                depthFactor={500}
+                depthFactor={650}
                 onNodeClick={(data) => {
                     nodeClicked(data, setSelected);
                 }}
@@ -153,8 +153,8 @@ export default function PMTree({
                 renderCustomNodeElement={(d3Props) =>
                     customNode({ ...d3Props, setSelected, setAnchor, setOptions })
                 }
-                nodeSize={{ x: 250, y: 200 }}
-                separation={{ nonSiblings: 3, siblings: 3 }}
+                nodeSize={{ x: 250, y: 100 }}
+                separation={{ nonSiblings: 4, siblings: 3 }}
             ></Tree>
             <Popper open={options} anchorEl={anchor}>
                 <Box
