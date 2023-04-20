@@ -24,7 +24,7 @@ const _getNode = async (nodeId, index) => {
 
     var scope = nodeResponse.data.agile_scope;
     var content = capitalize(nodeResponse.data.content);
-    var nodeName = index === -1 ? "Project" : capitalize(scope) + " " + (index + 1);
+    var nodeName = nodeResponse.data.name || (index === -1 ? "Project" : capitalize(scope) + " " + (index + 1));
 
     return {
         id: nodeId,

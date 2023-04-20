@@ -68,6 +68,7 @@ export default function List({ data, setData }) {
 
                 // add new node to database
                 const response = await axios.post(`http://localhost:11000/nodes/add-node`, {
+                    name: node.name,
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
@@ -100,6 +101,7 @@ export default function List({ data, setData }) {
 
                 // update current node
                 const response = await axios.patch(`http://localhost:11000/nodes/update/${node.id}`, {
+                    name: node.name,
                     content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,

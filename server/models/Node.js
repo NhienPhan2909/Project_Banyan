@@ -10,6 +10,10 @@ const NodeSchema = new Schema({
         type: Array,
         default: null
     },
+    name: {
+        type: String,
+        default: null
+    },
     content: {
         type: String,
         default: null

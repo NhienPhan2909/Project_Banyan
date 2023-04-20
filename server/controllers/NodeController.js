@@ -36,7 +36,7 @@ const addNode = (req, res, next) => {
 
 const updateNode = async (req, res, next) => {
     try {
-        const { content, agile_scope, _childIdList, _parentId } = req.body;
+        const { name, content, agile_scope, _childIdList, _parentId } = req.body;
         const { node_id } = req.params;
 
         if (!mongoose.Types.ObjectId.isValid(node_id)) {
@@ -49,6 +49,7 @@ const updateNode = async (req, res, next) => {
             return res.status(404).send({ msg: 'Node not found' });
         }
 
+        node.name = name || node.name;
         node.content = content || node.content;
         node.agile_scope = agile_scope || node.agile_scope;
         node._parentId = _parentId || node._parentId;
