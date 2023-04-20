@@ -8,12 +8,12 @@
     padding-top: 0px;
     width: 100vw;
     height: 100vh;
-    background: hsl(151, 81%, 81%);
+    background-color:  hsl(155, 92%, 92%);
 } 
 
 #onboard-main {
     width: 70%;
-    height: 98%;
+    height: 97%;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
     padding-bottom: 10vh;
     padding-top: 10px;
