@@ -57,10 +57,10 @@ export default function List({ data }) {
             }
 
             // check if node has ID
-            if (!node.id || node.id === -1) {
+            if (!node.id || node.id.startsWith("TEMPID")) {
                 if (node.attributes.content === "") {
-                    console.log("Empty node!")
-                    return
+                    console.log("Empty node!");
+                    return;
                 }
 
                 // add new node to database

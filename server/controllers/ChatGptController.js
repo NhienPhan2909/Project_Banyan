@@ -22,8 +22,11 @@ const extractEpicsAndStories = (responseText) => {
 }
 
 const projectPrompt = async (req, res, next) => {
-    var prompt = "Think yourself as a Project Manager. Break down the project of "
-        + req.body.prompt + " into agile epics. And break down each epic into user stories. Some background information regarding the project: " + req.body.description;
+    var prompt = `Think of yourself as a project manager. Break down the project of ${req.body.prompt} into agile epics.
+    Some background information regarding the project: ${req.body.description}
+    Each epic should be on their own line, in the format of "Epic n: *". 
+    Then, break down each epic into user stories, each on their own line below their corresponding epic,
+    in the format of "User Story n: As a user, I want to be able to *."`
 
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
@@ -65,11 +68,10 @@ const extractExpandedNode = (responseText, agileType) => {
     const text = responseText;
     const json = { children: [] };
 
-    for (const line of text.split('\n')) {
-        const childName = childType.charAt(0).toUpperCase() + childType.slice(1) + " " + line.charAt(0); // e.g. Story 3
+    text.split('\n').forEach(line => {
+        line = line.trim();
         const childContent = line.substring(3).trim();
         const currentChild = {
-            name: childName,
             attributes: {
                 type: childType,
                 prompt: childContent
@@ -77,36 +79,38 @@ const extractExpandedNode = (responseText, agileType) => {
             children: []
         }
         json.children.push(currentChild);
-    }
+    });
 
     return json;
 }
 
 const expandNode = async (req, res, next) => {
     var projectPrompt = req.body.projectPrompt;
-    var agileType = req.body.type;
-    var parentNodePrompt = req.body.prompt;
+    var agileType = req.body.agileType;
+    var parentNodePrompt = req.body.parentNodePrompt;
     var prompt;
 
     switch (agileType) {
         case "epic":
-            prompt = "Think yourself as a project manager. Using the Agile methodology, break down the agile epic: \""
-                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into 2-4 relevant user stories.";
+            prompt = `Think of yourself as a project manager. Using the Agile methodology, break down the agile epic: "${parentNodePrompt}"
+            for the project of "${projectPrompt}" into 2-4 relevant user stories. 
+            Each story should be written as "As a user, I want to be able to *."`;
             break;
         case "story":
-            prompt = "Think yourself as a software engineer. Using the Agile methodology, break down the user story: \""
-                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into 3-5 achievable tasks. Do not include any tasks involving "
-                + "deploying to production. Include recommended tech stacks for each task, in the form of (Recommended stacks: *, *, *).";
+            prompt = `Think of yourself as a software engineer. Using the Agile methodology, break down the user story: "${parentNodePrompt}"
+            for the project of "${projectPrompt}" into 3-5 achievable tasks. Do not include any tasks involving deploying to production. 
+            Each task should be written as a direction, with recommended tech stacks included as (Recommended stacks: *, *, *).`;
             break;
         case "task":
-            prompt = "Think yourself as a software engineer. Using the Agile methodology, break down the task: \""
-                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into subtasks such that each is achievable by a single developer. "
-                + "Do not include any tasks involving deploying to production.";
+            prompt = `Think of yourself as a software engineer. Using the Agile methodology, break down the task: "${parentNodePrompt}"
+            for the project of "${projectPrompt}" into up to 6 subtasks such that each is achievable by a single developer.
+            Do not include any tasks involving deploying to production.`;
             break;
         default:
-            prompt = "Think yourself as a project manager. Using the Agile methodology, break down the goal of: \""
-                + parentNodePrompt + "\" for the project of \"" + projectPrompt + "\" into more granular and detailed goals.";
+            prompt = `Think of yourself as a project manager. Using the Agile methodology, break down the goal of: "${parentNodePrompt}"
+            for the project of "${projectPrompt}" into more granular and detailed goals.`;
     }
+    prompt += " Write the result as a numbered list, in the form of (1. *, 2. *).";
 
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
@@ -120,16 +124,16 @@ const expandNode = async (req, res, next) => {
             "temperature": 0
         }))
         .end(function (response) {
-            if (response.error) throw new Error(response.error);
+            if (response.error) console.log(response.error) // throw new Error(response.error);
             console.log("response..........", response);
             const completedText = response.raw_body;
             console.log(typeof completedText);
             const jsonObj = JSON.parse(completedText);
             console.log(jsonObj);
             console.log(jsonObj.choices);
-            finalText = jsonObj.choices[0].text;
+            finalText = jsonObj.choices[0].text.trim();
             console.log("JSON TEXT.............", finalText);
-            return res.status(200).json(extractExpandedNode(finalText));
+            return res.status(200).json(extractExpandedNode(finalText, agileType));
         });
 }
 
