@@ -161,16 +161,16 @@ export default function PMTree({
                     sx={{ border: 1, bgcolor: "background.paper" }}
                     onMouseLeave={() => setOptions(false)}
                 >
-                    <IconButton onClick={() => setOpenDialog(true)}>
+                    <IconButton title="Edit item" onClick={() => setOpenDialog(true)}>
                         <EditIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => setOpenExpandDialog(true)}>
+                    <IconButton title="Expand item" onClick={() => setOpenExpandDialog(true)}>
                         <ExpandCircleDownIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => setOpenCreateDialog(true)}>
+                    <IconButton title="Add item" onClick={() => setOpenCreateDialog(true)}>
                         <AddBoxIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={() => setOpenDeleteDialog(true)}>
+                    <IconButton title="Delete item" onClick={() => setOpenDeleteDialog(true)}>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 </Box>
