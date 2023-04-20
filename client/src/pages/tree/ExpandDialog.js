@@ -68,10 +68,10 @@ export default function ExpandDialog({
             const node = traverse(root, selected.id);
             node.children = node.children.concat(genChildren);
 
-            console.log(initChildIDs(response.data.children))
-            console.log(response)
-            console.log(node.children)
-            console.log(root)
+            //console.log(initChildIDs(response.data.children))
+            //console.log(response)
+            //console.log(node.children)
+            //console.log(root)
         } catch (error) {
             console.error(error);
         }
