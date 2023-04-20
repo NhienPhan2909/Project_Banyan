@@ -72,7 +72,7 @@ const extractExpandedNode = (responseText, agileType) => {
             name: childName,
             attributes: {
                 type: childType,
-                content: childContent
+                prompt: childContent
             },
             children: []
         }

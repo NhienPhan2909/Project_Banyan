@@ -65,7 +65,7 @@ export default function List({ data }) {
 
                 // add new node to database
                 const response = await axios.post(`http://localhost:11000/nodes/add-node`, {
-                    content: node.attributes.content,
+                    content: node.attributes.prompt,
                     agile_scope: node.attributes.type,
                     _childIdList: childIdList,
                     _parentId: parentId

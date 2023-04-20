@@ -68,10 +68,13 @@ export default function ExpandDialog({
             const node = traverse(root, selected.id);
             node.children = node.children.concat(genChildren);
 
+            setData({ ...data }); // trigger a re-render by updating the data state
+
             //console.log(initChildIDs(response.data.children))
             //console.log(response)
             //console.log(node.children)
             //console.log(root)
+            handleClose()
         } catch (error) {
             console.error(error);
         }
