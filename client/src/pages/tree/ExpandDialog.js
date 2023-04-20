@@ -15,6 +15,8 @@ import {
     Radio,
 } from "@mui/material";
 
+import FadeLoader from "react-spinners/FadeLoader";
+
 export default function ExpandDialog({
     open,
     setOpen,
@@ -22,6 +24,8 @@ export default function ExpandDialog({
     setData,
     selected,
 }) {
+    const [loading, setLoading] = useState(false);
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -37,6 +41,7 @@ export default function ExpandDialog({
 
     const expandNode = async (root) => {
         try {
+            setLoading(true)
             // Find the node in the PMTree given an id
             const traverse = (node, id) => {
                 if (node.id === id) {
@@ -77,12 +82,15 @@ export default function ExpandDialog({
             handleClose()
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false)
         }
     };
 
     return (
         <div>
             <Dialog open={open} onClose={handleClose}>
+                <FadeLoader className='spinner' loading={loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77', position: 'fixed', top: '50%', left: '50%', transform: 'translateX(-50%)',}}/>
                 <DialogTitle>Expand item?</DialogTitle>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
