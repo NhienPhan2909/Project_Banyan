@@ -103,18 +103,15 @@ export default function ExpandDialog({
     };
 
     return (
-        <div>
+        <div style={{ position: "relative" }}>
             <Dialog open={open} onClose={handleClose}>
-                <FadeLoader className='spinner' loading={loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77', position: 'fixed', top: '50%', left: '50%', transform: 'translateX(-50%)',}}/>
+                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                    <FadeLoader className='spinner' loading={loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77'}} />
+                </div>
                 <DialogTitle>Expand item?</DialogTitle>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button
-                        onClick={async () => {
-                            expandNode(data);
-                        }}>
-                        Expand
-                    </Button>
+                    <Button onClick={async () => { expandNode(data); }}>Expand</Button>
                 </DialogActions>
             </Dialog>
         </div>
