@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './prompt.css';
 import {TextField} from '@mui/material/';
 // import Box from '@mui/material/Box';
@@ -92,7 +93,9 @@ class Prompt extends Component {
                                     >
                         </Button>
                         <div className='logo'>
-                            <img id='logo' src="BanyanText_Transparent.png"/>
+                            <Link id='dashboard' to="/dashboard">
+                                <img id='logo' src="BanyanText_Transparent.png"/>
+                            </Link>
                         </div>
                         <div className="Prompt-form-content">
                             <div className="inputs">
