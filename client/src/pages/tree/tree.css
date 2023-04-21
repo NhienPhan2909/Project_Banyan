@@ -1,5 +1,9 @@
 @import '../globals.css';
 
+body {
+    overflow: hidden;
+}
+
 #tree-body {
     display: flex;
     justify-content: center;
