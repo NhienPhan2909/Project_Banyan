@@ -54,7 +54,8 @@ class Prompt extends Component {
             // Finally, save the initiative (prompt) as the root node that includes the list of epic IDs,
             // then save a project attached to the user that points to the initiative ID.
             const rootResponse = await axios.post('http://localhost:11000/nodes/add-node', {
-                content: prompt,
+                name: prompt,
+                content: description,
                 agile_scope: "initiative",
                 _childIdList: epic_ids
             });

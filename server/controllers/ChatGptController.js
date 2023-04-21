@@ -26,7 +26,7 @@ const projectPrompt = async (req, res, next) => {
     Some background information regarding the project: ${req.body.description}
     Each epic should be on their own line, in the format of "Epic n: *". 
     Then, break down each epic into user stories, each on their own line below their corresponding epic,
-    in the format of "User Story n: As a user, I want to be able to *."`
+    in the format of "User Story n: As a *, I want to be able to *."`
 
     console.log(`PROMPT TEXT......... ${prompt}`);
 
@@ -92,17 +92,20 @@ const expandNode = async (req, res, next) => {
         case "epic":
             prompt = `Think of yourself as a project manager. Using the Agile methodology, break down the agile epic: "${parentNodePrompt}"
             for the project of "${projectPrompt}" into 2-4 relevant user stories. 
-            Each story should be written as "As a user, I want to be able to *."`;
+            Each story should be written as "As a *, I want to be able to *."`;
             break;
         case "story":
             prompt = `Think of yourself as an expert in the field. Using the Agile methodology, break down the user story: "${parentNodePrompt}"
-            for the project of "${projectPrompt}" into 3-5 achievable tasks. Do not include any tasks involving deploying to production. 
-            Each task should be written as a direction. If applicable, include recommended tech stacks as (Recommended stacks: *, *, *).`;
+            for the project of "${projectPrompt}" into 3-5 achievable tasks. 
+            Do not include any tasks involving deploying, integrating, testing, or documentation. 
+            Each task should be written as a direction. 
+            If the task requires software development or programming, include recommended tech stacks as (Recommended stacks: *, *, *).
+            Otherwise, include any recommendations as (Recommended departments: *, *, *).`;
             break;
         case "task":
             prompt = `Think of yourself as an expert in the field. Using the Agile methodology, break down the task: "${parentNodePrompt}"
             for the project of "${projectPrompt}" into up to 6 subtasks such that each is achievable by a single developer.
-            Do not include any tasks involving deploying to production.`;
+            Do not include any tasks involving deploying, integrating, testing, or documentation.`;
             break;
         default:
             prompt = `Think of yourself as a project manager. Using the Agile methodology, break down the goal of: "${parentNodePrompt}"

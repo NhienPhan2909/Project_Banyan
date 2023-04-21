@@ -29,7 +29,7 @@ const customNode = ({
     >
         <rect
             width="800"
-            height="200"
+            height="120"
             x="-400"
             y="-140"
             style={{ fill: "#00693e", stroke: "#00693e", strokeWidth: "2" }}
@@ -37,8 +37,9 @@ const customNode = ({
 
         <rect
             width="800"
-            height="300"
+            height="380"
             x="-400"
+            y="-20"
             style={{
                 fill: "white",
                 stroke: "#00693e",
@@ -48,15 +49,17 @@ const customNode = ({
         />
 
         <foreignObject
-            x="-380"
-            y="-120"
-            width="500"
-            height="200"
+            x="-400"
+            y="-140"
+            width="800"
+            height="120"
             onMouseOver={(e) =>
                 mouseOver(nodeDatum, e, setAnchor, setOptions, setSelected)
             }
         >
-            <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
+            <div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
+            </div>
         </foreignObject>
         {/* <text fill="black" strokeWidth="0" x="20">
       {nodeDatum.name}
@@ -74,7 +77,7 @@ const customNode = ({
             // >
             //   {nodeDatum.attributes?.prompt}
             // </text>
-            <foreignObject x="-380" y="20" width="760" height="300">
+            <foreignObject x="-380" width="760" height="380">
                 <textbox style={{ color: "black", fontSize: "44px" }}>
                     {nodeDatum.attributes?.prompt}
                 </textbox>
