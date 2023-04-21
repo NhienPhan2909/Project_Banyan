@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     text-align: right;
-    padding-top: 0px;
+    padding-top: 0vh;
     width: 100vw;
     height: 100vh;
     background-color:  hsl(155, 92%, 92%);
@@ -14,9 +14,9 @@
 #onboard-main {
     width: 70%;
     height: 97%;
-    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    box-shadow: rgb(0 0 0 / 16%) 1vh 1vh 2.5vh;
     padding-bottom: 10vh;
-    padding-top: 10px;
+    padding-top: .25vh;
     border-radius: 5vh;
     background-color: #fafafa;
 }
@@ -64,7 +64,7 @@
 
 .caption-text {
     font-family: "Signika Negative";
-    font-size: 15px;
+    font-size: 2.25vh;
     font-variant: normal;
     color: black;
 }
@@ -84,7 +84,7 @@
 
 #slide-5-text {
     margin-bottom: 1em;
-    font-size: 15px;
+    font-size: 2.25vh;
 }
 
 #logo {
@@ -96,7 +96,7 @@
 }
 
 #buttons {
-    padding-top: 2.5vh;
+    padding-top: 1.75vh;
 }
 
 .row {
