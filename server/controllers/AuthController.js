@@ -5,6 +5,8 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken');
 
+
+
 const register = (req, res, next) => {
     var username = req.body.username
     var email = req.body.email
@@ -35,6 +37,11 @@ const register = (req, res, next) => {
         password: hashedPass
     });
 
+    saveUser(user, res)
+   // return res.status(200).send('User successfully created');
+};
+
+const saveUser = (user, res) => {
     user.save(function (err) {
         if (err) {
             return res.status(500).send({ msg: err.message });
@@ -48,32 +55,35 @@ const register = (req, res, next) => {
             }
             else {
                 // Send email (use credintials of SendGrid)
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail', 
-                    auth: {
-                        user: process.env.EMAIL, 
-                        pass: process.env.EMAIL_PASS 
-                    } 
-                });
-                url = process.env.SITE_URL;
-                var mailOptions = { 
-                    from: process.env.EMAIL, 
-                    to: user.email, subject: 'Account Verification Link', 
-                    text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
-                    // \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
-                };
-                transporter.sendMail(mailOptions, function (err) {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).send({ msg: 'Technical Issue!, Please click on resend for verify your Email.' });
-                    }
-                    return res.status(200).send('A verification email has been sent to ' + user.email + '. It will be expire after one day. If you not get verification Email click on resend token.');
-                    });
+                sendEmail(user, res, activationToken)
             }
         });
     });
-   // return res.status(200).send('User successfully created');
-};
+}
+
+const sendEmail = (user, res, activationToken) => {
+    var transporter = nodemailer.createTransport({
+        service: 'gmail', 
+        auth: {
+            user: process.env.EMAIL, 
+            pass: process.env.EMAIL_PASS 
+        } 
+    });
+    url = process.env.SITE_URL;
+    var mailOptions = { 
+        from: process.env.EMAIL, 
+        to: user.email, subject: 'Account Verification Link', 
+        text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
+        // \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
+    };
+    transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(500).send({ msg: 'Technical Issue!, Please click on resend for verify your Email.' });
+        }
+        return res.status(200).send('A verification email has been sent to ' + user.email + '. It will be expire after one day. If you not get verification Email click on resend token.');
+    });
+}
 
 const login = (req, res, next) => {
     var username = req.body.username
@@ -114,24 +124,7 @@ const verify = (req, res) => {
                             return restart.status(500).send({ msg: err.message });
                         }
                         else if (user) {
-                            user.active = true;
-                            user.save((err) => {
-                                if (err) {
-                                  console.log(err);
-                                  return;
-                                }
-                                const token = generateJWT(user);
-                                console.log('User is now verified!');
-                                ActivationToken.remove( {token: activationToken._id}, function (err, result) {
-                                    if (err) {
-                                        console.log(err);
-                                        return ;
-                                    }
-                                    console.log("Deleted Token Succesfully")
-                                });
-                                //ActivationToken.deleteOne({ token: activationToken });
-                                return res.status(200).json({ token });
-                              });
+                            setActiveUser(user, activationToken, res); 
                         }
                     });
                 }
@@ -148,6 +141,27 @@ const verify = (req, res) => {
         return res.sendStatus(403);
     }
 };
+
+const setActiveUser = (user, activationToken, res) => {
+    user.active = true;
+    user.save((err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        const token = generateJWT(user);
+        console.log('User is now verified!');
+        ActivationToken.remove( {token: activationToken._id}, function (err, result) {
+            if (err) {
+                console.log(err);
+                return ;
+            }
+            console.log("Deleted Token Succesfully")
+        });
+        //ActivationToken.deleteOne({ token: activationToken });
+        return res.status(200).json({ token });
+      });
+}
 
 // Verify JWT middleware
 const verifyJWT = (req, res, next) => {
