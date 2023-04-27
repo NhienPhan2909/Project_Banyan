@@ -61,7 +61,8 @@ const addProject = (req, res, next) => {
             name: req.body.name,
             _userId: user
         });
-    } catch(error) {
+    } 
+    catch(error) {
         return res.status(400).send({ msg: 'Invalid project structure.' });
     }
 

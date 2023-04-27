@@ -38,7 +38,6 @@ const register = (req, res, next) => {
     });
 
     saveUser(user, res)
-   // return res.status(200).send('User successfully created');
 };
 
 const saveUser = (user, res) => {
@@ -46,7 +45,6 @@ const saveUser = (user, res) => {
         if (err) {
             return res.status(500).send({ msg: err.message });
         }
-
         // generate token and save
         var activationToken = new ActivationToken({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
         activationToken.save(function (err) {
@@ -74,7 +72,6 @@ const sendEmail = (user, res, activationToken) => {
         from: process.env.EMAIL, 
         to: user.email, subject: 'Account Verification Link', 
         text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
-        // \nhttp:\/\/' + req.headers.host +  '\/api/verify?token=' + token.token + '\n\nThank You!\n' 
     };
     transporter.sendMail(mailOptions, function (err) {
         if (err) {

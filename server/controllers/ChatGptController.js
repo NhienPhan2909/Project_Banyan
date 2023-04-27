@@ -1,5 +1,6 @@
 const unirest = require('unirest');
 
+//Extracting the epics and user stories from GPT response. 
 const extractEpicsAndStories = (responseText) => {
     const text = responseText
     const json = { epics: [] };
@@ -7,11 +8,14 @@ const extractEpicsAndStories = (responseText) => {
     let currentStory = null;
 
     for (const line of text.split('\n')) {
+        //Extract epics from response text
         if (line.startsWith('Epic ')) {
             const epicName = line.substring(8).trim();
             currentEpic = { name: epicName, stories: [] };
             json.epics.push(currentEpic);
-        } else if (line.startsWith('User Story ')) {
+        } 
+        //Extract user stories and push to current epic story is within. 
+        else if (line.startsWith('User Story ')) {
             const storyName = line.substring(14).trim();
             currentStory = { name: storyName };
             currentEpic.stories.push(currentStory);
@@ -28,12 +32,11 @@ const projectPrompt = async (req, res, next) => {
     Then, break down each epic into user stories, each on their own line below their corresponding epic,
     in the format of "User Story n: As a *, I want to be able to *."`
 
-    console.log(`PROMPT TEXT......... ${prompt}`);
-
+    //Sending a request to OpenAI API with given prompt to generate project. 
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
-            'Authorization': process.env.OpenAI_API
+            'Authorization': 'Bearer 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'
         })
         .send(JSON.stringify({
             "model": "text-davinci-003",
@@ -46,26 +49,20 @@ const projectPrompt = async (req, res, next) => {
             const completedText = response.raw_body;
             const jsonObj = JSON.parse(completedText);
             finalText = jsonObj.choices[0].text;
-            console.log(`RESPONSE TEXT......... ${finalText}`);
+            //Send response with epics and user stories
             return res.status(200).json(extractEpicsAndStories(finalText));
         });
 }
 
 const extractExpandedNode = (responseText, agileType) => {
     var childType;
-    switch (agileType) {
-        case "epic":
-            childType = "story";
-            break;
-        case "story":
-        case "task":
-        default:
-            childType = "task";
-    }
+    //Create child type of task unless parent is epic. 
+    agileType == "epic" ? childType = "story" : childType = "task"; 
 
     const text = responseText;
     const json = { children: [] };
 
+    //Extract the child from response text. 
     text.split('\n').forEach(line => {
         line = line.trim();
         const childContent = line.substring(3).trim();
@@ -87,7 +84,8 @@ const expandNode = async (req, res, next) => {
     var agileType = req.body.agileType;
     var parentNodePrompt = req.body.parentNodePrompt;
     var prompt;
-
+    
+    //Change prompt depending on type of agile card being expanded. 
     switch (agileType) {
         case "epic":
             prompt = `Think of yourself as a project manager. Using the Agile methodology, break down the agile epic: "${parentNodePrompt}"
@@ -113,11 +111,11 @@ const expandNode = async (req, res, next) => {
     }
     prompt += " Write the result as a numbered list, in the form of (1. *, 2. *).";
 
-    console.log(`PROMPT TEXT......... ${prompt}`);
+    //Send request to chatGPT for expansion. 
     var req = unirest('POST', 'https://api.openai.com/v1/completions')
         .headers({
             'Content-Type': 'application/json',
-            'Authorization': process.env.OpenAI_API
+            'Authorization': 'Bearer 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'
         })
         .send(JSON.stringify({
             "model": "text-davinci-003",
@@ -130,7 +128,6 @@ const expandNode = async (req, res, next) => {
             const completedText = response.raw_body;
             const jsonObj = JSON.parse(completedText);
             finalText = jsonObj.choices[0].text.trim();
-            console.log(`RESPONSE TEXT......... ${finalText}`);
             return res.status(200).json(extractExpandedNode(finalText, agileType));
         });
 }
