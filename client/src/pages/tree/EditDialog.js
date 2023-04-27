@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -39,7 +38,6 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             selected.name = name;
             selected.attributes.prompt = prompt;
             setOpen(false);
-            //console.log(selected);
 
             // Edit state
             const node = traverse(root, selected.id);
@@ -65,7 +63,6 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle >Edit Node</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>Set Name</DialogContentText> */}
                     <TextField
                         autoFocus
                         id="name"
@@ -78,7 +75,6 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
                     />
                 </DialogContent>
                 <DialogContent>
-                    {/* <DialogContentText>Set Prompt</DialogContentText> */}
                     <TextField
                         autoFocus
                         id="prompt"

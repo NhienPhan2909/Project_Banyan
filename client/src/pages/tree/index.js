@@ -6,7 +6,6 @@ import CreateDialog from "./CreateDialog";
 import DeleteDialog from "./DeleteDialog";
 import ExpandDialog from "./ExpandDialog";
 import axios from "axios";
-
 import "./tree.css";
 
 const capitalize = (string) => {
@@ -108,13 +107,6 @@ export default function TreeContainer() {
                 setData={setData}
                 selected={selected}
             />
-            {/* <Stack direction="row">
-        <div style={{ marginRight: "20%" }}>
-          <h2>Selected: {selected.name}</h2>
-          <Button variant="outlined" onClick={handleClickOpen}>
-            Edit Node
-          </Button>
-        </div> */}
             {data && (
                 <PMTree
                     data={data}
@@ -127,8 +119,6 @@ export default function TreeContainer() {
                     setOpenExpandDialog={setOpenExpandDialog}
                 />
             )}
-            {/* </Stack> */}
-            {/* // </Container> */}
         </div>
     );
 }

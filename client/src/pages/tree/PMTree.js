@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import Tree from "react-d3-tree";
-import { Popper, Box, Popover, IconButton } from "@mui/material";
+import { Popper, Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import ExpandIcon from "@mui/icons-material/Expand";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import List from "./List";
-
 import "./tree.css";
 
 // This defines the node
@@ -61,22 +56,7 @@ const customNode = ({
                 <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
             </div>
         </foreignObject>
-        {/* <text fill="black" strokeWidth="0" x="20">
-      {nodeDatum.name}
-    </text> */}
         {nodeDatum.attributes?.prompt && (
-            // <text
-            //   fill="white"
-            //   x="20"
-            //   y="20"
-            //   dy="20"
-            //   wordSpacing="0.1em"
-            //   strokeWidth="1"
-            //   textLength="400"
-            //   lengthAdjust="spacingAndGlyphs"
-            // >
-            //   {nodeDatum.attributes?.prompt}
-            // </text>
             <foreignObject x="-380" width="760" height="380">
                 <textbox style={{ color: "black", fontSize: "44px" }}>
                     {nodeDatum.attributes?.prompt}
@@ -107,17 +87,6 @@ const mouseOver = (nodeDatum, e, setAnchor, setOptions, setSelected) => {
     setAnchor(e.target);
     setOptions(true);
 };
-
-// const onHover = (data, setOpen, setHover) => {
-//   console.log(data);
-//   setHover(data);
-//   setOpen(true);
-// };
-
-// const onHoverOut = (data, setOpen) => {
-//   console.log(data);
-//   setOpen(false);
-// };
 
 export default function PMTree({
     data,
@@ -152,8 +121,6 @@ export default function PMTree({
                 onNodeClick={(data) => {
                     nodeClicked(data, setSelected);
                 }}
-                // onNodeMouseOver={(data) => onHover(data, setOptions, setHover, setAnchor)}
-                // onNodeMouseOut={(data) => onHoverOut(data, setOptions)}
                 renderCustomNodeElement={(d3Props) =>
                     customNode({ ...d3Props, setSelected, setAnchor, setOptions })
                 }

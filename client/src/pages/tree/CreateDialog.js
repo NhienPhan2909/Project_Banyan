@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import {
     FormControl,
@@ -37,6 +35,7 @@ export default function CreateDialog({
                 if (node.id === id) {
                     return node;
                 }
+                // Not the node we seek, recurse on the children (if they exist)
                 if (node.children && node.children.length > 0) {
                     for (let i = 0; i < node.children.length; i++) {
                         const result = traverse(node.children[i], id);
@@ -52,6 +51,7 @@ export default function CreateDialog({
             const node = traverse(root, selected.id);
 
             let count = node.children.length + 1;
+
             //Add a new child to the selected node
             const newChild = {
                 id: `TEMPID - ${node.id} (${count})`,
@@ -81,7 +81,6 @@ export default function CreateDialog({
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create a New Node</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>Set Name</DialogContentText> */}
                     <TextField
                         autoFocus
                         id="name"
@@ -94,7 +93,6 @@ export default function CreateDialog({
                     />
                 </DialogContent>
                 <DialogContent>
-                    {/* <DialogContentText>Set Prompt</DialogContentText> */}
                     <TextField
                         autoFocus
                         id="prompt"

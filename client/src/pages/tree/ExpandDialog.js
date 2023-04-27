@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-    FormControl,
-    FormLabel,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-} from "@mui/material";
-
 import FadeLoader from "react-spinners/FadeLoader";
 
 export default function ExpandDialog({
@@ -62,9 +51,7 @@ export default function ExpandDialog({
                 return string.charAt(0).toUpperCase() + string.slice(1);
             };
 
-            //console.log(selected.id);
             const node = traverse(root, selected.id);
-            //console.log(node);
 
             const response = await axios.post(`http://localhost:11000/chatgpt/expand-node`, {
                 projectPrompt: root.attributes.prompt,
@@ -90,10 +77,6 @@ export default function ExpandDialog({
 
             setData({ ...data }); // trigger a re-render by updating the data state
 
-            //console.log(initChildIDs(response.data.children));
-            //console.log(response);
-            //console.log(node.children);
-            //console.log(root);
             handleClose()
         } catch (error) {
             console.error(error);
