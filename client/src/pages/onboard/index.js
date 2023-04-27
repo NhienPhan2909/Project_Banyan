@@ -7,14 +7,13 @@ import { faTree, faSeedling } from '@fortawesome/free-solid-svg-icons';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './onboard.css'
+
 function Onboard() {
   return (
     <div id="onboard-container" className="onboarding">
       <div id="onboard-main">
-        {/* <div id='header'>
-            <img id='logo'  src="BanyanText_Transparent.png" />
-        </div> */}
         <Container>
+          {/*Handle the display of the header in onboarding page*/}
           <Row>
             <Col>
               <h1 className="text-center text">Welcome to</h1>
@@ -23,9 +22,11 @@ function Onboard() {
               </div>
             </Col>
           </Row>
+          {/*Handle the slide show in the onboarding page*/}
           <Row>
             <Row>
               <Carousel>
+                {/*Handle the first image in the slide show */}
                 <Carousel.Item className='custom-item'>
                   <div className="ImgDiv" >
                     <img 
@@ -36,6 +37,7 @@ function Onboard() {
                     />
                   </div>
                 </Carousel.Item>
+                {/*Handle the second image in the slide show */}
                 <Carousel.Item>
                   <div className="ImgDiv">
                     <img
@@ -44,6 +46,7 @@ function Onboard() {
                       alt="Second slide"
                     />
                   </div>
+                  {/*Handle the caption of the second image */}
                   <Carousel.Caption>
                     <h3 className='caption-title' id='slide-2-title'>Make an Account</h3>
                     <p className='caption-text' id='slide-2-text'>
@@ -52,6 +55,7 @@ function Onboard() {
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
+                {/*Handle the third image in the slide show */}
                 <Carousel.Item>
                   <div className='ImgDiv'>
                     <img
@@ -60,6 +64,7 @@ function Onboard() {
                       alt="Third slide"
                     />
                   </div>
+                  {/*Handle the caption of the third image */}
                   <Carousel.Caption>
                     <h3 className='caption-title'>Enter Your Idea!</h3>
                     <p className='caption-text' id='slide-3-text'>
@@ -69,6 +74,7 @@ function Onboard() {
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
+                {/*Handle the fourth image in the slide show */}
                 <Carousel.Item>
                   <div className='ImgDiv'>
                     <img
@@ -77,6 +83,7 @@ function Onboard() {
                       alt="Fourth slide"
                     />
                   </div>
+                  {/*Handle the caption of the fourth image */}
                   <Carousel.Caption>
                     <h3 className='caption-title'>Grow Your Tree</h3> 
                     <p className='caption-text' id='slide-4-text'>
@@ -85,6 +92,7 @@ function Onboard() {
                     </p>
                   </Carousel.Caption>
                 </Carousel.Item>
+                {/*Handle the fifth image in the slide show */}
                 <Carousel.Item>
                   <div className='ImgDiv'>
                     <img
@@ -93,6 +101,7 @@ function Onboard() {
                       alt="Fifth slide"
                     />
                   </div>
+                  {/*Handle the caption of the fifth image */}
                   <Carousel.Caption>
                     <h3 className='caption-title' id='slide-5-title'>Repeat!</h3>
                     <p className='caption-text' id='slide-5-text'>
@@ -102,6 +111,7 @@ function Onboard() {
                 </Carousel.Item>
               </Carousel>
             </Row>
+            {/*Handle the appearance and function of both the signup and the login buttons */}
             <Row>
                 <div id="buttons">
                   <Link id='signup' to="/signup">

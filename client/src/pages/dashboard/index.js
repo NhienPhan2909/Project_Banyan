@@ -29,19 +29,20 @@ class Dashboard extends Component {
         this.setState({ anchorEl: null });
     };
 
+    // Implement logic to delete project
     handleDeleteProject = () => {
-        // implement logic to delete project
         this.setState({ deleteMode: true });
         this.setState({ displayNumProjectError: false });
         this.handlePopoverClose();
     };
 
-    cancelDelete = () => {
-        // implement logic to delete project
+    // Implement logic to cancel the delete function
+    ancelDelete = () => {
         this.setState({ deleteMode: false });
         this.handlePopoverClose()
     };
 
+    // Handle the appeareance and the function of buttons related to deletion of projects
     buttonMode = () => {
         if (this.state.deleteMode) {
             return <Button variant="contained" className="popover-button" sx={{ mb: 1 }} onClick={this.cancelDelete}>Cancel</Button>
@@ -51,12 +52,14 @@ class Dashboard extends Component {
         }
     }
 
+    // Handle the logout function of a user
     handleLogout = () => {
         localStorage.setItem("jwtToken", "");
         window.location.href = '/login';
         this.handlePopoverClose();
     };
 
+    // Retrieve a project and all its nodes fromt the database
     getProjects = async () => {
         const token = localStorage.getItem('jwtToken');
 
@@ -71,6 +74,7 @@ class Dashboard extends Component {
         this.setState({ projects: response.data.projects });
     }
 
+    // Handle the deletion of a project
     deleteProject = async (projectId) => {
         try {
             const token = localStorage.getItem('jwtToken');
@@ -92,7 +96,7 @@ class Dashboard extends Component {
                 }
             });
 
-            // remove the project from the component state
+            // remove the project from the component state (delete the project appeareance on the front end)
             this.setState({ projects: this.state.projects.filter((x) => x._id !== projectId) });
 
             return projectResponse.status;
@@ -103,6 +107,7 @@ class Dashboard extends Component {
         }
     };
 
+    // Congifure and handle the appearance of the header on the dashboard page
     displayHeader = () => {
         return <div id='dash-header'>
             <Box id='spacer' />
@@ -137,6 +142,7 @@ class Dashboard extends Component {
         </div>
     }
 
+    // Congifure and handle the appearance of projects as boxes on the dashboard page
     displayProjects = () => {
         return <Box id="dash-projects">
             <div id="projects-text">Your Projects</div>
@@ -165,6 +171,7 @@ class Dashboard extends Component {
         </Box>
     }
 
+    // Display a message for the user to confirm that the user has activated the delete function
     displayDeleteMessage = () => {
         if (this.state.deleteMode === true)
             return <Box display='flex' justifyContent='center' color='red' alignItems='center' paddingTop={'100px'} margin-top='10px'>
