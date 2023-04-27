@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './prompt.css';
-import {TextField} from '@mui/material/';
-// import Box from '@mui/material/Box';
-// import AccountCircle from '@mui/icons-material/AccountCircle';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import { TextField, Button, Box, Stack } from '@mui/material/';
 import axios from 'axios';
-import { fontSize } from '@mui/system';
 import FadeLoader from "react-spinners/FadeLoader";
+import './prompt.css';
 
 class Prompt extends Component {
     state = {
@@ -84,52 +78,54 @@ class Prompt extends Component {
     render() {
         return (
             <div>
-                <FadeLoader className='spinner' loading={this.state.loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77', position: 'fixed', top: '5%', left: '50%', transform: 'translateX(-50%)',}}/>
+                <FadeLoader className='spinner' loading={this.state.loading} size={30} color={'rgb(0, 105, 62)'} />
                 <div className="prompt-container">
                     <form className="promptForm">
-                    <Button className='cancel' sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: 'white', maxWidth: '40px', maxHeight: '30px', minWidth: '40px', minHeight: '30px', fontSize:'18px'}} variant="none"
-                                        onClick={() => {
-                                            window.location.href = '/dashboard'
-                                        }}
-                                    >
-                        </Button>
+                        <Button className='cancel' sx={{ color: 'rgb(0, 105, 62)' }} style={{ backgroundColor: 'white', maxWidth: '40px', maxHeight: '30px', minWidth: '40px', minHeight: '30px', fontSize: '18px' }} variant="none"
+                            onClick={() => {
+                                window.location.href = '/dashboard'
+                            }}
+                        ></Button>
                         <div className='logo'>
                             <Link id='dashboard' to="/dashboard">
-                                <img id='logo' src="BanyanText_Transparent.png"/>
+                                <img id='logo' src="BanyanText_Transparent.png" />
                             </Link>
                         </div>
                         <div className="Prompt-form-content">
                             <div className="inputs">
-                            <Box color={'rgb(0, 105, 62)'} fontWeight='425' paddingLeft={'50px'}  fontSize={'20px'} box={{display: 'flex', alignItems: 'flex-end', color: 'white' }}>1. Project Title</Box>
-                                    <Box textAlign={'center'} paddingBottom={'40px'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <TextField sx={{ input: { color: 'black' }, width: '300px' }} label="E.g. Ecommerce Website" variant="standard"
-                                            InputLabelProps={{
-                                                style: { color: "lightgrey" },
-                                            }}
-                                            onChange={
-                                                x => {
-                                                    this.setState({ prompt: x.target.value });
-                                                }
+                                <p className="prompt-label">1. Project Title</p>
+                                <Box textAlign={'center'} paddingBottom={'40px'}>
+                                    <TextField
+                                        sx={{ input: { color: 'black' }, width: '300px' }}
+                                        label="E.g. Ecommerce Website"
+                                        variant="standard"
+                                        InputLabelProps={{
+                                            style: { color: "lightgrey" },
+                                        }}
+                                        onChange={
+                                            x => {
+                                                this.setState({ prompt: x.target.value });
                                             }
-                                        />
-                                    </Box>
-                                    <Box color={'rgb(0, 105, 62)'} fontWeight='425' paddingLeft={'50px'}  paddingBottom={'20px'} fontSize={'20px'} text-align={'left'} justifyContent={'left'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>2. Project Description</Box>
-                                    <Box textAlign={'center'} box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <TextField variant={'outlined'}  multiline rows={5} maxRows={8} sx={{ input: { color: 'black' }, width: '300px' }} label="What does your project entail?" 
-                                            InputLabelProps={{
-                                                style: { color: "lightgrey" },
-                                            }}
-                                            onChange={
-                                                x => {
-                                                    this.setState({ description: x.target.value });
-                                                }
+                                        }
+                                    />
+                                </Box>
+                                <p className="prompt-label">2. Project Description</p>
+                                <Box textAlign={'center'}>
+                                    <TextField variant={'outlined'} multiline rows={5} maxRows={8} sx={{ input: { color: 'black' }, width: '300px' }} label="What does your project entail?"
+                                        InputLabelProps={{
+                                            style: { color: "lightgrey" },
+                                        }}
+                                        onChange={
+                                            x => {
+                                                this.setState({ description: x.target.value });
                                             }
-                                        />
-                                    </Box>
+                                        }
+                                    />
+                                </Box>
                             </div>
                             <div className="promptSubmit">
                                 <Stack paddingBottom={'10px'} spacing={2}>
-                                    <Button style={{backgroundColor:  'rgb(0, 105, 62)', maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
+                                    <Button style={{ backgroundColor: 'rgb(0, 105, 62)', maxWidth: '90px', maxHeight: '45px', minWidth: '90px', minHeight: '45px' }} variant="contained"
                                         onClick={async () => {
                                             this.createProject(this.state.prompt, this.state.description);
                                         }}
