@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { traverse } from "./traversal"
 
 export default function EditDialog({ open, setOpen, data, setData, selected }) {
     const handleClose = () => {
@@ -16,23 +17,6 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
 
     const updateNode = async (root) => {
         try {
-            // Find the node in the PMTree given an id
-            const traverse = (node, id) => {
-                if (node.id === id) {
-                    return node;
-                }
-                if (node.children && node.children.length > 0) {
-                    for (let i = 0; i < node.children.length; i++) {
-                        const result = traverse(node.children[i], id);
-                        if (result) {
-                            return result;
-                        }
-                    }
-                }
-                return null;
-            };
-
-            //Update the name and prompt of the selected node
             
             // Edit display
             selected.name = name;
@@ -60,6 +44,7 @@ export default function EditDialog({ open, setOpen, data, setData, selected }) {
 
     return (
         <div>
+            {/* This dialog is to allow users to edit the name or contents of a node */}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle >Edit Node</DialogTitle>
                 <DialogContent>

@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { traverse } from "./traversal"
 import {
     FormControl,
     FormLabel,
@@ -30,22 +31,6 @@ export default function CreateDialog({
 
     const addNode = async (root) => {
         try {
-            // Find the node in the PMTree given an id
-            const traverse = (node, id) => {
-                if (node.id === id) {
-                    return node;
-                }
-                // Not the node we seek, recurse on the children (if they exist)
-                if (node.children && node.children.length > 0) {
-                    for (let i = 0; i < node.children.length; i++) {
-                        const result = traverse(node.children[i], id);
-                        if (result) {
-                            return result;
-                        }
-                    }
-                }
-                return null;
-            };
 
             // Edit state
             const node = traverse(root, selected.id);
@@ -78,6 +63,7 @@ export default function CreateDialog({
 
     return (
         <div>
+            {/* Dialog that will pop up when a user clicks the create node option */}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create a New Node</DialogTitle>
                 <DialogContent>
@@ -107,6 +93,7 @@ export default function CreateDialog({
                     />
                 </DialogContent>
                 <DialogContent>
+                    {/* Allow users to choose what type of node they wish to create (epic, story, or task) */}
                     <FormControl>
                         <FormLabel>Type</FormLabel>
                         <RadioGroup value={type} onChange={(e) => setType(e.target.value)}>
@@ -116,6 +103,7 @@ export default function CreateDialog({
                         </RadioGroup>
                     </FormControl>
                 </DialogContent>
+                {/* Buttons to Create the node or cancel and exit the dialog */}
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button

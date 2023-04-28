@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import FadeLoader from "react-spinners/FadeLoader";
+import { traverse } from "./traversal"
 
 export default function ExpandDialog({
     open,
@@ -31,21 +32,6 @@ export default function ExpandDialog({
     const expandNode = async (root) => {
         try {
             setLoading(true)
-            // Find the node in the PMTree given an id
-            const traverse = (node, id) => {
-                if (node.id === id) {
-                    return node;
-                }
-                if (node.children && node.children.length > 0) {
-                    for (let i = 0; i < node.children.length; i++) {
-                        const result = traverse(node.children[i], id);
-                        if (result) {
-                            return result;
-                        }
-                    }
-                }
-                return null;
-            };
 
             const capitalize = (string) => {
                 return string.charAt(0).toUpperCase() + string.slice(1);
