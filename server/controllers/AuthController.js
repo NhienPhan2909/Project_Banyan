@@ -52,6 +52,7 @@ const saveUser = (user, res) => {
                 return res.status(500).send({ msg: err.message });
             }
             else {
+                console.log("Sending email")
                 // Send email (use credintials of SendGrid)
                 sendEmail(user, res, activationToken)
             }
