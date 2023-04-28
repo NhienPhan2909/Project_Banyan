@@ -22,6 +22,18 @@ THere are 4 main controllers:
 3. NodeController - Manage the add, delete, find and update functionalities for node in the database
 4. ProjectController - Manage the add, delete, find, getAll and update for multiple projects in the database
 
+THere are 4 main models:
+1. ActivationToken - Handle the JWT tokens for user authentication
+2. User - Schema design for user including username, password, email, date, and active status
+3. Node - Schema design including parentID, list of children, name, content, and agile scope
+4. Project - Schema design including root id, name, and user id
+
+THere are 4 main controllers:
+1. Auth - Post Routes to register, verify, login and authenticate get user 
+2. ChatGpt - Two routes for starting project and expanding node
+3. NodeofTree - Four routes to the add, delete, find and update nodes
+4. Project - Four routes to add, delete, find, getAll and update for multiple projects
+
 ### Start Project
 #### Start the server
 ```
