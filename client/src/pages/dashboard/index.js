@@ -111,7 +111,7 @@ class Dashboard extends Component {
     displayHeader = () => {
         return <div id='dash-header'>
             <Box id='spacer' />
-            <img id='logo' src="BanyanText_Transparent.png" />
+            <img id='logo' alt="Banyan Logo" src="BanyanText_Transparent.png" />
             <Box id='settings'>
                 <Button onClick={this.handlePopoverOpen}>
                     <SettingsIcon sx={{ color: 'rgb(21, 20, 20)', fontSize: '50px' }} />

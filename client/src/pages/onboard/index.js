@@ -18,7 +18,7 @@ function Onboard() {
             <Col>
               <h1 className="text-center text">Welcome to</h1>
               <div id='header'>
-                <img id='logo'  src="BanyanText_Transparent.png" />
+                <img id='logo' alt="Banyan Logo" src="BanyanText_Transparent.png" />
               </div>
             </Col>
           </Row>
@@ -33,7 +33,7 @@ function Onboard() {
                     id="slide-1-Img"
                     className="d-block w-100 customImg"
                     src="/slides/banyan_slide1.png"
-                    alt="First slide"
+                    alt="Intro Slide with Forrest"
                     />
                   </div>
                 </Carousel.Item>
@@ -43,7 +43,7 @@ function Onboard() {
                     <img
                       className="d-block w-100 customImg"
                       src="/slides/signup_slide.png"
-                      alt="Second slide"
+                      alt="Second Slide showcasing signup page"
                     />
                   </div>
                   {/*Handle the caption of the second image */}
@@ -61,7 +61,7 @@ function Onboard() {
                     <img
                       className="d-block w-100 customImg"
                       src="/slides/Prompt.gif"
-                      alt="Third slide"
+                      alt="Third slide showcasing prompt page"
                     />
                   </div>
                   {/*Handle the caption of the third image */}
@@ -80,7 +80,7 @@ function Onboard() {
                     <img
                       className="d-block w-100 customImg"
                       src="/slides/Tree.gif"
-                      alt="Fourth slide"
+                      alt="Fourth slide showcasing the tree page"
                     />
                   </div>
                   {/*Handle the caption of the fourth image */}
@@ -98,7 +98,7 @@ function Onboard() {
                     <img
                       className="d-block w-100 customImg"
                       src="/slides/dashboard_slide.png"
-                      alt="Fifth slide"
+                      alt="Fifth slide showcasing our dashboard"
                     />
                   </div>
                   {/*Handle the caption of the fifth image */}

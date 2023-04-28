@@ -65,10 +65,6 @@ export default function TreeContainer() {
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openExpandDialog, setOpenExpandDialog] = useState(false);
 
-    const handleClickOpen = () => {
-        if (selected) setOpenDialog(true);
-    };
-
     useEffect(() => {
         async function getData() {
             const data = await getProject(project);

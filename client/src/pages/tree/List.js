@@ -49,7 +49,7 @@ export default function List({ data, setData }) {
                     const childNode = node.children[i];
                     await updateNodeAndChildren(childNode);
 
-                    if (childNode.id && childNode.id != -1) {
+                    if (childNode.id && childNode.id !== -1) {
                         childIdList.push(childNode.id);
                     }
                 }

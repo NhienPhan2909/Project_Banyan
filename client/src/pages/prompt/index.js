@@ -88,7 +88,7 @@ class Prompt extends Component {
                         ></Button>
                         <div className='logo'>
                             <Link id='dashboard' to="/dashboard">
-                                <img id='logo' src="BanyanText_Transparent.png" />
+                                <img id='logo' alt="Banyan Logo" src="BanyanText_Transparent.png" />
                             </Link>
                         </div>
                         <div className="Prompt-form-content">

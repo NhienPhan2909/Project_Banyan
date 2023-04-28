@@ -66,13 +66,6 @@ const customNode = ({
     </g>
 );
 
-const wrappedText = (text) => {
-    const split = text.split(" ");
-
-    for (let i = 0; i < split.length; i += 5) { }
-    return text;
-};
-
 const getColor = (data) => {
     return data?.attributes?.type === "Epic" ? "blue" : "green";
 };
