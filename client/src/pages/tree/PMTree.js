@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Tree from "react-d3-tree";
 import { Popper, Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -9,86 +9,7 @@ import List from "./List";
 import "./tree.css";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-
-// This defines the node
-const customNode = ({
-  nodeDatum,
-  toggleNode,
-  setSelected,
-  setAnchor,
-  setOptions,
-}) => (
-  // Group changes
-  <g
-    fill={getColor(nodeDatum)}
-    onClick={() => nodeClicked(nodeDatum, toggleNode, setSelected, setOptions)}
-    transform="scale(0.8)"
-  >
-    <rect
-      width="800"
-      height="120"
-      x="-400"
-      y="-140"
-      style={{ fill: "#00693e", stroke: "#00693e", strokeWidth: "2" }}
-    />
-
-    <rect
-      width="800"
-      height="380"
-      x="-400"
-      y="-20"
-      style={{
-        fill: "white",
-        stroke: "#00693e",
-        strokeWidth: "2",
-        zIndex: 1,
-      }}
-    />
-
-    <foreignObject
-      x="-400"
-      y="-140"
-      width="800"
-      height="120"
-      onMouseOver={(e) =>
-        mouseOver(nodeDatum, e, setAnchor, setOptions, setSelected)
-      }
-    >
-      <div
-        style={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <h2 style={{ color: "white", fontSize: "50px" }}>{nodeDatum.name}</h2>
-      </div>
-    </foreignObject>
-    {nodeDatum.attributes?.prompt && (
-      <foreignObject x="-380" width="760" height="380">
-        <textbox style={{ color: "black", fontSize: "44px" }}>
-          {nodeDatum.attributes?.prompt}
-        </textbox>
-      </foreignObject>
-    )}
-  </g>
-);
-
-const getColor = (data) => {
-  return data?.attributes?.type === "Epic" ? "blue" : "green";
-};
-
-const nodeClicked = (nodeDatum, toggleNode, setSelected) => {
-  toggleNode();
-  setSelected(nodeDatum);
-};
-
-const mouseOver = (nodeDatum, e, setAnchor, setOptions, setSelected) => {
-  setSelected(nodeDatum);
-  setAnchor(e.target);
-  setOptions(true);
-};
+import CustomNode from "./CustomNode";
 
 export default function PMTree({
   data,
@@ -103,6 +24,7 @@ export default function PMTree({
   const [options, setOptions] = useState(false);
   const [anchor, setAnchor] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(0.3);
+  const nodeData = useRef([]);
 
   const handleZoomIn = () => {
     if (zoomLevel < 10) {
@@ -115,6 +37,12 @@ export default function PMTree({
       setZoomLevel(zoomLevel - 0.1);
     }
   };
+
+  const nodeClicked = (nodeDatum, toggleNode, setSelected) => {
+    toggleNode();
+    setSelected(nodeDatum);
+  };
+
   return (
     // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
     <div id="tree-wrapper" onClick={() => setOptions(false)}>
@@ -135,9 +63,16 @@ export default function PMTree({
         onNodeClick={(data) => {
           nodeClicked(data, setSelected);
         }}
-        renderCustomNodeElement={(d3Props) =>
-          customNode({ ...d3Props, setSelected, setAnchor, setOptions })
-        }
+        renderCustomNodeElement={(d3Props) => (
+          <CustomNode
+            d3Props={d3Props}
+            setSelected={setSelected}
+            setAnchor={setAnchor}
+            setOptions={setOptions}
+            nodeClicked={nodeClicked}
+            nodeData={nodeData}
+          />
+        )}
         nodeSize={{ x: 250, y: 100 }}
         separation={{ nonSiblings: 4, siblings: 3 }}
       ></Tree>
@@ -177,7 +112,12 @@ export default function PMTree({
           </IconButton>
         </Box>
       </Popper>
-      <List data={data} setData={setData} />
+      <List
+        data={data}
+        setData={setData}
+        nodeData={nodeData}
+        nodeClicked={nodeClicked}
+      />
     </div>
   );
 }
