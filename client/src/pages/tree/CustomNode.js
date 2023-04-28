@@ -17,7 +17,7 @@ export default function CustomNode({
       { nodeDatum, toggleNode, setSelected },
     ];
   };
-  useEffect(() => addNode(), []);
+  useEffect(addNode);
 
   const getColor = (data) => {
     return data?.attributes?.type === "Epic" ? "blue" : "green";
