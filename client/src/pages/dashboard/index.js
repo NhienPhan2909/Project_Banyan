@@ -37,7 +37,7 @@ class Dashboard extends Component {
     };
 
     // Implement logic to cancel the delete function
-    ancelDelete = () => {
+    cancelDelete = () => {
         this.setState({ deleteMode: false });
         this.handlePopoverClose()
     };
