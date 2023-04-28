@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { TextField } from '@mui/material';
@@ -11,6 +11,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import './auth.css';
 
+// Once the user is logged in, takes the user's authentication token and saves it for this session
 const setAuthToken = (token) => {
     if (token) {
         localStorage.setItem('jwtToken', token);
@@ -21,127 +22,103 @@ const setAuthToken = (token) => {
     }
 };
 
-class Login extends Component {
-    state = {
-        username: '',
-        password: '',
-        loginStatus: null,
-        showPassword: false,
-        errorMessage: ''
-    };
+export default function Login() {
+    
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [status, setStatus] = useState(null);
+    const [showPassword, setShowPassword] = useState('');
 
-    toggleShowPassword = () => {
-        this.setState({ showPassword: !this.state.showPassword });
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
     }
 
-    changeUsername = (event) => {
-        this.setState({
-            username: event.target.value
-        });
-    }
-
-    changePassword = (event) => {
-        this.setState({
-            password: event.target.value
-        });
-    }
-
-    displayErrorMessage = () => {
+    const displayErrorMessage = () => {
         return <Box display='flex' justifyContent='center' color='red' alignItems='center' margin-top='10px'>{this.state.errorMessage}</Box>
     }
 
-    login = async () => {
+    const login = async () => {
         try {
-            var username = this.state.username
-            var password = this.state.password
             const response = await axios.post('http://localhost:11000/api/login', {
                 username,
                 password
             });
 
-            console.log(response);
             const token = response.data.token;
             setAuthToken(token);
 
             if (response.status === 200) {
                 window.location.href = '/dashboard';
             }
-            return response.status
+            return response.status;
         } catch (error) {
-            if (error.response) {
-                console.log(error.response.data.msg);
-                this.setState({errorMessage: error.response.data.msg})
-            }
+            console.error(error);
         }
     }
 
-    render() {
-        return (
-            <div>
-                <div className="form-container">
-                    <form className="form">   
-                        <Link to="/">
-                            <Button sx={{color: 'lightgrey'}} style={{fontSize:'13px', marginLeft:'20px', maxWidth: '50px', maxHeight: '25px', minWidth: '50px', minHeight: '25px' }} variant="standard">
-                                    home
-                            </Button>
-                        </Link>
-                        <div className="Auth-form-content">
-                            <h3 className="Auth-form-title">Login</h3>
-                            <div className="inputs">
-                                    <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 2}} />
-                                        <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Username" variant="standard"
-                                            InputLabelProps={{
-                                                style: { color: "lightgrey" },
-                                            }}
-                                            onChange={this.changeUsername}
-                                        />
-                                    </Box>
-                                    <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
-                                        <AccountCircle sx={{ color: 'black', mr: 1, my: 2 }} />
-                                        <TextField className='usernameField' type={this.state.showPassword ? 'text' : 'password'} sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Password" variant="standard"
-                                            InputLabelProps={{
-                                                style: { color: "lightgrey" },
-                                            }}
-                                            onChange={this.changePassword}
-                                            InputProps={{
-                                                // add an InputAdornment with a IconButton that toggles the showPassword state
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={this.toggleShowPassword}
-                                                            edge="end"
-                                                        >
-                                                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                        />
-                                    </Box>
-                                </div>
-                            <div className="authSubmit">
-                                <Stack paddingBottom={'20px'}>
-                                    <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
-                                        onClick={async () => {
-                                            var message = await this.login()
-                                            this.setState({ loginStatus: message });
+    return (
+        <div>
+            <div className="form-container">
+                <form className="form">   
+                    <Link to="/">
+                        <Button sx={{color: 'lightgrey'}} style={{fontSize:'13px', marginLeft:'20px', maxWidth: '50px', maxHeight: '25px', minWidth: '50px', minHeight: '25px' }} variant="standard">
+                                home
+                        </Button>
+                    </Link>
+                    <div className="Auth-form-content">
+                        <h3 className="Auth-form-title">Login</h3>
+                        <div className="inputs">
+                                <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
+                                    <AccountCircle sx={{ color: 'black', mr: 1, my: 2}} />
+                                    <TextField className='usernameField' sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Username" variant="standard"
+                                        InputLabelProps={{
+                                            style: { color: "lightgrey" },
                                         }}
-                                    >Submit
-                                    </Button>
-                                </Stack>
+                                        onChange={(event) => setUsername(event.target.value)}
+                                    />
+                                </Box>
+                                <Box box={{ display: 'flex', alignItems: 'flex-end', color: 'white' }}>
+                                    <AccountCircle sx={{ color: 'black', mr: 1, my: 2 }} />
+                                    <TextField className='usernameField' type={showPassword ? 'text' : 'password'} sx={{ input: { color: 'black' }, width: '180px' }} id="input-with-username" label="Password" variant="standard"
+                                        InputLabelProps={{
+                                            style: { color: "lightgrey" },
+                                        }}
+                                        onChange={(event) => setPassword(event.target.value)}
+                                        InputProps={{
+                                            // add an InputAdornment with a IconButton that toggles the showPassword state
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={toggleShowPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </Box>
                             </div>
-                            <p className="text-center mt-2">
-                                <a href="/signup">Need an account?</a>
-                            </p>
+                        <div className="authSubmit">
+                            <Stack paddingBottom={'20px'}>
+                                <Button sx={{backgroundColor: 'rgb(0, 105, 62)'}} style={{ maxWidth: '80px', maxHeight: '40px', minWidth: '80px', minHeight: '40px' }} variant="contained"
+                                    onClick={async () => {
+                                        var message = await login()
+                                        setStatus(message);
+                                    }}
+                                >Submit
+                                </Button>
+                            </Stack>
                         </div>
-                    </form>
-                </div>
-                {this.state.loginStatus !== 200 && this.state.loginStatus !== null && this.displayErrorMessage()}
+                        <p className="text-center mt-2">
+                            <a href="/signup">Need an account?</a>
+                        </p>
+                    </div>
+                </form>
             </div>
-        )
-    }
+            {status !== 200 && status !== null && displayErrorMessage()}
+        </div>
+    )
 }
-
-export default Login;
