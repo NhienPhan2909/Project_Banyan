@@ -71,7 +71,7 @@ const sendEmail = (user, res, activationToken) => {
     var mailOptions = { 
         from: process.env.EMAIL, 
         to: user.email, subject: 'Account Verification Link', 
-        text: 'Hello ' + user.username + ',\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\n\nThank You!\n'
+        text: 'Welcome ' + user.username + '!\n\n' + 'Please verify your account by clicking the link:\n' + url +  '\/api/verify?token=' + activationToken.token + '\nWe wish you luck on your first tree!\n\nBest,\nProject Banyan Team'
     };
     transporter.sendMail(mailOptions, function (err) {
         if (err) {
