@@ -78,7 +78,7 @@ class Prompt extends Component {
     render() {
         return (
             <div>
-                <FadeLoader className='spinner' loading={this.state.loading} size={30} color={'rgb(0, 105, 62)'} />
+                <FadeLoader className='spinner' loading={this.state.loading} size={30} sx={{color: 'rgb(0, 105, 62)'}} style={{backgroundColor: '69af77', position: 'fixed', top: '5%', left: '50%', transform: 'translateX(-50%)',}}/>
                 <div className="prompt-container">
                     <form className="promptForm">
                         <Button className='cancel' sx={{ color: 'rgb(0, 105, 62)' }} style={{ backgroundColor: 'white', maxWidth: '40px', maxHeight: '30px', minWidth: '40px', minHeight: '30px', fontSize: '18px' }} variant="none"
